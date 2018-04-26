@@ -24,7 +24,7 @@ public class User implements UserDetails{
 	@GeneratedValue
 	private Long id;
 
-	private String nombre;
+	private String firs;
 
 	private String lastName;
 	
