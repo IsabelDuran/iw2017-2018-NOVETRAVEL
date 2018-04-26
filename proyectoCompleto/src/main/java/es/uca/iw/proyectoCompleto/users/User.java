@@ -50,6 +50,10 @@ public class User implements UserDetails{
 	public User(String firstName, String lastName, String address, int zipcode) {
 		this(firstName,lastName,firstName, address, zipcode);
 	}
+	
+	public User(String firstName, String lastName) {
+		this(firstName,lastName,firstName, "sad",3321);
+	}
 
 	public Long getId() {
 		return id;
