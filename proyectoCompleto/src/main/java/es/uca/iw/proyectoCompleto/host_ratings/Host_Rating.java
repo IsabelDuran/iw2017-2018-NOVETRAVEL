@@ -6,6 +6,9 @@ import javax.persistence.Id;
 
 @Entity
 public class Host_Rating{
+	@Id
+	@GeneratedValue
+	private Long id;
 	private int value;
 
 	public int getValue() {
