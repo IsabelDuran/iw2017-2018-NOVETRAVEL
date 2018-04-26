@@ -1,8 +1,82 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Apartment{
+	@Id
+	@GeneratedValue
+	private Long id;
 
+	private String name;
+
+	private String description;
+	
+	private int price_per_day;
+
+	private boolean book;
+	
+	private String type;
+
+	public Apartment(Long id, String name, String description, int price_per_day, boolean book, String type) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.price_per_day = price_per_day;
+		this.book = book;
+		this.type = type;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getPrice_per_day() {
+		return price_per_day;
+	}
+
+	public void setPrice_per_day(int price_per_day) {
+		this.price_per_day = price_per_day;
+	}
+
+	public boolean isBook() {
+		return book;
+	}
+
+	public void setBook(boolean book) {
+		this.book = book;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 }
