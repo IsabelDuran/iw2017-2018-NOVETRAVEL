@@ -18,7 +18,7 @@ public class Apartment{
 
 	private boolean book;
 	
-	private String type;
+	private String apartment_type;
 
 	public Apartment(Long id, String name, String description, int price_per_day, boolean book, String type) {
 		super();
@@ -71,7 +71,7 @@ public class Apartment{
 	}
 
 	public String getType() {
-		return type;
+		return apartment_type;
 	}
 
 	public void setType(String type) {
