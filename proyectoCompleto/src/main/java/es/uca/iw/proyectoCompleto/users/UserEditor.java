@@ -35,6 +35,8 @@ public class UserEditor extends VerticalLayout {
 	TextField lastName = new TextField("Last name");
 	TextField username = new TextField("Username");
 	TextField password = new TextField("Password");
+	TextField direccion = new TextField("Direccion");
+	TextField zipcodee = new TextField("Zip code");
 
 	/* Action buttons */
 	Button save = new Button("Save", FontAwesome.SAVE);
@@ -49,7 +51,7 @@ public class UserEditor extends VerticalLayout {
 	public UserEditor(UserService service) {
 		this.service = service;
 
-		addComponents(firstName, lastName, username, password, actions);
+		addComponents(firstName, lastName, username, password, direccion, zipcodee, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);

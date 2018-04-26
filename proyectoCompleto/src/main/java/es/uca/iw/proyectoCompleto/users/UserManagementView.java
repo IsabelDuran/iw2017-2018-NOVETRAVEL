@@ -72,7 +72,7 @@ public class UserManagementView extends VerticalLayout implements View {
 		});
 
 		// Instantiate and edit new User the new button is clicked
-		addNewBtn.addClickListener(e -> editor.editUser(new User("", "")));
+		addNewBtn.addClickListener(e -> editor.editUser(new User("", "", "", 1231)));
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
