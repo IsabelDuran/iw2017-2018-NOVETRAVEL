@@ -13,8 +13,6 @@ import javax.persistence.Id;
 @Entity
 public class Dispute{
 	
-
-
 	@Id
 	@GeneratedValue
 	private Long id;
