@@ -1,4 +1,4 @@
-package es.uca.iw.proyectoCompleto.users;
+package es.uca.iw.proyectoCompleto.apartments;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails{
 
 	/**
-	 * 
+	 es
 	 */
 	private static final long serialVersionUID = -8883789651072229337L;
 
@@ -24,7 +24,7 @@ public class User implements UserDetails{
 	@GeneratedValue
 	private Long id;
 
-	private String firstName;
+	private String nombre;
 
 	private String lastName;
 	
