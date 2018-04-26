@@ -32,18 +32,18 @@ public class User implements UserDetails{
 
 	private String password;
 	
-	private String direccion;
+	private String address;
 	
 	private int zipcode;
 	
 	protected User() {
 	}
 
-	public User(String firstName, String lastName, String username, String direccion, int zipcode) {
+	public User(String firstName, String lastName, String username, String address, int zipcode) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
-		this.direccion = direccion;
+		this.address = address;
 		this.zipcode = zipcode;
 	}
 
@@ -84,12 +84,12 @@ public class User implements UserDetails{
 		this.password = password;
 	}
 	
-	public String getDireccion() {
-		return direccion;
+	public String getAddress() {
+		return address;
 	}
 	
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	
@@ -104,7 +104,7 @@ public class User implements UserDetails{
 	@Override
 	public String toString() {
 		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s']", id,
-				firstName, lastName,username,password, direccion);
+				firstName, lastName,username,password);
 	}
 
 	@Override
