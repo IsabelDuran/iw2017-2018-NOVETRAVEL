@@ -42,7 +42,6 @@ public class Dispute{
 		this.description = description;
 	}
 
-
 	public Date getDate_opening() {
 		return date_opening;
 	}
