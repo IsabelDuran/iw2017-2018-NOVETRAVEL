@@ -27,7 +27,7 @@ public class Apartment{
 		this.description = description;
 		this.price_per_day = price_per_day;
 		this.book = book;
-		this.type = type;
+		this.apartment_type = type;
 	}
 
 	public Long getId() {
