@@ -9,14 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 public class Dispute{
 	
-	private static final long serialVersionUID = -8883789651072229337L;
+
 
 	@Id
 	@GeneratedValue
