@@ -70,13 +70,14 @@ public class Apartment{
 		this.book = book;
 	}
 
-	public String getType() {
+	public String getApartment_type() {
 		return apartment_type;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setApartment_type(String apartment_type) {
+		this.apartment_type = apartment_type;
 	}
+
 	
 	
 }
