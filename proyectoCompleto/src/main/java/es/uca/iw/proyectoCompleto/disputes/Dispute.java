@@ -22,51 +22,51 @@ public class Dispute{
 	@GeneratedValue
 	private Long id;
 	
-	private Date date;
+	private Long id_user;
+	
+	private Long id_host;
+	
+	private Date date_opening;
+	
+	private Date date_closing;
 
-	private String title;
-	
-	private String reason;
-	
 	private String description;
 	
 	protected Dispute() {
 	}
 
-	public Dispute(Date date, String title, String reason, String description) {
-		this.date = date;
-		this.title = title;
-		this.reason = reason;
+	public Dispute(Date date_opening, Date date_closing, String description) {
+		super();
+		this.date_opening = date_opening;
+		this.date_closing = date_closing;
 		this.description = description;
 	}
-	
-	public Date getDate() {
-		return date;
+
+
+	public Date getDate_opening() {
+		return date_opening;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setDate_opening(Date date_opening) {
+		this.date_opening = date_opening;
 	}
 
-	public String getTitle() {
-		return title;
+
+	public Date getDate_closing() {
+		return date_closing;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+
+	public void setDate_closing(Date date_closing) {
+		this.date_closing = date_closing;
 	}
 
-	public String getReason() {
-		return reason;
-	}
-
-	public void setReason(String reason) {
-		this.reason = reason;
-	}
 
 	public String getDescription() {
 		return description;
 	}
+
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -74,7 +74,7 @@ public class Dispute{
 
 	@Override
 	public String toString() {
-		return "a";
+		return description;
 	}
 
 }
