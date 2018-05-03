@@ -1,5 +1,9 @@
 package es.uca.iw.proyectoCompleto.bookings;
-/*
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 @Entity
 public class Booking{
 	@Id
@@ -8,12 +12,11 @@ public class Booking{
 	
 	
 
-	private Date entryDate_;
+	private String entryString_;
 
-	private Date departureDate_;
+	private String departureString_;
 	
 	private int totalPrice_;
 	
 }
 
-*/
