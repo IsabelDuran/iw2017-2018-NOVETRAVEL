@@ -1,6 +1,5 @@
 package es.uca.iw.proyectoCompleto.reports;
-/*
-¡
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +9,7 @@ public class Report
 {
 	@Id
 	@GeneratedValue
-	private Date date;
+	private String date;
 
 	private String title;
 	
@@ -21,7 +20,7 @@ public class Report
 	private Long id;
 	
 
-	public Report(Date date, String title, String reasons, String report_description, Long id) {
+	public Report(String date, String title, String reasons, String report_description, Long id) {
 		super();
 		this.date = date;
 		this.title = title;
@@ -38,11 +37,11 @@ public class Report
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public String getString() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setString(String date) {
 		this.date = date;
 	}
 
@@ -71,5 +70,3 @@ public class Report
 	}
 	
 }
-
-*/
