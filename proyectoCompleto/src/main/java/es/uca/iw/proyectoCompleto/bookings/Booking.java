@@ -26,7 +26,7 @@ public class Booking{
 	}
 
 	public Long getId_() {
-		return id_;
+		return id_ ;
 	}
 
 	public void setId_(Long id_) {
