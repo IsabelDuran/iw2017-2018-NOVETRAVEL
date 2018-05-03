@@ -5,19 +5,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Report
-{
+public class Report{
+
 	@Id
 	@GeneratedValue
+	private Long id;
+	
 	private String date;
 
 	private String title;
 	
 	private String reasons;
 
+
 	private String report_description;
 
-	private Long id;
 	
 
 	public Report(String date, String title, String reasons, String report_description, Long id) {
