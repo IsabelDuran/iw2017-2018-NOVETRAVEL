@@ -1,11 +1,9 @@
 package es.uca.iw.proyectoCompleto.reports;
 
-import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
+<<<<<<< HEAD
 public class Report
 {/*
 	@Id
@@ -69,5 +67,8 @@ public class Report
 	public void setReport_description(String report_description) {
 		this.report_description = report_description;
 	}
+=======
+public class Report{
+>>>>>>> parent of fffee2c... Creada clase "Report"
 	
 */}
