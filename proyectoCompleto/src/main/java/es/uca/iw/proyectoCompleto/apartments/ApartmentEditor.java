@@ -23,14 +23,14 @@ public class ApartamentEditor extends VerticalLayout {
 
 	
 	/**
-	 * The currently edited user
+	 * The currently edited apartment
 	 */
 	private Apartment apartamento;
 
 	private Binder<Apartment> binder = new Binder<>(Apartment.class);
 
 	
-	/* Fields to edit properties in User entity */
+	/* Fields to edit properties in Apartment entity */
 	TextField name = new TextField("Name");
 	TextField description = new TextField("Description");
 	TextField price_per_day = new TextField("price_per_day");
@@ -47,10 +47,10 @@ public class ApartamentEditor extends VerticalLayout {
 
 
 	@Autowired
-	public ApartmentEditor(UserService service) {
+	public ApartmentEditor(ApartmentService service) {
 		this.service = service;
 
-		addComponents(name, username, password, direccion, zipcodee, actions);
+		addComponents(name, description, price_per_day, book, apartment_type,actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
@@ -63,9 +63,9 @@ public class ApartamentEditor extends VerticalLayout {
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-		save.addClickListener(e -> service.save(user));
-		delete.addClickListener(e -> service.delete(user));
-		cancel.addClickListener(e -> editUser(user));
+		save.addClickListener(e -> service.save(apartment));
+		delete.addClickListener(e -> service.delete(apartment));
+		cancel.addClickListener(e -> editApartment(apartment));
 		setVisible(false);
 		
 		// Solo borra el admin
@@ -77,7 +77,7 @@ public class ApartamentEditor extends VerticalLayout {
 		void onChange();
 	}
 
-	public final void editUser(User c) {
+	public final void editApartment(Apartment c) {
 		if (c == null) {
 			setVisible(false);
 			return;
@@ -85,17 +85,17 @@ public class ApartamentEditor extends VerticalLayout {
 		final boolean persisted = c.getId() != null;
 		if (persisted) {
 			// Find fresh entity for editing
-			user = service.findOne(c.getId());
+			apartment = service.findOne(c.getId());
 		}
 		else {
-			user = c;
+			apartment = c;
 		}
 		cancel.setVisible(persisted);
 
-		// Bind user properties to similarly named fields
+		// Bind apartment properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
-		binder.setBean(user);
+		binder.setBean(apartment);
 
 		setVisible(true);
 
