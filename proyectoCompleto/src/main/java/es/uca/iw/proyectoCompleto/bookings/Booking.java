@@ -6,6 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Booking{
+
 	@Id
 	@GeneratedValue
 	private Long id_;
