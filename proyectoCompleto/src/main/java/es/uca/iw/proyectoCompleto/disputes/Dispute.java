@@ -1,8 +1,8 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
-
+/*
 @Entity
-public class Dispute{/*
+public class Dispute{
 	
 	@Id
 	@GeneratedValue
@@ -11,6 +11,8 @@ public class Dispute{/*
 	private Long id_user;
 	
 	private Long id_host;
+	
+	
 	
 	private Date date_opening;
 	
@@ -78,4 +80,4 @@ public class Dispute{/*
 		this.id_host = id_host;
 	}
 
-*/}
+}*/
