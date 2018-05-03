@@ -50,7 +50,7 @@ public class ApartamentEditor extends VerticalLayout {
 	public ApartmentEditor(UserService service) {
 		this.service = service;
 
-		addComponents(firstName, lastName, username, password, direccion, zipcodee, actions);
+		addComponents(name, username, password, direccion, zipcodee, actions);
 
 		// bind using naming convention
 		binder.bindInstanceFields(this);
