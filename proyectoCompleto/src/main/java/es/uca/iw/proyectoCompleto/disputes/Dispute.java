@@ -1,14 +1,11 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity
-public class Dispute{/*
+public class Dispute{
 	
 	@Id
 	@GeneratedValue
@@ -18,38 +15,40 @@ public class Dispute{/*
 	
 	private Long id_host;
 	
-	private Date date_opening;
 	
-	private Date date_closing;
+	
+	private String date_opening;
+	
+	private String date_closing;
 
 	private String description;
 	
 	protected Dispute() {
 	}
 
-	public Dispute(Date date_opening, Date date_closing, String description) {
+	public Dispute(String date_opening, String date_closing, String description) {
 		super();
 		this.date_opening = date_opening;
 		this.date_closing = date_closing;
 		this.description = description;
 	}
 
-	public Date getDate_opening() {
+	public String getString_opening() {
 		return date_opening;
 	}
 
 
-	public void setDate_opening(Date date_opening) {
+	public void setString_opening(String date_opening) {
 		this.date_opening = date_opening;
 	}
 
 
-	public Date getDate_closing() {
+	public String getString_closing() {
 		return date_closing;
 	}
 
 
-	public void setDate_closing(Date date_closing) {
+	public void setString_closing(String date_closing) {
 		this.date_closing = date_closing;
 	}
 
@@ -84,4 +83,4 @@ public class Dispute{/*
 		this.id_host = id_host;
 	}
 
-*/}
+}
