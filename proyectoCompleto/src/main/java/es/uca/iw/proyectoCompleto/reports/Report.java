@@ -1,13 +1,13 @@
 package es.uca.iw.proyectoCompleto.reports;
-
-import java.util.Date;
+/*
+¡
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Report
-{/*
+{
 	@Id
 	@GeneratedValue
 	private Date date;
@@ -70,4 +70,6 @@ public class Report
 		this.report_description = report_description;
 	}
 	
-*/}
+}
+
+*/
