@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Booking{
+public class Booking{/*
 	@Id
 	@GeneratedValue
 	private Long id_;
@@ -16,5 +16,5 @@ public class Booking{
 
 	private Date departureDate_;
 	
-	private int totalPrice_;
+	private int totalPrice_;*/
 }

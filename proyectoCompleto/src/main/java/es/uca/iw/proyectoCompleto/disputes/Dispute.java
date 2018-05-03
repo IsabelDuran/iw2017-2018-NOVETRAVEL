@@ -1,8 +1,5 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -11,7 +8,7 @@ import javax.persistence.Id;
 
 
 @Entity
-public class Dispute{
+public class Dispute{/*
 	
 	@Id
 	@GeneratedValue
@@ -87,4 +84,4 @@ public class Dispute{
 		this.id_host = id_host;
 	}
 
-}
+*/}
