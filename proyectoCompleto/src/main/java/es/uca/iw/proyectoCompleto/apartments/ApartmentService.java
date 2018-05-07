@@ -16,7 +16,7 @@ public class ApartmentService {
 	//throws ApartmentnameNotFoundException 
 	public Apartment loadApartmentByApartmentname(String apartamentoname) {
 
-		Apartment apartamento = repo.findByApartmentname(apartamentoname);
+		Apartment apartamento = repo.findByName(apartamentoname);
 		if (apartamento == null) {
 			//throw new ApartmentnameNotFoundException(apartamentoname);
 		}
@@ -26,10 +26,6 @@ public class ApartmentService {
 	public Apartment save(Apartment apartamento) {
 
 		return repo.save(apartamento);
-	}
-
-	public List<Apartment> findByLastNameStartsWithIgnoreCase(String lastName) {
-		return repo.findByLastNameStartsWithIgnoreCase(lastName);
 	}
 
 	public Apartment findOne(Long arg0) {
