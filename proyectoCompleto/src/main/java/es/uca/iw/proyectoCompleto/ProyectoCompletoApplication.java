@@ -40,7 +40,7 @@ public class ProyectoCompletoApplication {
 
 			if (service.findAll().size() == 0) {
 				// save a couple of users with default password: default
-				service.save(new User("Jack", "Bauer"));
+				service.save(new User("Juan", "Bauer"));
 				service.save(new User("Chloe", "O'Brian"));
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
