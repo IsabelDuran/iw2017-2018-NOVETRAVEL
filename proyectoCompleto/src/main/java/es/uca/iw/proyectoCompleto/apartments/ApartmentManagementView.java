@@ -24,7 +24,7 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 
 @SpringView(name = ApartmentManagementView.VIEW_NAME)
 public class ApartmentManagementView extends VerticalLayout implements View{
-	public static final String VIEW_NAME = "userManagementView";
+	public static final String VIEW_NAME = "apartmentManagementView";
 
 	private Grid<Apartment> grid;
 	private TextField filter;
