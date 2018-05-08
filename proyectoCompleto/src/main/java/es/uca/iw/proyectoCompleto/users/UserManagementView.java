@@ -19,10 +19,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * @author ruizrube
- *
- */
+
 @SpringView(name = UserManagementView.VIEW_NAME)
 public class UserManagementView extends VerticalLayout implements View {
 	public static final String VIEW_NAME = "userManagementView";
