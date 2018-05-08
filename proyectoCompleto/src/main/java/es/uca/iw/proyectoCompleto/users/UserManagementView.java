@@ -42,8 +42,7 @@ public class UserManagementView extends VerticalLayout implements View {
 		this.editor = editor;
 		this.grid = new Grid<>(User.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New user", FontAwesome.PLUS);
-	    
+		this.addNewBtn = new Button("New user", FontAwesome.PLUS);  
 	}
 
 	
