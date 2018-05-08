@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentRepository;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.User;
@@ -35,7 +36,7 @@ public class ProyectoCompletoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner loadData(UserService service) {
+	public CommandLineRunner loadData(UserService service,ApartmentRepository ap) {
 		return (args) -> {
 
 			if (service.findAll().size() == 0) {
@@ -46,7 +47,7 @@ public class ProyectoCompletoApplication {
 				service.save(new User("David", "Palmer"));
 				service.save(new User("Michelle", "Dessler"));
 				
-				//service.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
+				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
 
 
 				User root = new User("root", "root");

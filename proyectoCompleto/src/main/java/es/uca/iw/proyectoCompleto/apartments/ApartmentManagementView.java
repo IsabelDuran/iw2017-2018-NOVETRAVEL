@@ -43,6 +43,8 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		this.grid = new Grid<>(Apartment.class);
 		this.filter = new TextField();
 		this.addNewBtn = new Button("New user");
+
+		this.addNewBtn = new Button("New apartment");
 	    
 	}
 
@@ -54,12 +56,12 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 		
 		addComponents(actions, grid, editor);
-
+		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setColumns("id", "firstName", "lastName");
 
 		filter.setPlaceholder("Filter by last name");
-
+		
 		// Hook logic to components
 
 		// Replace listing with filtered content when user changes filter
@@ -82,7 +84,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 
 		// Initialize listing
 		listApartments(null);
-
+		
 	}
 
 	private void listApartments(String filterText) {
