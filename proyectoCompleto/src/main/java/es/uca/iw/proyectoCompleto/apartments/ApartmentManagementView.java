@@ -41,7 +41,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		this.editor = editor;
 		this.grid = new Grid<>(Apartment.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New user", FontAwesome.PLUS);
+		this.addNewBtn = new Button("New apartment", FontAwesome.PLUS);
 	    
 	}
 
@@ -53,12 +53,12 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 		
 		addComponents(actions, grid, editor);
-
+		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setColumns("id", "firstName", "lastName");
 
 		filter.setPlaceholder("Filter by last name");
-
+		
 		// Hook logic to components
 
 		// Replace listing with filtered content when user changes filter
