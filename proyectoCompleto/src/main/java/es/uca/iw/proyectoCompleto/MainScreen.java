@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package es.uca.iw.proyectoCompleto;
@@ -18,6 +18,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
+import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
 import es.uca.iw.proyectoCompleto.users.UserView;
 
@@ -53,6 +54,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Users", UserView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("User Management", UserManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Apartments", ApartmentManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Reports", ReportManagementView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
 		// Creamos el panel
