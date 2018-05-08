@@ -36,9 +36,12 @@ public class ProyectoCompletoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner loadData(UserService service,ApartmentRepository ap) {
+	public CommandLineRunner loadData(UserService service,ApartmentService ap) {
 		return (args) -> {
-
+			if(ap.findAll().size()==0)
+			{
+				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
+			}
 			if (service.findAll().size() == 0) {
 				// save a couple of users with default password: default
 				service.save(new User("Juan", "Bauer"));
@@ -46,8 +49,6 @@ public class ProyectoCompletoApplication {
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
 				service.save(new User("Michelle", "Dessler"));
-				
-				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
 
 
 				User root = new User("root", "root");

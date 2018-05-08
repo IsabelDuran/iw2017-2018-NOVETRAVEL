@@ -4,14 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-<<<<<<< HEAD
-=======
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
->>>>>>> branch 'master' of https://github.com/IsabelDuran/iw2017-2018-NOVETRAVEL.git
 public class ApartmentService {
 
 	@Autowired
