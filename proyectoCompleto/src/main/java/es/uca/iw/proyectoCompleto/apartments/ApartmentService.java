@@ -4,10 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-
-
 public class ApartmentService {
 
 	@Autowired

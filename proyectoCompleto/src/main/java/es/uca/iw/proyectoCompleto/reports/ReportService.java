@@ -1,14 +1,7 @@
 package es.uca.iw.proyectoCompleto.reports;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
-
-
 
 public class ReportService {
 
