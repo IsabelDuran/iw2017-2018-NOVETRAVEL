@@ -19,6 +19,9 @@ public class Report{
 	
 	private String report_description;
 
+	protected Report() {
+		
+	}
 
 	public Report(String date, String title, String reasons, String report_description) {
 		super();
@@ -30,6 +33,15 @@ public class Report{
 
 	public Long getId() {
 		return id;
+	}
+	
+	public void setDate(String date)
+	{
+		this.date = date;
+	}
+	
+	public String getDate() {
+		return date;
 	}
 
 	public void setId(Long id) {

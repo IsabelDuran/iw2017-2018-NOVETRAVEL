@@ -3,6 +3,7 @@ package es.uca.iw.proyectoCompleto.reports;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -12,6 +13,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
@@ -35,8 +37,9 @@ public class ReportEditor extends VerticalLayout {
 	
 	/* Fields to edit properties in Report entity */
 	TextField title = new TextField("Titulo");
-	TextField reason = new TextField("Motivo");
-	TextField description = new TextField("Descripcion");
+	TextField date = new TextField("Fecha");
+	TextField reasons = new TextField("Motivo");
+	TextField report_description = new TextField("Descripcion");
 
 	/* Action buttons */
 	Button save = new Button("Save");
@@ -51,10 +54,13 @@ public class ReportEditor extends VerticalLayout {
 	public ReportEditor(ReportService service) {
 		this.service = service;
 
-		addComponents(title, reason, description ,actions);
+		addComponents(title, date, reasons, report_description ,actions);
 
 		// bind using naming convention
-		binder.bindInstanceFields(this);
+		binder.forField(date).bind(Report::getDate, Report::setDate);
+		binder.forField(title).bind(Report::getTitle,Report::setTitle);
+		binder.forField(reasons).bind(Report::getReasons,Report::setReasons);
+		binder.forField(report_description).bind(Report::getReport_description, Report::setReport_description);
 
 		
 		// Configure and style components

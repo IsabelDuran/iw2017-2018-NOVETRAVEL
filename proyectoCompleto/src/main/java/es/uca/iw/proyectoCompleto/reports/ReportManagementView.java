@@ -26,7 +26,7 @@ public class ReportManagementView extends VerticalLayout implements View{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String VIEW_NAME = "ReportManagementView";
+	public static final String VIEW_NAME = "reportManagementView";
 
 	private Grid<Report> grid;
 	private TextField filter;
@@ -58,9 +58,9 @@ public class ReportManagementView extends VerticalLayout implements View{
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("id", "apartment_type", "book","description", "name","price_per_day");
+		grid.setColumns("id","title", "date", "reasons", "report_description");
 
-		filter.setPlaceholder("Filter by last name");
+		filter.setPlaceholder("Filter by date");
 		
 		// Hook logic to components
 

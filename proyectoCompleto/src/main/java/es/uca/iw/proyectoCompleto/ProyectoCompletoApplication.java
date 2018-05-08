@@ -25,6 +25,8 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
+import es.uca.iw.proyectoCompleto.reports.ReportService;
+import es.uca.iw.proyectoCompleto.reports.Report;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class ProyectoCompletoApplication {
@@ -36,11 +38,15 @@ public class ProyectoCompletoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner loadData(UserService service,ApartmentService ap) {
+	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re) {
 		return (args) -> {
 			if(ap.findAll().size()==0)
 			{
 				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
+			}
+			if(re.findAll().size()==0)
+			{
+				re.save(new Report("23/03/91", "hola", "vater sucio", "el vater esta muy sucio loco"));
 			}
 			if (service.findAll().size() == 0) {
 				// save a couple of users with default password: default
