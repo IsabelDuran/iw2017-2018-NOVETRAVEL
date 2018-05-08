@@ -9,7 +9,7 @@ public class Booking{
 
 	@Id
 	@GeneratedValue
-	private Long id_;
+	private Long id;
 
 	private String entryDate_;
 
@@ -17,20 +17,20 @@ public class Booking{
 	
 	private int totalPrice_;
 	
-	public Booking(Long id_, String entryDate_, String departureDate_, int totalPrice_) {
+	public Booking(Long id, String entryDate_, String departureDate_, int totalPrice_) {
 		super();
-		this.id_ = id_;
+		this.id = id;
 		this.entryDate_ = entryDate_;
 		this.departureDate_ = departureDate_;
 		this.totalPrice_ = totalPrice_;
 	}
 
-	public Long getId_() {
-		return id_ ;
+	public Long getId() {
+		return id ;
 	}
 
-	public void setId_(Long id_) {
-		this.id_ = id_;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getEntryDate_() {
