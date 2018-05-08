@@ -19,10 +19,12 @@ public class Apartment{
 	private boolean book;
 	
 	private String apartment_type;
-
+	
+	protected Apartment() {
+	}
+	
 	public Apartment(String name, String description, int price_per_day, boolean book, String type) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price_per_day = price_per_day;

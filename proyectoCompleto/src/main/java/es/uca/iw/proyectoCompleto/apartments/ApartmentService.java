@@ -17,7 +17,7 @@ public class ApartmentService {
 	//throws ApartmentnameNotFoundException 
 	public Apartment loadApartmentByApartmentname(String apartamentoname) {
 
-		Apartment apartamento = repo.findByName(apartamentoname);
+		Apartment apartamento = repo.findByDescription(apartamentoname);
 		if (apartamento == null) {
 			//throw new ApartmentnameNotFoundException(apartamentoname);
 		}

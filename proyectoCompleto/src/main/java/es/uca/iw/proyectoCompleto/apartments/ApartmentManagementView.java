@@ -55,7 +55,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		addComponents(actions, grid, editor);
 		
 		grid.setHeight(300, Unit.PIXELS);
-		grid.setColumns("id", "firstName", "lastName");
+		grid.setColumns("id", "apartment_type", "book","description", "name","price_per_day");
 
 		filter.setPlaceholder("Filter by last name");
 		
