@@ -16,19 +16,16 @@ public class Report{
 	private String title;
 	
 	private String reasons;
-
-
+	
 	private String report_description;
 
-	
 
-	public Report(String date, String title, String reasons, String report_description, Long id) {
+	public Report(String date, String title, String reasons, String report_description) {
 		super();
 		this.date = date;
 		this.title = title;
 		this.reasons = reasons;
 		this.report_description = report_description;
-		this.id = id;
 	}
 
 	public Long getId() {
