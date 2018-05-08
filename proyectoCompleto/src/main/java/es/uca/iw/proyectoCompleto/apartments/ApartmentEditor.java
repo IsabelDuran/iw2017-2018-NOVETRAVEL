@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -19,6 +18,10 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 @UIScope
 public class ApartmentEditor extends VerticalLayout {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final ApartmentService service;
 	private Apartment apartamento;
 	
@@ -38,9 +41,9 @@ public class ApartmentEditor extends VerticalLayout {
 	TextField apartment_type = new TextField("apartment_type");
 
 	/* Action buttons */
-	Button save = new Button("Save", FontAwesome.SAVE);
+	Button save = new Button("Save");
 	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete", FontAwesome.TRASH_O);
+	Button delete = new Button("Delete");
 
 	/* Layout for buttons */
 	CssLayout actions = new CssLayout(save, cancel, delete);
