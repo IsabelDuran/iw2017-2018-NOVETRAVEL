@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.reports;
 
+import java.util.Calendar;
+
 import javax.annotation.PostConstruct;
 
 
@@ -68,13 +70,19 @@ public class ReportManagementView extends VerticalLayout implements View{
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
 		filter.addValueChangeListener(e -> listReports(e.getValue()));
 
-		// Connect selected Apartment to editor or hide if none is selected
+		// Connect selected Report to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
 			editor.editReport(e.getValue());
 		});
 
-		// Instantiate and edit new Apartment the new button is clicked
-		//addNewBtn.addClickListener(e -> editor.editApartment(new Apartment("", "", "", 1231)));
+		// Instantiate and edit new Report the new button is clicked
+		Calendar fecha_ = Calendar.getInstance();
+		
+		//
+		final String date = String.valueOf(fecha_.get(Calendar.DAY_OF_MONTH)) 
+				+ "/" + String.valueOf(fecha_.get(Calendar.MONTH)) 
+				+ "/" + String.valueOf(fecha_.get(Calendar.YEAR));
+		addNewBtn.addClickListener(e -> editor.editReport(new Report(date, "", "", "")));
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {

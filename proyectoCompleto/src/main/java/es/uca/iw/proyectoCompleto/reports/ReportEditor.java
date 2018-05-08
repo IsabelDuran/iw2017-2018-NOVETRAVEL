@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.reports;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
@@ -8,12 +9,12 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
@@ -40,7 +41,8 @@ public class ReportEditor extends VerticalLayout {
 	TextField date = new TextField("Fecha");
 	TextField reasons = new TextField("Motivo");
 	TextField report_description = new TextField("Descripcion");
-
+	
+	
 	/* Action buttons */
 	Button save = new Button("Save");
 	Button cancel = new Button("Cancel");
