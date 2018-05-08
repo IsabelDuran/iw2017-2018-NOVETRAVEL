@@ -81,7 +81,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 
 		// Initialize listing
 		listApartments(null);
-
+		
 	}
 
 	private void listApartments(String filterText) {
