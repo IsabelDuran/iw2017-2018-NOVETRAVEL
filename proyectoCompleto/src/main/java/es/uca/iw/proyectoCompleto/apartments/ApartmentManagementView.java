@@ -3,12 +3,8 @@ package es.uca.iw.proyectoCompleto.apartments;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -24,6 +20,11 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 
 @SpringView(name = ApartmentManagementView.VIEW_NAME)
 public class ApartmentManagementView extends VerticalLayout implements View{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String VIEW_NAME = "apartmentManagementView";
 
 	private Grid<Apartment> grid;
@@ -41,7 +42,9 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		this.editor = editor;
 		this.grid = new Grid<>(Apartment.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New apartment", FontAwesome.PLUS);
+		this.addNewBtn = new Button("New user");
+
+		this.addNewBtn = new Button("New apartment");
 	    
 	}
 

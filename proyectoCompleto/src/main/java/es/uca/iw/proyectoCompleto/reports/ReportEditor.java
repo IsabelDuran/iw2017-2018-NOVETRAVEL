@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -40,9 +39,9 @@ public class ReportEditor extends VerticalLayout {
 	TextField description = new TextField("Descripcion");
 
 	/* Action buttons */
-	Button save = new Button("Save", FontAwesome.SAVE);
+	Button save = new Button("Save");
 	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete", FontAwesome.TRASH_O);
+	Button delete = new Button("Delete");
 
 	/* Layout for buttons */
 	CssLayout actions = new CssLayout(save, cancel, delete);
