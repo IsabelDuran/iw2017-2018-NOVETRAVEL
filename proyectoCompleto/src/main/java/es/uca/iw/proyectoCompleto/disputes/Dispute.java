@@ -15,11 +15,9 @@ public class Dispute{
 	
 	private Long id_host;
 	
+	private String opening_date;
 	
-	
-	private String date_opening;
-	
-	private String date_closing;
+	private String closing_date;
 
 	private String description;
 	
@@ -28,28 +26,28 @@ public class Dispute{
 
 	public Dispute(String date_opening, String date_closing, String description) {
 		super();
-		this.date_opening = date_opening;
-		this.date_closing = date_closing;
+		this.opening_date = date_opening;
+		this.closing_date = date_closing;
 		this.description = description;
 	}
 
 	public String getString_opening() {
-		return date_opening;
+		return opening_date;
 	}
 
 
-	public void setString_opening(String date_opening) {
-		this.date_opening = date_opening;
+	public void setString_opening(String opening_date) {
+		this.opening_date = opening_date;
 	}
 
 
 	public String getString_closing() {
-		return date_closing;
+		return closing_date;
 	}
 
 
-	public void setString_closing(String date_closing) {
-		this.date_closing = date_closing;
+	public void setString_closing(String closing_date) {
+		this.closing_date = closing_date;
 	}
 
 
