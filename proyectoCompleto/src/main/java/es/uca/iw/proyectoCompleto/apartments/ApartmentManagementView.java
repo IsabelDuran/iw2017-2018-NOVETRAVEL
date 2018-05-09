@@ -42,9 +42,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		this.editor = editor;
 		this.grid = new Grid<>(Apartment.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New user");
-
-		this.addNewBtn = new Button("New apartment");
+		this.addNewBtn = new Button("Nuevo apartamento");
 	    
 	}
 
