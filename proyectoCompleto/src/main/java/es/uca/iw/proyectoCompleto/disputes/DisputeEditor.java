@@ -22,6 +22,6 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 public class DisputeEditor extends VerticalLayout
 {
 	private static final long serialVersionUID = 1L;
-	private final DisputeService service;
+	private DisputeService service;
 	private Dispute dispute_;
 }
