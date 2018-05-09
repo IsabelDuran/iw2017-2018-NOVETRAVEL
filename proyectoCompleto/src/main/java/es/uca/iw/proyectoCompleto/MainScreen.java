@@ -7,20 +7,20 @@ import javax.annotation.PostConstruct;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
+import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
+import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
 import es.uca.iw.proyectoCompleto.users.UserView;
-import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
+
 
 /**
  * @author ruizrube
@@ -29,6 +29,10 @@ import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
 @SpringViewDisplay
 public class MainScreen extends VerticalLayout implements ViewDisplay {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Panel springViewDisplay;
 	
 	@Override
@@ -50,11 +54,12 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		// Creamos la barra de navegación
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		navigationBar.addComponent(createNavigationButton("Welcome", WelcomeView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Users", UserView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("User Management", UserManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Bienvenido", WelcomeView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Usuarios", UserView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Gestión de Usuarios", UserManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Reports", ReportManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
 		// Creamos el panel
