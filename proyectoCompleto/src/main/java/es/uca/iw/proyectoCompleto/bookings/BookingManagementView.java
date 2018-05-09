@@ -1,10 +1,8 @@
-package es.uca.iw.proyectoCompleto.reports;
+package es.uca.iw.proyectoCompleto.bookings;
 
 import java.util.Calendar;
 
-
 import javax.annotation.PostConstruct;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
@@ -18,40 +16,36 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.reports.Report;
-import es.uca.iw.proyectoCompleto.reports.ReportEditor;
-import es.uca.iw.proyectoCompleto.reports.ReportService;
+import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
+import es.uca.iw.proyectoCompleto.bookings.BookingService;
 
+@SpringView(name = BookingManagementView.VIEW_NAME)
+public class BookingManagementView extends VerticalLayout implements View{
 
-@SpringView(name = ReportManagementView.VIEW_NAME)
-public class ReportManagementView extends VerticalLayout implements View{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public static final String VIEW_NAME = "reportManagementView";
+	public static final String VIEW_NAME = "bookingManagementView";
 
-	private Grid<Report> grid;
+	private Grid<Booking> grid;
 	private TextField filter;
 	private Button addNewBtn;
 
-	private ReportEditor editor;
+	private BookingEditor editor;
 
 	
-	private final ReportService service;
+	private final BookingService service;
 
 	@Autowired
-	public ReportManagementView(ReportService service,ReportEditor editor) {
+	public BookingManagementView(BookingService service,BookingEditor editor) {
 		this.service = service;
 		this.editor = editor;
-		this.grid = new Grid<>(Report.class);
+		this.grid = new Grid<>(Booking.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("Nueva queja");
+		this.addNewBtn = new Button("New report"); //ESTO HAY Q PONER OTRA COSA
 	    
 	}
 
-	
 	@PostConstruct
 	void init() {
 		
