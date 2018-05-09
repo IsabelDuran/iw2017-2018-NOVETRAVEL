@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentRepository;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.bookings.BookingService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
@@ -38,7 +39,7 @@ public class ProyectoCompletoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re) {
+	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
 			if(ap.findAll().size()==0)
 			{
