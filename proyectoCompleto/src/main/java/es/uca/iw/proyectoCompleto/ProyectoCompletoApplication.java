@@ -41,9 +41,12 @@ public class ProyectoCompletoApplication {
 	@Bean
 	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
+
 			if(ap.findAll().size()==0)
 			{
 				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
+				
+				//PONER AQUI BOOKING SERVICE
 			}
 			if(re.findAll().size()==0)
 			{

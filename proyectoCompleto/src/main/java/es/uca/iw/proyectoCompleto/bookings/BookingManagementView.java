@@ -42,7 +42,6 @@ public class BookingManagementView extends VerticalLayout implements View{
 		this.editor = editor;
 		this.grid = new Grid<>(Booking.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New report"); //ESTO HAY Q PONER OTRA COSA
 	    
 	}
 
@@ -56,7 +55,7 @@ public class BookingManagementView extends VerticalLayout implements View{
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("id","title", "date", "reasons", "report_description");
+		grid.setColumns("Id","Tipo de apartamento", "Fecha", "reasons", "report_description");
 
 		filter.setPlaceholder("Filter by date");
 		
