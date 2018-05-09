@@ -68,7 +68,7 @@ public class BookingManagementView extends VerticalLayout implements View{
 
 		// Connect selected Report to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			editor.editReport(e.getValue());
+	//		editor.editReport(e.getValue());
 		});
 
 		// Instantiate and edit new Report the new button is clicked
@@ -78,7 +78,7 @@ public class BookingManagementView extends VerticalLayout implements View{
 		final String date = String.valueOf(fecha_.get(Calendar.DAY_OF_MONTH)) 
 				+ "/" + String.valueOf(fecha_.get(Calendar.MONTH)) 
 				+ "/" + String.valueOf(fecha_.get(Calendar.YEAR));
-		addNewBtn.addClickListener(e -> editor.editReport(new Report(date, "", "", "")));
+		//addNewBtn.addClickListener(e -> editor.editReport(new Report(date, "", "", "")));
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
@@ -95,9 +95,7 @@ public class BookingManagementView extends VerticalLayout implements View{
 		
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(service.findAll());
-		} else {
-			grid.setItems(service.findByDateStartsWithIgnoreCase(filterText));
-		}
+		} 
 		
 		//grid.setItems(service.findAll());
 	}
