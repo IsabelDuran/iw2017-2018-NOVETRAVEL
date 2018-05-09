@@ -29,7 +29,7 @@ public class ReportEditor extends VerticalLayout {
 	private Report report;
 	
 	/**
-	 * The currently edited apartment
+	 * The currently edited report
 	 */
 	
 
@@ -57,13 +57,14 @@ public class ReportEditor extends VerticalLayout {
 		this.service = service;
 
 		addComponents(title, date, reasons, report_description ,actions);
+		
 
 		// bind using naming convention
 		binder.forField(date).bind(Report::getDate, Report::setDate);
+		binder.setReadOnly(true);
 		binder.forField(title).bind(Report::getTitle,Report::setTitle);
 		binder.forField(reasons).bind(Report::getReasons,Report::setReasons);
 		binder.forField(report_description).bind(Report::getReport_description, Report::setReport_description);
-
 		
 		// Configure and style components
 		setSpacing(true);
@@ -101,7 +102,7 @@ public class ReportEditor extends VerticalLayout {
 		}
 		cancel.setVisible(persisted);
 
-		// Bind apartment properties to similarly named fields
+		// Bind report properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
 		binder.setBean(report);

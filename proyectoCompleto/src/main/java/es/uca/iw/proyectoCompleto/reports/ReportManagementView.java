@@ -2,6 +2,7 @@ package es.uca.iw.proyectoCompleto.reports;
 
 import java.util.Calendar;
 
+
 import javax.annotation.PostConstruct;
 
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ValueChangeMode;
+import org.springframework.util.StringUtils;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -96,14 +98,14 @@ public class ReportManagementView extends VerticalLayout implements View{
 	}
 
 	private void listReports(String filterText) {
-		/*
+		
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(service.findAll());
 		} else {
-			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
+			grid.setItems(service.findByDateStartsWithIgnoreCase(filterText));
 		}
-		*/
-		grid.setItems(service.findAll());
+		
+		//grid.setItems(service.findAll());
 	}
 	
 	

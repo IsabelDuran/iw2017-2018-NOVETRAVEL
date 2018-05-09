@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.uca.iw.proyectoCompleto.users.User;
+
 @Service 
 public class ReportService {
 
@@ -18,6 +20,10 @@ public class ReportService {
 			//throw new ReportnameNotFoundException(reportname);
 		}
 		return report;
+	}
+	
+	public List<Report> findByDateStartsWithIgnoreCase(String date) {
+		return repo.findByDateStartsWithIgnoreCase(date);
 	}
 
 	public Report save(Report report) {
