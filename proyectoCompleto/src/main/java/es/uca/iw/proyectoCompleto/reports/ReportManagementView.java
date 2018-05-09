@@ -47,7 +47,7 @@ public class ReportManagementView extends VerticalLayout implements View{
 		this.editor = editor;
 		this.grid = new Grid<>(Report.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New report");
+		this.addNewBtn = new Button("Nueva queja");
 	    
 	}
 
