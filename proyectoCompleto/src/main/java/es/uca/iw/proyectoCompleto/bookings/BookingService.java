@@ -2,7 +2,9 @@ package es.uca.iw.proyectoCompleto.bookings;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookingService {
 
 	@Autowired
@@ -18,9 +20,9 @@ public class BookingService {
 		return booking_;
 	}
 
-	public Booking save(Booking apartamento) {
+	public Booking save(Booking booking) {
 
-		return repository_.save(apartamento);
+		return repository_.save(booking);
 	}
 
 	public Booking findOne(Long arg0) {

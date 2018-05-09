@@ -96,7 +96,7 @@ public class BookingEditor extends VerticalLayout {
 		}
 		cancel.setVisible(persisted);
 
-		// Bind apartment properties to similarly named fields
+		// Bind booking properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
 		// moving values from fields to entities before saving
 		binder.setBean(booking_);
