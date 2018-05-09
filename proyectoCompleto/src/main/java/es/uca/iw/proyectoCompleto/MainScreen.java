@@ -15,6 +15,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
 import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
 import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
@@ -58,6 +59,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Usuarios", UserView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Gestión de Usuarios", UserManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Clientes"", ApartmentListView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		root.addComponent(navigationBar);
