@@ -71,6 +71,8 @@ public class ApartmentListView extends VerticalLayout implements View
 	private void listApartments(String filterText) {
 		
 		if (StringUtils.isEmpty(filterText)) {
+			HorizontalLayout lista = new HorizontalLayout();
+			addComponents(lista);
 			List<Apartment> aps=service.findAll();
 			for(int i=0;i<aps.size();i++)
 			{
@@ -82,7 +84,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				content.setSizeUndefined(); // Shrink to fit
 				content.setMargin(true);
 				panel[i].setContent(content);
-				addComponents(panel[i]);
+				lista.addComponents(panel[i]);
 			}
 		} 
 		

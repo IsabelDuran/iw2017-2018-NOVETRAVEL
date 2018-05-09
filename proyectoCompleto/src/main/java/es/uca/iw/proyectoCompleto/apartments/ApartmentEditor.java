@@ -3,6 +3,7 @@ package es.uca.iw.proyectoCompleto.apartments;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.converter.StringToBooleanConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -60,8 +61,8 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(name).bind(Apartment::getName,Apartment::setName);
 		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);
 		binder.forField(price_per_day).withConverter(new StringToIntegerConverter("Introducir un numero")).bind(Apartment::getPrice_per_day,Apartment::setPrice_per_day);
-		binder.forField(book);
-		binder.forField(apartment_type);
+		binder.forField(book).withConverter(new StringToBooleanConverter("Introducir un numero")).bind(Apartment::isBook,Apartment::setBook);
+		binder.forField(apartment_type).bind(Apartment::getApartment_type,Apartment::setApartment_type);
 		
 
 		
