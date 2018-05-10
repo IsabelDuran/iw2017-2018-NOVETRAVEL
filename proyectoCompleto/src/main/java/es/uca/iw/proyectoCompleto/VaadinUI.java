@@ -11,6 +11,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
@@ -21,6 +23,8 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 @SpringUI
 public class VaadinUI extends UI {
 
+	HorizontalLayout head = new HorizontalLayout();
+			
 	@Autowired
 	SpringViewProvider viewProvider;
 
@@ -36,7 +40,12 @@ public class VaadinUI extends UI {
 
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-	
+		
+		head.addComponent(new Label("heaaaaaaaaaad"));
+		head.setHeight(50, Unit.PIXELS);
+		head.setResponsive(true);
+		head.setStyleName("color: pink");
+		
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {

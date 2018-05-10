@@ -30,7 +30,7 @@ public class WelcomeView extends VerticalLayout implements View {
 
 	@PostConstruct
 	void init() {
-		addComponent(new Label("This is the welcome page"));
+		addComponent(new Label("VEN A NOVETRAVEL"));
 	}
 
 	@Override
