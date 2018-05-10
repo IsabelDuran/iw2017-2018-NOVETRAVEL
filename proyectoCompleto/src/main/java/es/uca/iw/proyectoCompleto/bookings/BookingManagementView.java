@@ -10,13 +10,13 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
 
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 @SpringView(name = BookingManagementView.VIEW_NAME)
 public class BookingManagementView extends VerticalLayout implements View{
 	/**
@@ -27,6 +27,8 @@ public class BookingManagementView extends VerticalLayout implements View{
 	public static final String VIEW_NAME = "bookingManagementView";
 
 	private Grid<Booking> grid;
+	
+	private Grid<Apartment> grid2;
 	//private TextField filter;
 
 	private BookingEditor editor;
@@ -37,7 +39,8 @@ public class BookingManagementView extends VerticalLayout implements View{
 	public BookingManagementView(BookingService service, BookingEditor editor) {
 		this.service = service;
 		this.editor = editor;
-		this.grid = new Grid<>(Booking.class);
+		this.grid = new Grid<>();
+		this.grid2 = new Grid<>();
 	//	this.filter = new TextField();
 		    
 	}
@@ -47,10 +50,18 @@ public class BookingManagementView extends VerticalLayout implements View{
 	void init() {
 		
 		// build layout
+		addComponents(grid2,grid);
 		
+		grid2.setHeight(300, Unit.PIXELS);
+		grid2.setWidth(200, Unit.PIXELS);
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("id", "entryDate_", "departureDate_","totalPrice_");	
+		
+		grid2.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada").setResizable(false);
+		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
+		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
+		
 		
 		// Hook logic to components
 
@@ -66,11 +77,11 @@ public class BookingManagementView extends VerticalLayout implements View{
 		}); */
 
 		// Initialize listing
-		listApartments(null);
+		listBookings(null);
 		
 	}
 
-	private void listApartments(String filterText) {
+	private void listBookings(String filterText) {
 		/*
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(service.findAll());

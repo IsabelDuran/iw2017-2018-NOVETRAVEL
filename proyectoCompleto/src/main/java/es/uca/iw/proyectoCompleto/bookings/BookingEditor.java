@@ -60,7 +60,7 @@ public class BookingEditor extends VerticalLayout {
 		addComponents(entryDate,departureDate,actions);
 
 		// bind using naming convention
-		binder.bindInstanceFields(this);
+		//binder.bindInstanceFields(this);
 
 		
 		// Configure and style components
@@ -76,7 +76,7 @@ public class BookingEditor extends VerticalLayout {
 		setVisible(false);
 		
 		// Solo borra el admin
-		delete.setEnabled(SecurityUtils.hasRole("ADMIN"));
+		//delete.setEnabled(SecurityUtils.hasRole("ADMIN"));
 	}
 	
 	// Set the date to present

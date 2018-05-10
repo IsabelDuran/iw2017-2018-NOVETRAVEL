@@ -15,17 +15,21 @@ public class Booking{
 
 	private String departureDate_;
 	
-	private int totalPrice_;
+	private Double totalPrice_ = 0.0;
 	
-	private Long idApartamento;
+//	private Long idApartamento;
 	
-	private Long idUserReg;
+	//private Long idUserReg;
 	
-	public Booking(String entryDate_, String departureDate_, int totalPrice) {
+	public Booking(String entryDate_, String departureDate_, Double totalPrice) {
 		super();
 		this.entryDate_ = entryDate_;
 		this.departureDate_ = departureDate_;
-		this.totalPrice_ = totalPrice_;
+		this.totalPrice_ = totalPrice;
+	}
+
+	public Booking() {
+		super();
 	}
 
 	public Long getId() {
@@ -36,27 +40,27 @@ public class Booking{
 		this.id = id;
 	}
 
-	public String getEntryDate_() {
+	public String getEntryDate() {
 		return entryDate_;
 	}
 
-	public void setEntryDate_(String entryDate_) {
+	public void setEntryDate(String entryDate_) {
 		this.entryDate_ = entryDate_;
 	}
 
-	public String getDepartureDate_() {
+	public String getDepartureDate() {
 		return departureDate_;
 	}
 
-	public void setDepartureDate_(String departureDate_) {
+	public void setDepartureDate(String departureDate_) {
 		this.departureDate_ = departureDate_;
 	}
 
-	public int getTotalPrice_() {
+	public Double getTotalPrice() {
 		return totalPrice_;
 	}
 
-	public void setTotalPrice_(int totalPrice_) {
+	public void setTotalPrice(Double totalPrice_) {
 		this.totalPrice_ = totalPrice_;
 	}	
 	
