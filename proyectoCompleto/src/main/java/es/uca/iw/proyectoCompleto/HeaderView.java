@@ -6,7 +6,7 @@ import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 
-@SpringViewDisplay
+
 public class HeaderView extends HorizontalLayout implements ViewDisplay
 {
 	private static final long serialVersionUID = 1L;
