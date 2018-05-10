@@ -17,7 +17,7 @@ public class Booking{
 	
 	private Double totalPrice_ = 0.0;
 	
-//	private Long idApartamento;
+///	private Long idApartamento;
 	
 	//private Long idUserReg;
 	

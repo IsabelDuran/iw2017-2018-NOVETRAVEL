@@ -49,7 +49,7 @@ public class BookingManagementView extends VerticalLayout implements View{
 	@PostConstruct
 	void init() {
 		
-		// build layout
+		/// build layout
 		addComponents(grid2,grid);
 		
 		grid2.setHeight(300, Unit.PIXELS);

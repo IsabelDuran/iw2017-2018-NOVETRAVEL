@@ -59,7 +59,7 @@ public class BookingEditor extends VerticalLayout {
 
 		addComponents(entryDate,departureDate,actions);
 
-		// bind using naming convention
+		/// bind using naming convention
 		//binder.bindInstanceFields(this);
 
 		
