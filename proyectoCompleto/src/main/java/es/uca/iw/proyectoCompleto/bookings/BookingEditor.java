@@ -8,9 +8,10 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import java.time.LocalDate;
 
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
@@ -37,9 +38,12 @@ public class BookingEditor extends VerticalLayout {
 
 	
 	/* Fields to edit properties in Booking entity */
-	TextField entryDate = new TextField("Fecha de entrada");
-	TextField departureDate = new TextField("Fecha de salida");
 
+	// Create a DateField with the default style
+	DateField entryDate = new DateField();
+	DateField departureDate = new DateField();
+	
+	
 	/* Action buttons */
 	Button save = new Button("Guardar");
 	Button cancel = new Button("Cancelar");
@@ -74,6 +78,12 @@ public class BookingEditor extends VerticalLayout {
 		// Solo borra el admin
 		delete.setEnabled(SecurityUtils.hasRole("ADMIN"));
 	}
+	
+	// Set the date to present
+	public void editDate() {
+		entryDate.setValue(LocalDate.now());
+		departureDate.setValue(LocalDate.now());
+	}
 
 	public interface ChangeHandler {
 
@@ -106,7 +116,7 @@ public class BookingEditor extends VerticalLayout {
 		// A hack to ensure the whole form is visible
 		save.focus();
 		// Select all text in firstName field automatically
-		entryDate.selectAll();
+	//	entryDate.selectAll();
 	}
 
 	public void setChangeHandler(ChangeHandler h) {

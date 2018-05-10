@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ValueChangeMode;
-import org.springframework.util.StringUtils;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -20,73 +19,66 @@ import es.uca.iw.proyectoCompleto.bookings.BookingService;
 
 @SpringView(name = BookingManagementView.VIEW_NAME)
 public class BookingManagementView extends VerticalLayout implements View{
-
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 
 	public static final String VIEW_NAME = "bookingManagementView";
 
 	private Grid<Booking> grid;
-	private TextField filter;
-	private Button addNewBtn;
+	//private TextField filter;
 
 	private BookingEditor editor;
 
-	
 	private final BookingService service;
 
 	@Autowired
-	public BookingManagementView(BookingService service,BookingEditor editor) {
+	public BookingManagementView(BookingService service, BookingEditor editor) {
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>(Booking.class);
-		this.filter = new TextField();
-	    
+	//	this.filter = new TextField();
+		    
 	}
 
+	
 	@PostConstruct
 	void init() {
 		
 		// build layout
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		
-		addComponents(actions, grid, editor);
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("Id","Fecha de entrada", "Fecha de Salida", "Precio total");
-
-		filter.setPlaceholder("Filtrar por fecha de entrada");
+		grid.setColumns("id", "entryDate_", "departureDate_","totalPrice_");	
 		
 		// Hook logic to components
 
-		// Replace listing with filtered content when user changes filter
-		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listBooking(e.getValue()));
-
-		// Connect selected Report to editor or hide if none is selected
+		// Connect selected Booking to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-	//		editor.editReport(e.getValue());
+			editor.editBooking(e.getValue());
 		});
-
 		
 		// Listen changes made by the editor, refresh data from backend
-		editor.setChangeHandler(() -> {
+	/*	editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listBooking(filter.getValue());
-		});
+			listBookings(filter.getValue());
+		}); */
 
 		// Initialize listing
-		listBooking(null);
+		listApartments(null);
 		
 	}
 
-	private void listBooking(String filterText) {
-		
+	private void listApartments(String filterText) {
+		/*
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(service.findAll());
-		} 
-		
-		//grid.setItems(service.findAll());
+		} else {
+			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
+		}
+		*/
+		grid.setItems(service.findAll());
 	}
 	
 	
