@@ -17,9 +17,8 @@ public class Booking{
 	
 	private int totalPrice_;
 	
-	public Booking(Long id, String entryDate_, String departureDate_, int totalPrice_) {
+	public Booking(String entryDate_, String departureDate_, int totalPrice_) {
 		super();
-		this.id = id;
 		this.entryDate_ = entryDate_;
 		this.departureDate_ = departureDate_;
 		this.totalPrice_ = totalPrice_;

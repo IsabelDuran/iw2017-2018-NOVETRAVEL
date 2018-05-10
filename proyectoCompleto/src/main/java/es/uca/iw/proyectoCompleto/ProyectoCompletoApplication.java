@@ -20,8 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentRepository;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.User;
@@ -41,11 +41,16 @@ public class ProyectoCompletoApplication {
 	@Bean
 	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
+			
+			//Esto para probar la tabla del booking
+			if(bs.findAll().size()==0)
+			{
+				bs.save(new Booking("03/07/2018", "13/07/2018", 300));
+			}
 
 			if(ap.findAll().size()==0)
 			{
 				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
-				
 				//PONER AQUI BOOKING SERVICE
 			}
 			if(re.findAll().size()==0)

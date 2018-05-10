@@ -1,7 +1,5 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
-import java.util.Calendar;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,42 +53,34 @@ public class BookingManagementView extends VerticalLayout implements View{
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("Id","Tipo de apartamento", "Fecha", "reasons", "report_description");
+		grid.setColumns("Id","Fecha de entrada", "Fecha de Salida", "Precio total");
 
-		filter.setPlaceholder("Filter by date");
+		filter.setPlaceholder("Filtrar por fecha de entrada");
 		
 		// Hook logic to components
 
 		// Replace listing with filtered content when user changes filter
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listReports(e.getValue()));
+		filter.addValueChangeListener(e -> listBooking(e.getValue()));
 
 		// Connect selected Report to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
 	//		editor.editReport(e.getValue());
 		});
 
-		// Instantiate and edit new Report the new button is clicked
-		Calendar fecha_ = Calendar.getInstance();
 		
-		//
-		final String date = String.valueOf(fecha_.get(Calendar.DAY_OF_MONTH)) 
-				+ "/" + String.valueOf(fecha_.get(Calendar.MONTH)) 
-				+ "/" + String.valueOf(fecha_.get(Calendar.YEAR));
-		//addNewBtn.addClickListener(e -> editor.editReport(new Report(date, "", "", "")));
-
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listReports(filter.getValue());
+			listBooking(filter.getValue());
 		});
 
 		// Initialize listing
-		listReports(null);
+		listBooking(null);
 		
 	}
 
-	private void listReports(String filterText) {
+	private void listBooking(String filterText) {
 		
 		if (StringUtils.isEmpty(filterText)) {
 			grid.setItems(service.findAll());
