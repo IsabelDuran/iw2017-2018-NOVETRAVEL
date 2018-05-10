@@ -29,6 +29,7 @@ public class ApartmentService {
 			//throw new ApartmentnameNotFoundException(apartamentoname);
 		}
 		return apartamento;
+		//
 	} 
 
 	public Apartment save(Apartment apartamento) {

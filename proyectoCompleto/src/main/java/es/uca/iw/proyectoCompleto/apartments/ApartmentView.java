@@ -84,7 +84,7 @@ public class ApartmentView extends VerticalLayout implements View
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
-			
+			//
 		} 
 	}
 	

@@ -6,5 +6,6 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long>{
 	
 	public Apartment findByDescription(String username);
 	public Apartment findById(Long id);
+	//
 }
 
