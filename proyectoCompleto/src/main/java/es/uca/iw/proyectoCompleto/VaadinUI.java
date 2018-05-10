@@ -22,8 +22,6 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringUI
 public class VaadinUI extends UI {
-
-	HorizontalLayout head = new HorizontalLayout();
 			
 	@Autowired
 	SpringViewProvider viewProvider;
@@ -33,6 +31,9 @@ public class VaadinUI extends UI {
 
 	@Autowired
     MainScreen mainScreen;
+	
+	@Autowired
+	HeaderView headerView;
 
 	
 	@Override
@@ -41,17 +42,18 @@ public class VaadinUI extends UI {
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
 		
-		head.addComponent(new Label("heaaaaaaaaaad"));
-		head.setHeight(50, Unit.PIXELS);
-		head.setResponsive(true);
-		head.setStyleName("color: pink");
-		
+		showHeaderView();
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
 			showLoginScreen();
 		}
 
+	}
+	
+	private void showHeaderView()
+	{
+		setContent(headerView);
 	}
 
 	private void showLoginScreen() {
