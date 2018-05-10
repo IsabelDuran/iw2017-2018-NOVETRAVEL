@@ -42,6 +42,7 @@ public class ApartmentView extends VerticalLayout implements View
 
 	
 	private final ApartmentService service;
+	private ApartmentRepository repo;
 
 	@Autowired
 	public ApartmentView(ApartmentService service, ApartmentEditor editor) {
@@ -58,10 +59,7 @@ public class ApartmentView extends VerticalLayout implements View
 		
 		
 		// Hook logic to components
-
-
-
-		
+	
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
@@ -77,10 +75,17 @@ public class ApartmentView extends VerticalLayout implements View
 		if (StringUtils.isEmpty(filterText)) {
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			Long id=MainScreen.getUltimoPinchado();
+			Long id = MainScreen.getUltimoPinchado();
 			
-			lista.addComponent(new Label(new Long(id).toString()));
-			
+			//PONER IMAGEN AQUI
+			Apartment apartment = service.loadApartmentById(id);
+			lista.addComponent(new Label(apartment.getName()));
+			VerticalLayout abajo = new VerticalLayout();
+			addComponents(abajo);
+			abajo.addComponent(new Label(apartment.getDescription()));
+			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
+			//
+			//
 		} 
 	}
 	

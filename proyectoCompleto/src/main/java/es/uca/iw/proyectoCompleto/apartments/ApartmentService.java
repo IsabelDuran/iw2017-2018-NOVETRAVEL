@@ -21,6 +21,17 @@ public class ApartmentService {
 		}
 		return apartamento;
 	}
+	
+	public Apartment loadApartmentById(Long id) {
+
+		Apartment apartamento = repo.findById(id);
+		if (apartamento == null) {
+			//throw new ApartmentnameNotFoundException(apartamentoname);
+		}
+		return apartamento;
+		//
+		//
+	} 
 
 	public Apartment save(Apartment apartamento) {
 
