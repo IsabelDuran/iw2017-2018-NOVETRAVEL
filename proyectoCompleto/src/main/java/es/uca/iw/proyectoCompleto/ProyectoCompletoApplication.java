@@ -45,7 +45,7 @@ public class ProyectoCompletoApplication {
 			//Esto para probar la tabla del booking
 			if(bs.findAll().size()==0)
 			{
-				bs.save(new Booking("03/07/2018", "13/07/2018", 300));
+				bs.save(new Booking("03/07/2018", "13/07/2018", (double) 300));
 			}
 
 			if(ap.findAll().size()==0)
