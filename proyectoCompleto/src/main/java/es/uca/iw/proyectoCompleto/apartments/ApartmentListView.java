@@ -84,6 +84,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				content.addComponent(new Label(aps.get(i).getDescription()));
 				content.addComponent(ver_mas);
 				//ver_mas.addClickListener(e -> ());
+				//a
 				content.setSizeUndefined(); // Shrink to fit
 				content.setMargin(true);
 				panel[i].setContent(content);
