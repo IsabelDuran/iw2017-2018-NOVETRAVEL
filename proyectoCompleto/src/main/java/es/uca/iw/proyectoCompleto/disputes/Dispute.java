@@ -10,7 +10,7 @@ public class Dispute{
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private Long id_user;
 	
 	private Long id_host;
@@ -30,23 +30,31 @@ public class Dispute{
 		this.closing_date = date_closing;
 		this.description = description;
 	}
+	
+	public Long getId() {
+		return id;
+	}
 
-	public String getString_opening() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOpening_date() {
 		return opening_date;
 	}
 
 
-	public void setString_opening(String opening_date) {
+	public void setOpening_date(String opening_date) {
 		this.opening_date = opening_date;
 	}
 
 
-	public String getString_closing() {
+	public String getClosing_date() {
 		return closing_date;
 	}
 
 
-	public void setString_closing(String closing_date) {
+	public void setClosing_date(String closing_date) {
 		this.closing_date = closing_date;
 	}
 
