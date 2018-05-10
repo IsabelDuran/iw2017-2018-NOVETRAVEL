@@ -30,11 +30,11 @@ import es.uca.iw.proyectoCompleto.users.UserView;
 @SpringViewDisplay
 public class MainScreen extends VerticalLayout implements ViewDisplay {
 
-	/**
-	 * 
-	 */
+	private static Long ultimoPinchado;
 	private static final long serialVersionUID = 1L;
 	private Panel springViewDisplay;
+	
+	
 	
 	@Override
     public void attach() {
@@ -52,7 +52,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		root.addComponent(logoutButton);
 
-		// Creamos la barra de navegación
+		// Creamos l barra de navegación
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		navigationBar.addComponent(createNavigationButton("Bienvenido", WelcomeView.VIEW_NAME));
@@ -64,7 +64,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
-		// Creamos el panel
+		// Creamos el panel de
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
 		root.addComponent(springViewDisplay);
@@ -88,8 +88,15 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	public void showView(View view) {
 		springViewDisplay.setContent((Component) view);
 	}
-
 	
+	public static Long getUltimoPinchado() {
+		return ultimoPinchado;
+	}
+
+	public static void setUltimoPinchado(Long ultimoPinchado) {
+		MainScreen.ultimoPinchado = ultimoPinchado;
+	}
+
 	private void logout() {
 		getUI().getPage().reload();
 		getSession().close();
