@@ -78,6 +78,7 @@ public class ApartmentView extends VerticalLayout implements View
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
 			Long id=MainScreen.getUltimoPinchado();
+			
 			lista.addComponent(new Label(new Long(id).toString()));
 			
 		} 

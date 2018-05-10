@@ -64,7 +64,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
-		// Creamos el panel de
+		// Creamos el panel
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
 		root.addComponent(springViewDisplay);

@@ -84,7 +84,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				content.addComponent(ver_mas);
 				long id=aps.get(i).getId();
 				ver_mas.addClickListener(e->ultimo(id));
-	
+				ver_mas.addClickListener(e->getUI().getNavigator().navigateTo("apartmentView"));
 				content.setSizeUndefined(); // Shrink to fit
 				content.setMargin(true);
 				panel[i].setContent(content);
