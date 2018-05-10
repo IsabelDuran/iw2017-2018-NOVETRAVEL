@@ -33,7 +33,7 @@ import es.uca.iw.proyectoCompleto.reports.Report;
 public class ProyectoCompletoApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(ProyectoCompletoApplication.class);
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoCompletoApplication.class, args);
 	}
@@ -94,7 +94,8 @@ public class ProyectoCompletoApplication {
 				log.info("");
 			}
 		};
-	}
+	}	
+
 
 	@Configuration
 	@EnableGlobalMethodSecurity(securedEnabled = true)
