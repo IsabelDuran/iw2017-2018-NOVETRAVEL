@@ -52,7 +52,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		root.addComponent(logoutButton);
 
-		// Creamos la barra de navegación bar
+		// Creamos l barra de navegación
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		navigationBar.addComponent(createNavigationButton("Bienvenido", WelcomeView.VIEW_NAME));
