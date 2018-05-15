@@ -32,7 +32,6 @@ public class VaadinUI extends UI {
 	@Autowired
     MainScreen mainScreen;
 	
-	
 	HeaderView headerView;
 
 	
