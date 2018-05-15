@@ -17,6 +17,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.ValueChangeMode;
+import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
@@ -25,6 +26,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.dnd.DragSourceExtension;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
@@ -57,7 +59,15 @@ public class ImageApartmentView extends VerticalLayout implements View
 	void init() {
 		
 		
-		
+		Label draggableLabel = new Label("You can grab and drag me");
+		DragSourceExtension<Label> dragSource = new DragSourceExtension<>(draggableLabel);
+
+		// set the allowed effect
+		dragSource.setEffectAllowed(EffectAllowed.MOVE);
+		// set the text to transfer
+		dragSource.setDataTransferText("hello receiver");
+		// set other data to transfer (in this case HTML)
+		dragSource.setDataTransferData("text/html", "<label>hello receiver</label>");
 		// Hook logic to components
 	
 		// Listen changes made by the editor, refresh data from backend
