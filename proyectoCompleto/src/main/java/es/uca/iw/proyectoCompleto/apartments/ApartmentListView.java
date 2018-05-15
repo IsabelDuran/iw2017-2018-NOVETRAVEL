@@ -37,6 +37,9 @@ public class ApartmentListView extends VerticalLayout implements View
 	private TextField filter;
 	private Button addNewBtn;
 	
+	private Apartment ap;
+	
+	
 	private Panel panel[];
 	private ApartmentEditor editor;
 
@@ -73,8 +76,9 @@ public class ApartmentListView extends VerticalLayout implements View
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
 			List<Apartment> aps=service.findAll();
-			for(int i=0;i<aps.size();i++)
+			for(int i = 0;i<aps.size();i++)
 			{
+				ap = aps.get(i);
 				Button ver_mas = new Button("Ver mas...");
 				panel[i]=new Panel(aps.get(i).getName());
 				panel[i].setHeight(200,Unit.PIXELS);
@@ -82,8 +86,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				VerticalLayout content = new VerticalLayout();
 				content.addComponent(new Label(aps.get(i).getDescription()));
 				content.addComponent(ver_mas);
-				long id=aps.get(i).getId();
-				ver_mas.addClickListener(e->ultimo(id));
+				ver_mas.addClickListener(e->ultimo(ap));
 				ver_mas.addClickListener(e->getUI().getNavigator().navigateTo("apartmentView"));
 				content.setSizeUndefined(); // Shrink to fit
 				content.setMargin(true);
@@ -94,7 +97,7 @@ public class ApartmentListView extends VerticalLayout implements View
 	}
 	
 	
-	public void ultimo(Long pinchado) {
+	public void ultimo(Apartment pinchado) {
 		MainScreen.setUltimoPinchado(pinchado);
 	}
 	

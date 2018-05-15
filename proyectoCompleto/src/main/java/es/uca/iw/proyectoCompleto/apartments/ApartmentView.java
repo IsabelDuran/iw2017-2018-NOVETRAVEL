@@ -75,10 +75,9 @@ public class ApartmentView extends VerticalLayout implements View
 		if (StringUtils.isEmpty(filterText)) {
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			Long id = MainScreen.getUltimoPinchado();
+			Apartment apartment = (Apartment) MainScreen.getUltimoPinchado();
 			
 			//PONER IMAGEN AQUI
-			Apartment apartment = service.loadApartmentById(id);
 			lista.addComponent(new Label(apartment.getName()));
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
@@ -90,7 +89,7 @@ public class ApartmentView extends VerticalLayout implements View
 	}
 	
 	
-	public void ultimo(Long pinchado) {
+	public void ultimo(Apartment pinchado) {
 		MainScreen.setUltimoPinchado(pinchado);
 	}
 	
