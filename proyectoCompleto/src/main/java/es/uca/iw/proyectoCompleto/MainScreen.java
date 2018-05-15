@@ -30,7 +30,7 @@ import es.uca.iw.proyectoCompleto.users.UserView;
 @SpringViewDisplay
 public class MainScreen extends VerticalLayout implements ViewDisplay {
 
-	private static Long ultimoPinchado;
+	private static Object ultimoPinchado;
 	private static final long serialVersionUID = 1L;
 	private Panel springViewDisplay;
 	
@@ -89,11 +89,11 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		springViewDisplay.setContent((Component) view);
 	}
 	
-	public static Long getUltimoPinchado() {
+	public static Object getUltimoPinchado() {
 		return ultimoPinchado;
 	}
 
-	public static void setUltimoPinchado(Long ultimoPinchado) {
+	public static void setUltimoPinchado(Object ultimoPinchado) {
 		MainScreen.ultimoPinchado = ultimoPinchado;
 	}
 
