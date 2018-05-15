@@ -32,29 +32,26 @@ public class VaadinUI extends UI {
 	@Autowired
     MainScreen mainScreen;
 	
-	HeaderView headerView;
-
-	
 	@Override
 	protected void init(VaadinRequest request) {
 
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-		
-		showHeaderView();
+
+		showNavbar();
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
-			showLoginScreen();
+			showNavbar();
+			//showLoginScreen();
 		}
 
 	}
-	
-	private void showHeaderView()
-	{
-		setContent(headerView);
-	}
 
+	private void showNavbar() {
+		setContent(new Navbar());
+	}
+	
 	private void showLoginScreen() {
 		setContent(new LoginScreen(this::login));
 	}
