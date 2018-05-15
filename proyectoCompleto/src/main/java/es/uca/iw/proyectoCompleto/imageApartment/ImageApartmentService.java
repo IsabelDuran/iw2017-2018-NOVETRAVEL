@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service 
 public class ImageApartmentService {
-	/*
+	
 	@Autowired
 	private ImageApartmentRepository repo;
 
@@ -40,5 +40,5 @@ public class ImageApartmentService {
 		return repo.findAll();
 	}
 
-	 */
+	 
 }

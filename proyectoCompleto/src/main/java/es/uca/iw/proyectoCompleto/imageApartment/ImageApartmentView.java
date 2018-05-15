@@ -44,6 +44,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.reports.Report;
 
 
@@ -58,11 +60,14 @@ public class ImageApartmentView extends VerticalLayout implements View
 
 	
 	private final ImageApartmentService service;
+	private final ApartmentService apservice;
 	private ImageApartmentRepository repo;
+	
 
 	@Autowired
-	public ImageApartmentView(ImageApartmentService service, ImageApartmentEditor editor) {
+	public ImageApartmentView(ImageApartmentService service,ApartmentService ap,ImageApartmentEditor editor) {
 		this.service = service;
+		apservice=ap;
 		this.editor = editor;
 		panel = new Panel[10];
 	    
@@ -119,6 +124,11 @@ public class ImageApartmentView extends VerticalLayout implements View
                                 final StreamingEndEvent event) {
                             progress.setVisible(false);
                             showFile(fileName, bas);
+                            ImageApartment im=new ImageApartment();
+                
+                            im.setApartment(apservice.findOne(1L));
+                            im.setFile(bas.toByteArray());
+                            service.save(im);
                         }
  
                         @Override

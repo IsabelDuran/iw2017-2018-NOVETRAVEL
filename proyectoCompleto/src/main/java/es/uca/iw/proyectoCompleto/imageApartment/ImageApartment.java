@@ -26,6 +26,9 @@ public class ImageApartment {
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Apartment apartment;
 	
+	public ImageApartment() {
+	
+	}
 	
 	public ImageApartment(byte[] file, Apartment apartment) {
 		super();
