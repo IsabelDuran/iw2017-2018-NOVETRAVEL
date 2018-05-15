@@ -1,9 +1,11 @@
 package es.uca.iw.proyectoCompleto.imageApartment;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import com.mysql.jdbc.Blob;
@@ -17,14 +19,17 @@ public class ImageApartment {
 	@GeneratedValue
 	private Long id;
 	
-	//private Blob file;
+	@Basic(fetch=FetchType.LAZY)
+	@Lob
+	private byte[] file;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Apartment apartment;
 	
 	
-	public ImageApartment(Blob file, Apartment apartment) {
+	public ImageApartment(byte[] file, Apartment apartment) {
 		super();
-		//this.file = file;
+		this.file = file;
 		this.apartment = apartment;
 	}
 	
@@ -36,18 +41,13 @@ public class ImageApartment {
 		this.id = id;
 	}
 
-
-
-/*
-	public Blob getFile() {
+	public byte[] getFile() {
 		return file;
 	}
 
-
-	public void setFile(Blob file) {
+	public void setFile(byte[] file) {
 		this.file = file;
 	}
-*/
 
 	public Apartment getApartment() {
 		return apartment;
