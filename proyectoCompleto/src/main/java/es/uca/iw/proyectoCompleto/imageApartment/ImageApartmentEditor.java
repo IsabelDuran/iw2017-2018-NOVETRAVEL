@@ -24,14 +24,14 @@ public class ImageApartmentEditor extends VerticalLayout {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final ImageApartmentService service;
-	private ImageApartment image;
+	//private ImageApartment image;
 	
 	/**
 	 * The currently edited image
 	 */
 	
 
-	private Binder<ImageApartment> binder = new Binder<>(ImageApartment.class);
+	//private Binder<ImageApartment> binder = new Binder<>(ImageApartment.class);
 
 	
 	/* Fields to edit properties in ImageApartment entity */
@@ -76,7 +76,7 @@ public class ImageApartmentEditor extends VerticalLayout {
 		save.addClickListener(e -> service.save(image));
 		delete.addClickListener(e -> service.delete(image));
 		*/
-		cancel.addClickListener(e -> editImageApartment(image));
+		//cancel.addClickListener(e -> editImageApartment(image));
 		setVisible(false);
 		
 		// Solo borra el admin
@@ -87,13 +87,13 @@ public class ImageApartmentEditor extends VerticalLayout {
 
 		void onChange();
 	}
-
+/*
 	public final void editImageApartment(ImageApartment c) {
 		if (c == null) {
 			setVisible(false);
 			return;
 		}
-		/*
+
 		final boolean persisted = c.getId() != null;
 		if (persisted) {
 			// Find fresh entity for editing
@@ -103,7 +103,7 @@ public class ImageApartmentEditor extends VerticalLayout {
 			image = c;
 		}
 		cancel.setVisible(persisted);
-		*/
+	
 
 		// Bind image properties to similarly named fields
 		// Could also use annotation or "manual binding" or programmatically
@@ -117,7 +117,7 @@ public class ImageApartmentEditor extends VerticalLayout {
 		// Select all text in firstName field automatically
 		title.selectAll();
 	}
-
+*/
 	public void setChangeHandler(ChangeHandler h) {
 		// ChangeHandler is notified when either save or delete
 		// is clicked

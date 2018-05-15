@@ -5,12 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
-import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentRepository;
+//import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentRepository;
 
 @Service 
 public class ImageApartmentService {
-	
+	/*
 	@Autowired
 	private ImageApartmentRepository repo;
 
@@ -41,5 +40,5 @@ public class ImageApartmentService {
 		return repo.findAll();
 	}
 
-
+	 */
 }
