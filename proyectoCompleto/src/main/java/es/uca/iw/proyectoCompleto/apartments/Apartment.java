@@ -8,8 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-
+import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 
 @Entity
@@ -27,6 +28,9 @@ public class Apartment{
 	private boolean book;
 	
 	private String apartment_type;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	private Booking booking;
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;

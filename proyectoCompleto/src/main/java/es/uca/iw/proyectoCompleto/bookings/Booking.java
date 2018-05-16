@@ -1,8 +1,12 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 
 @Entity
 public class Booking{
@@ -14,6 +18,9 @@ public class Booking{
 	private String entryDate_;
 
 	private String departureDate_;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	private Apartment apartment;
 	
 	private Double totalPrice_ = 0.0;
 	
