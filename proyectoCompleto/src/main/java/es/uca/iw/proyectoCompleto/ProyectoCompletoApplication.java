@@ -1,5 +1,8 @@
 package es.uca.iw.proyectoCompleto;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +44,22 @@ public class ProyectoCompletoApplication {
 	@Bean
 	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
-			
+				
+			 LocalDate fe = LocalDate.of(2018, 07, 03);
+			 LocalDate fs = LocalDate.of(2018, 07, 13);
+			 
+			 LocalDate t1 = LocalDate.of(2018, 10, 13);
+			 LocalDate t2 = LocalDate.of(2018, 10, 23);
 			//Esto para probar la tabla del booking
 			if(bs.findAll().size()==0)
 			{
-				bs.save(new Booking("03/07/2018", "13/07/2018", (double) 300));
+
+			 
+			//	Apartment a = new Apartment("hola", "holadios", 40, true, "piso");
+			//	User u = new User("Pepito", "grillo");
+				//Booking b = new Booking(fe, fs, 300.0, a, u);
+				bs.save(new Booking(fe, fs, (double)400));
+				bs.save(new Booking(t1, t2, (double)1000));
 			}
 
 			if(ap.findAll().size()==0)
