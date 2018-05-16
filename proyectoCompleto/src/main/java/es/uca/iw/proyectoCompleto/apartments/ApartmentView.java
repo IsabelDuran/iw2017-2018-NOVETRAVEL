@@ -56,8 +56,6 @@ public class ApartmentView extends VerticalLayout implements View
 	@PostConstruct
 	void init() {
 		
-		
-		
 		// Hook logic to components
 	
 		// Listen changes made by the editor, refresh data from backend
@@ -82,6 +80,7 @@ public class ApartmentView extends VerticalLayout implements View
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
+			//abajo.addComponent(new Label("Imagenes "+apartment.getImages().toString()));
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 			//
 			//
