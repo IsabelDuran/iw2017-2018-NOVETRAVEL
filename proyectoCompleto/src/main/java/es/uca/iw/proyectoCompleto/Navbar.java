@@ -9,7 +9,7 @@ import com.vaadin.ui.Label;
 public class Navbar extends HorizontalLayout
 {
 	/**
-	 * 
+	 * @author isa
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -27,25 +27,22 @@ public class Navbar extends HorizontalLayout
 			@Override
 		    protected String getCss(Component c) {
 		        if (c instanceof Label) {
-		            // Color the boxes with random colors
-		            int rgb = (int) (Math.random()*(1<<24));
+		            // Color the box with 16059007 (#
+		            int rgb = 16059007;
 		            return "background: #" + Integer.toHexString(rgb);
 		        }
 		        return null;
 		    }
 		};
-		//layout.setWidth("900px"); // Causes to wrap the contents
+		layout.setWidth("100%"); // Causes to wrap the contents
 
 		// Add boxes of various sizes
-		for (int i=0; i<40; i++) {
 		    Label box = new Label("&nbsp;", ContentMode.HTML);
 		    box.addStyleName("flowbox");
-		    box.setWidth((float) Math.random()*50,
-		                	Unit.PIXELS);
-		    box.setHeight((float) Math.random()*50,
+		    box.setWidth("100%");
+		    box.setHeight(70,
 		    			Unit.PIXELS);
 		    layout.addComponent(box);
-		}
 		addComponent(layout);
 	}
 }
