@@ -18,10 +18,10 @@ import es.uca.iw.proyectoCompleto.bookings.BookingService;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 @SpringView(name = BookingManagementView.VIEW_NAME)
-public class BookingManagementView extends VerticalLayout implements View{
+public class BookingManagementView extends HorizontalLayout implements View{
 	/**
 	 * 
-	 */
+	 */	
 	private static final long serialVersionUID = 1L;
 
 	public static final String VIEW_NAME = "bookingManagementView";
@@ -73,9 +73,11 @@ public class BookingManagementView extends VerticalLayout implements View{
 		// Listen changes made by the editor, refresh data from backend
 	/*	editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listBookings(filter.getValue());
-		}); */
-
+			listBookings(e.getValue());
+		}); 
+		*/
+		
+		
 		// Initialize listing
 		listBookings(null);
 		
