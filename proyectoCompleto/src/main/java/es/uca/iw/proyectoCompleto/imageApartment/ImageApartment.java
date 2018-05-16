@@ -23,7 +23,7 @@ public class ImageApartment {
 	@Lob
 	private byte[] file;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Apartment apartment;
 	
 	public ImageApartment() {

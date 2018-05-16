@@ -28,7 +28,7 @@ public class Apartment{
 	
 	private String apartment_type;
 	
-	@OneToMany(mappedBy="apartment")
+	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
 	
 	protected Apartment() {

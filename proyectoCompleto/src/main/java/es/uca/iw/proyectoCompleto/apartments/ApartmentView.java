@@ -3,6 +3,8 @@
  */
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,19 +17,25 @@ import com.vaadin.data.converter.StringToLongConverter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
+import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.reports.Report;
 
 
@@ -80,11 +88,45 @@ public class ApartmentView extends VerticalLayout implements View
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
-			//abajo.addComponent(new Label("Imagenes "+apartment.getImages().toString()));
+			abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
+
+			for(int i=0;i<apartment.getImages().size();i++)
+			{
+				desplegarImagen(abajo, apartment.getImages().get(i));
+			}
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 			//
 			//
 		} 
+	}
+	
+	public void desplegarImagen(Layout l,ImageApartment A) {
+		/*
+		final String name="nombre";
+		//final ByteArrayOutputStream bas=new ByteArrayOutputStream(A.getFile());
+		
+		byte[] bas=A.getFile();
+		
+		final StreamResource.StreamSource streamSource = () -> {
+            if (bas != null) {
+                final byte[] byteArray = bas;
+                return new ByteArrayInputStream(byteArray);
+            }
+            return null;
+        };
+        final StreamResource resource = new StreamResource(streamSource, name);
+ 
+        final VerticalLayout layout = new VerticalLayout();
+        layout.setSizeUndefined();
+        layout.setMargin(true);
+        final Window w = new Window(name, layout);
+        w.addStyleName("dropdisplaywindow");
+        w.setSizeUndefined();
+        w.setResizable(false);
+        l.setSizeUndefined();
+        layout.addComponent(l);
+        UI.getCurrent().addWindow(w);
+        */
 	}
 	
 	
