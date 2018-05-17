@@ -11,14 +11,13 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+
 
 @SpringUI
 public class VaadinUI extends UI {
@@ -41,7 +40,8 @@ public class VaadinUI extends UI {
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
-			showLoginScreen();
+			showNavbar();
+			//showLoginScreen();
 		}
 
 	}
@@ -57,7 +57,7 @@ public class VaadinUI extends UI {
 	private void showMainScreen() {
 		setContent(mainScreen);
 	}
-
+	
 	
 	private boolean login(String username, String password) {
 		try {
