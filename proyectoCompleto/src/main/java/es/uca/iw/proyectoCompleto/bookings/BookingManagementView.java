@@ -50,7 +50,7 @@ public class BookingManagementView extends HorizontalLayout implements View{
 		/// build layout
 		addComponents(grid,editor);
 				
-		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada").setResizable(false);
+		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada" ).setResizable(false);
 		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
 		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
 		
