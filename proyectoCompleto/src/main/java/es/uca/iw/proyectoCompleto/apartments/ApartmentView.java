@@ -107,26 +107,27 @@ public class ApartmentView extends VerticalLayout implements View
 			abajo.addComponent(new Label(apartment.getDescription()));
 			abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
 			HorizontalLayout imagenes=new HorizontalLayout();
-			if(apartment.getImages().size()!=0)
-			{
-				for(int i=0;i<apartment.getImages().size();i++)
-				{
-					desplegarImagen(imagenes, apartment.getImages().get(i));
-				}
-			}
-			
-
-			
-	        ponerContenedorImagenes(abajo);
-			
+			desplegarImagenes(imagenes);  	
 			abajo.addComponent(imagenes);
+			
+			ponerContenedorImagenes(abajo,imagenes);
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 			//
 			//
 		} 
 	}
 	
-	public void ponerContenedorImagenes(Layout l){
+	public void desplegarImagenes(Layout contenedor) {
+		if(apartment.getImages().size()!=0)
+		{
+			for(int i=0;i<apartment.getImages().size();i++)
+			{
+				desplegarImagen(contenedor, apartment.getImages().get(i));
+			}
+		}
+	}
+	
+	public void ponerContenedorImagenes(Layout l,Layout contenedorImagenes){
 		
 		final Label infoLabel = new Label("Para añadir imagenes arrastre los ficheros");
         infoLabel.setWidth(240.0f, Unit.PIXELS);
@@ -179,6 +180,7 @@ public class ApartmentView extends VerticalLayout implements View
                             im.setApartment(apartment);
                             im.setFile(bas.toByteArray());
                             imageService.save(im);
+                            desplegarImagenes(contenedorImagenes);
                         }
  
                         @Override
