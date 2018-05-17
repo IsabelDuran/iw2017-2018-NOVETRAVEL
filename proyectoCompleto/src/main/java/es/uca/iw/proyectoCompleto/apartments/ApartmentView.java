@@ -25,6 +25,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
@@ -89,11 +90,12 @@ public class ApartmentView extends VerticalLayout implements View
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
 			abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
-
+			HorizontalLayout imagenes=new HorizontalLayout();
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
-				desplegarImagen(abajo, apartment.getImages().get(i));
+				desplegarImagen(imagenes, apartment.getImages().get(i));
 			}
+			abajo.addComponent(imagenes);
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 			//
 			//
@@ -101,32 +103,26 @@ public class ApartmentView extends VerticalLayout implements View
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {
-		/*
-		final String name="nombre";
+		
+		final String name="";
 		//final ByteArrayOutputStream bas=new ByteArrayOutputStream(A.getFile());
-		
-		byte[] bas=A.getFile();
-		
+	
 		final StreamResource.StreamSource streamSource = () -> {
-            if (bas != null) {
-                final byte[] byteArray = bas;
+			
+            if (A.getFile() != null) {
+                final byte[] byteArray = A.getFile();
+
                 return new ByteArrayInputStream(byteArray);
             }
             return null;
         };
         final StreamResource resource = new StreamResource(streamSource, name);
- 
-        final VerticalLayout layout = new VerticalLayout();
-        layout.setSizeUndefined();
-        layout.setMargin(true);
-        final Window w = new Window(name, layout);
-        w.addStyleName("dropdisplaywindow");
-        w.setSizeUndefined();
-        w.setResizable(false);
-        l.setSizeUndefined();
-        layout.addComponent(l);
-        UI.getCurrent().addWindow(w);
-        */
+        Image im=new Image("name",resource);
+        im.setWidth(100,Unit.PIXELS);
+        im.setHeight(100,Unit.PIXELS);
+        l.addComponent(im);
+        
+        
 	}
 	
 	
