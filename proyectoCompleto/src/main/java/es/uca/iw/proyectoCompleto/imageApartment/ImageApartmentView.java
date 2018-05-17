@@ -170,7 +170,6 @@ public class ImageApartmentView extends VerticalLayout implements View
 		if (StringUtils.isEmpty(filterText)) {
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			lista.addComponent(new TextField("Hola"));
 			//
 			//
 		} 

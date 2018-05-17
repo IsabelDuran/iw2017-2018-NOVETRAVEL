@@ -29,8 +29,10 @@ public class Apartment{
 	
 	private String apartment_type;
 	
+	/*
 	@OneToOne(fetch=FetchType.LAZY)
 	private Booking booking;
+	*/
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
