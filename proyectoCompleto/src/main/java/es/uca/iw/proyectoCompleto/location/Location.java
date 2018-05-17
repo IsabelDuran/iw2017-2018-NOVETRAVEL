@@ -22,6 +22,10 @@ public class Location {
 	private int floor_;
 	
 	private char letter_;
+	
+	protected Location() {
+		
+	}
 
 	public Location(String city_, String postalCode_, String street_, int number_, int floor_, char letter_) {
 		super();

@@ -19,11 +19,13 @@ public class ImageApartment {
 	@GeneratedValue
 	private Long id;
 	
+	private String nombre;
+	
 	@Basic(fetch=FetchType.LAZY)
 	@Lob
 	private byte[] file;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Apartment apartment;
 	
 	public ImageApartment() {
@@ -46,6 +48,16 @@ public class ImageApartment {
 
 	public byte[] getFile() {
 		return file;
+	}
+	
+	
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public void setFile(byte[] file) {
