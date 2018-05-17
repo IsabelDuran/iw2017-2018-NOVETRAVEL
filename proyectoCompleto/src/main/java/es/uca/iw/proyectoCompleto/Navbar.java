@@ -4,6 +4,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+
 public class Navbar extends HorizontalLayout
 {
 	/**
@@ -40,17 +42,37 @@ public class Navbar extends HorizontalLayout
 //		layout.addComponent(box);
 //		addComponent(layout);
 		
-		Button loginButton = new Button("Login", event -> login());
-		loginButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		addComponent(loginButton);
-		
-		Button registerButton = new Button("Registrarme", event -> login());
-		registerButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		addComponent(registerButton);
+        if (!SecurityUtils.isLoggedIn())
+        {
+			Button loginButton = new Button("Login", event -> login());
+			loginButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+			addComponent(loginButton);
+			
+			Button registerButton = new Button("Registrarme", event -> register());
+			registerButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+			addComponent(registerButton);
+        }
+        else
+        {
+        	Button logoutButton = new Button("Logout", event -> logout());
+    		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+    		addComponent(logoutButton);
+        }
 
 	}
 	
-	private void login() {
+	private void logout() {
+		getUI().getPage().reload();
+		getSession().close();
+	}
+	
+	private void login()
+	{
+		
+	}
+	
+	private void register()
+	{
 		
 	}
 }
