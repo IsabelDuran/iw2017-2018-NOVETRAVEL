@@ -57,7 +57,7 @@ public class BookingManagementView extends HorizontalLayout implements View{
 		
 		// Hook logic to components
 		// Connect selected Booking to editor or hide if none is selected
-		grid.asSingleSelect().addValueChangeListener(e -> {
+		grid.asSingleSelect().addValueChangeListener( e -> {
 			editor.editBooking(e.getValue());
 		});
 		

@@ -54,7 +54,7 @@ public class BookingEditor extends VerticalLayout {
 	Button delete = new Button("Eliminar");
 
 	/* Layout for buttons */
-	CssLayout actions = new CssLayout(save, cancel, delete);
+	CssLayout actions = new CssLayout(save, cancel, delete );
 
 
 	@Autowired
