@@ -34,8 +34,13 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	private static Object ultimoPinchado;
 	private static final long serialVersionUID = 1L;
 	private Panel springViewDisplay;
+	Navbar navbar_;
 	
-	
+	public MainScreen()
+	{
+		setMargin(false);
+        setSpacing(false);
+	}
 	
 	@Override
     public void attach() {
@@ -45,6 +50,9 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	
 	@PostConstruct
 	void init() {
+		
+		navbar_ = new Navbar();
+		addComponent(navbar_);
 
 		final VerticalLayout root = new VerticalLayout();
 		root.setSizeFull();

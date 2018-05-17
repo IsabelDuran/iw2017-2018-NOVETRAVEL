@@ -7,11 +7,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
+
 
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
@@ -20,12 +22,13 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 
 @SpringUI
+@Theme("vaadinlayouts")
 public class VaadinUI extends UI {
 			
 	@Autowired
 	SpringViewProvider viewProvider;
 
-	@Autowired
+	@Autowired	
 	AuthenticationManager authenticationManager;
 
 	@Autowired
@@ -33,15 +36,14 @@ public class VaadinUI extends UI {
 	
 	@Override
 	protected void init(VaadinRequest request) {
-
+	
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
 
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
-			showNavbar();
-			//showLoginScreen();
+			showLoginScreen();
 		}
 
 	}

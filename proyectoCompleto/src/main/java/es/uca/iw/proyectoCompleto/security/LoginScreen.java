@@ -7,6 +7,7 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
+import es.uca.iw.proyectoCompleto.Navbar;
 import es.uca.iw.proyectoCompleto.reports.Report;
 import es.uca.iw.proyectoCompleto.users.*;
 import com.vaadin.ui.Button;
@@ -44,9 +45,11 @@ public class LoginScreen extends VerticalLayout {
 
   
 	public LoginScreen(LoginCallback callback) {
-        setMargin(true);
-        setSpacing(true);
-
+        setMargin(false);
+        setSpacing(false);
+        
+        Navbar navbar_ = new Navbar();
+        addComponent(navbar_);
         TextField username = new TextField("Username");
         addComponent(username);
 
