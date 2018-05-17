@@ -20,6 +20,7 @@ import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
+
 @SpringUI
 public class VaadinUI extends UI {
 			
@@ -63,7 +64,7 @@ public class VaadinUI extends UI {
 	private void showMainScreen() {
 		setContent(mainScreen);
 	}
-
+	
 	
 	private boolean login(String username, String password) {
 		try {
