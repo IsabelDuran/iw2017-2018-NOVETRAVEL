@@ -46,7 +46,7 @@ public class LoginScreen extends VerticalLayout {
   
 	public LoginScreen(LoginCallback callback) {
         setMargin(false);
-        setSpacing(false);
+        setSpacing(true);
         
         Navbar navbar_ = new Navbar();
         addComponent(navbar_);
@@ -65,16 +65,12 @@ public class LoginScreen extends VerticalLayout {
             }
         });
         
-        Button register = new Button("Register");
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         //register.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         addComponent(login);
-        addComponent(register);
         UserService us = new UserService();
         UserEditor ue = new UserEditor(us);
         HorizontalLayout actions = new HorizontalLayout();
-        actions.addComponent(register);
-        register.addClickListener(e -> ue.editUser(new User("","","","", 0)));
     }
 
     @FunctionalInterface

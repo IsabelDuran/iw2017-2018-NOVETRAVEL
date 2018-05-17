@@ -39,7 +39,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	public MainScreen()
 	{
 		setMargin(false);
-        setSpacing(false);
+        setSpacing(true);
 	}
 	
 	@Override
@@ -57,10 +57,6 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		final VerticalLayout root = new VerticalLayout();
 		root.setSizeFull();
 		
-		Button logoutButton = new Button("Logout", event -> logout());
-		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		root.addComponent(logoutButton);
-
 		// Creamos l barra de navegación
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
@@ -105,10 +101,5 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 
 	public static void setUltimoPinchado(Object ultimoPinchado) {
 		MainScreen.ultimoPinchado = ultimoPinchado;
-	}
-
-	private void logout() {
-		getUI().getPage().reload();
-		getSession().close();
 	}
 }

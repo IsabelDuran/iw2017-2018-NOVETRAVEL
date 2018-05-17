@@ -5,7 +5,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
+import es.uca.iw.proyectoCompleto.security.ErrorView;
+import es.uca.iw.proyectoCompleto.security.LoginScreen;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+
 
 public class Navbar extends HorizontalLayout
 {
@@ -22,7 +26,6 @@ public class Navbar extends HorizontalLayout
         addStyleName("pink-header");
 		
        if (SecurityUtils.isLoggedIn())
-    	   
         {
         	Button logoutButton = new Button("Logout", event -> logout());
     		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);

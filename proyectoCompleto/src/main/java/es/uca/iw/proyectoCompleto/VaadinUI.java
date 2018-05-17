@@ -47,10 +47,6 @@ public class VaadinUI extends UI {
 		}
 
 	}
-
-	private void showNavbar() {
-		setContent(new Navbar());
-	}
 	
 	private void showLoginScreen() {
 		setContent(new LoginScreen(this::login));
