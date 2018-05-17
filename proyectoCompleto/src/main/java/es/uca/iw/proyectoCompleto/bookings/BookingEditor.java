@@ -3,18 +3,22 @@ package es.uca.iw.proyectoCompleto.bookings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.converter.LocalDateTimeToDateConverter;
+import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
-import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
+//import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
 @UIScope
@@ -35,11 +39,11 @@ public class BookingEditor extends VerticalLayout {
 	
 
 	private Binder<Booking> binder = new Binder<>(Booking.class);
-
 	
 	/* Fields to edit properties in Booking entity */
-
-	// Create a DateField with the default style
+	TextField name = new TextField("Nombre");
+	TextField totalPrice = new TextField("Precio total");
+	// Create a DateField with the default style	
 	DateField entryDate = new DateField();
 	DateField departureDate = new DateField();
 	
@@ -56,12 +60,17 @@ public class BookingEditor extends VerticalLayout {
 	@Autowired
 	public BookingEditor(BookingService service) {
 		this.service = service;
-
-		addComponents(entryDate,departureDate,actions);
-
-		/// bind using naming convention
-		//binder.bindInstanceFields(this);
-
+        
+		editDate();
+		addComponents(entryDate,departureDate,totalPrice,actions);
+ 
+		/// bind using naming convention svsd
+		binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
+		binder.setReadOnly(true);
+		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
+		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);
+		
+		
 		
 		// Configure and style components
 		setSpacing(true);
@@ -83,8 +92,13 @@ public class BookingEditor extends VerticalLayout {
 	public void editDate() {
 		entryDate.setValue(LocalDate.now());
 		departureDate.setValue(LocalDate.now());
+		
+		entryDate.setDateFormat("dd-MM-yyy");
+		entryDate.setPlaceholder("dd-MM-yyy");
+		departureDate.setDateFormat("dd-MM-yyy");
+		departureDate.setPlaceholder("dd-MM-yyy");
 	}
-
+	
 	public interface ChangeHandler {
 
 		void onChange();

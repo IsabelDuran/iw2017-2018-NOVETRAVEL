@@ -1,8 +1,17 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 
 @Entity
 public class Apartment{
@@ -19,6 +28,12 @@ public class Apartment{
 	private boolean book;
 	
 	private String apartment_type;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	private Booking booking;
+	
+	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
+	private List<ImageApartment> images;
 	
 	protected Apartment() {
 	}
@@ -38,6 +53,22 @@ public class Apartment{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public List<ImageApartment> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ImageApartment> images) {
+		this.images = images;
+	}
+	
+	public void addImage(ImageApartment image)
+	{
+		this.images.add(image);
+        if (image.getApartment() != this) {
+            image.setApartment(this);
+        }
 	}
 
 	public String getName() {
