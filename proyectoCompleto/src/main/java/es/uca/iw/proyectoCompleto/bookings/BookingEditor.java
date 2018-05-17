@@ -3,6 +3,7 @@ package es.uca.iw.proyectoCompleto.bookings;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.converter.LocalDateTimeToDateConverter;
 import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -14,6 +15,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 //import es.uca.iw.proyectoCompleto.security.SecurityUtils;
@@ -37,8 +39,6 @@ public class BookingEditor extends VerticalLayout {
 	
 
 	private Binder<Booking> binder = new Binder<>(Booking.class);
-	private Binder<Apartment> binder2 = new Binder<>(Apartment.class);
-
 	
 	/* Fields to edit properties in Booking entity */
 	TextField name = new TextField("Nombre");
@@ -65,12 +65,12 @@ public class BookingEditor extends VerticalLayout {
 		addComponents(entryDate,departureDate,totalPrice,actions);
  
 		/// bind using naming convention svsd
-
-		binder2.forField(name).bind(Apartment::getName,Apartment::setName);
-		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
-		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);
 		binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
 		binder.setReadOnly(true);
+		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
+		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);
+		
+		
 		
 		// Configure and style components
 		setSpacing(true);
@@ -93,10 +93,10 @@ public class BookingEditor extends VerticalLayout {
 		entryDate.setValue(LocalDate.now());
 		departureDate.setValue(LocalDate.now());
 		
-		entryDate.setDateFormat("yyyy-MM-dd");
-		entryDate.setPlaceholder("yyyy-MM-dd");
-		departureDate.setDateFormat("yyyy-MM-dd");
-		entryDate.setPlaceholder("yyyy-MM-dd");
+		entryDate.setDateFormat("dd-MM-yyy");
+		entryDate.setPlaceholder("dd-MM-yyy");
+		departureDate.setDateFormat("dd-MM-yyy");
+		departureDate.setPlaceholder("dd-MM-yyy");
 	}
 	
 	public interface ChangeHandler {

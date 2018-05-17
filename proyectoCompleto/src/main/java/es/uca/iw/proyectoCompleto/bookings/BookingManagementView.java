@@ -28,7 +28,6 @@ public class BookingManagementView extends HorizontalLayout implements View{
 
 	private Grid<Booking> grid;
 	
-	private Grid<Apartment> grid2;
 	//private TextField filter;
 
 	private BookingEditor editor;
@@ -40,7 +39,6 @@ public class BookingManagementView extends HorizontalLayout implements View{
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>();
-		this.grid2 = new Grid<>();
 	//	this.filter = new TextField();
 		    
 	}
@@ -50,32 +48,25 @@ public class BookingManagementView extends HorizontalLayout implements View{
 	void init() {
 		
 		/// build layout
-		addComponents(grid2,grid);
-		
-		grid2.setHeight(300, Unit.PIXELS);
-		grid2.setWidth(200, Unit.PIXELS);
-		grid.setHeight(300, Unit.PIXELS);
-		grid.setWidth(900, Unit.PIXELS);
-		
-		grid2.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		addComponents(grid,editor);
+				
 		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada").setResizable(false);
 		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
 		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
 		
 		
 		// Hook logic to components
-
 		// Connect selected Booking to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
 			editor.editBooking(e.getValue());
 		});
 		
 		// Listen changes made by the editor, refresh data from backend
-	/*	editor.setChangeHandler(() -> {
+		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listBookings(e.getValue());
+			//listBookings(e.getValue());
 		}); 
-		*/
+		
 		
 		
 		// Initialize listing
