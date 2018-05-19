@@ -66,6 +66,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Clientes", ApartmentListView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
+		//navigationBar.addComponent(createNavigationButton("Disputas", DisputeManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Imagenes",ImageApartmentView.VIEW_NAME));
 		root.addComponent(navigationBar);

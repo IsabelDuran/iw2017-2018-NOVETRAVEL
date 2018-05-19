@@ -1,8 +1,10 @@
 package es.uca.iw.proyectoCompleto;
 
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
@@ -25,6 +27,9 @@ public class Navbar extends HorizontalLayout
         setStyleName("pink-header");
         addStyleName("pink-header");
 		
+        TextField searchbar = new TextField("Búsqueda");
+        addComponent(searchbar);
+        
        if (SecurityUtils.isLoggedIn())
         {
         	Button logoutButton = new Button("Logout", event -> logout());

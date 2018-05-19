@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.security;
 
+import javax.annotation.PostConstruct;
+
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -9,6 +11,11 @@ import es.uca.iw.proyectoCompleto.users.User;
 
 public class RegisterScreen extends VerticalLayout
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public RegisterScreen()
 	{
         Navbar navbar_ = new Navbar();
@@ -27,6 +34,11 @@ public class RegisterScreen extends VerticalLayout
 		setMargin(false);
 		setSpacing(true);
 		
+	}
+	
+	@PostConstruct
+	void init()
+	{
 		
 	}
 	
