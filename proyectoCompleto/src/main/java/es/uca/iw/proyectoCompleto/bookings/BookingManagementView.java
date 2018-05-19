@@ -18,7 +18,7 @@ import es.uca.iw.proyectoCompleto.bookings.BookingService;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 @SpringView(name = BookingManagementView.VIEW_NAME)
-public class BookingManagementView extends HorizontalLayout implements View{
+public class BookingManagementView extends HorizontalLayout implements View {
 	/**
 	 * 
 	 */	

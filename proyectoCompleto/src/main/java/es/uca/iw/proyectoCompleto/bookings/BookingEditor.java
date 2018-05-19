@@ -22,7 +22,7 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 
 @SpringComponent
 @UIScope
-public class BookingEditor extends VerticalLayout {
+public class BookingEditor extends VerticalLayout  {
 	
 	/**
 	 * 
