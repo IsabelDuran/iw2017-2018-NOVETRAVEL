@@ -18,7 +18,7 @@ public class RegisterScreen extends VerticalLayout
 
 	public RegisterScreen()
 	{
-        Navbar navbar_ = new Navbar();
+        Navbar navbar_ = new Navbar(0);
         addComponent(navbar_);
 		
 		TextField name = new TextField("Nombre:");

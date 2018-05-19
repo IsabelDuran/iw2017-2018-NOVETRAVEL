@@ -20,7 +20,7 @@ public class Navbar extends HorizontalLayout
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Navbar()
+	public Navbar(int loggedin)
 	{
 		setWidth("100%");
         setHeight("70px");
@@ -30,7 +30,7 @@ public class Navbar extends HorizontalLayout
         TextField searchbar = new TextField("Búsqueda");
         addComponent(searchbar);
         
-       if (SecurityUtils.isLoggedIn())
+       if (loggedin == 1)
         {
         	Button logoutButton = new Button("Logout", event -> logout());
     		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);

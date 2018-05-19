@@ -51,7 +51,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	@PostConstruct
 	void init() {
 		
-		navbar_ = new Navbar();
+		navbar_ = new Navbar(1);
 		addComponent(navbar_);
 
 		final VerticalLayout root = new VerticalLayout();
