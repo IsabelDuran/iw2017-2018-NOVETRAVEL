@@ -5,12 +5,18 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import es.uca.iw.proyectoCompleto.bookings.Booking;
 
 @Entity
 public class User implements UserDetails{
@@ -36,6 +42,10 @@ public class User implements UserDetails{
 	
 	private int zipcode;
 	
+	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+//	@JoinColumn(name="booking_id")
+	private List<Booking> booking;
+	
 	protected User() {
 	}
 
@@ -54,7 +64,7 @@ public class User implements UserDetails{
 	public User(String firstName, String lastName) {
 		this(firstName,lastName,firstName, "sad",3321);
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -100,10 +110,25 @@ public class User implements UserDetails{
 	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
+	
+	public List<Booking> getBooking() {
+		return booking;
+	}
 
+	public void setBooking(List<Booking> booking) {
+		this.booking = booking;
+	}
+	
+	public void addBooking(Booking book)
+	{
+		this.booking.add(book);
+        if (book.getUser() != this) {
+            book.setUser(this);
+        }
+	}
+		
 	@Override
 	public String toString() {
-	//	return "";
 		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s']", id,
 				firstName, lastName,username,password);
 	}

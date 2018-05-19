@@ -1,6 +1,5 @@
 package es.uca.iw.proyectoCompleto;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 import org.slf4j.Logger;
@@ -48,23 +47,17 @@ public class ProyectoCompletoApplication {
 			 LocalDate fe = LocalDate.of(2018, 07, 03);
 			 LocalDate fs = LocalDate.of(2018, 07, 13);
 			 
-			 LocalDate t1 = LocalDate.of(2018, 10, 13);
-			 LocalDate t2 = LocalDate.of(2018, 10, 23);
-			//Esto para probar la tabla del booking
-			if(bs.findAll().size()==0)
-			{
-
+		//	 LocalDate t1 = LocalDate.of(2018, 10, 13);
+		//	 LocalDate t2 = LocalDate.of(2018, 10, 23);
 			 
-			//	Apartment a = new Apartment("hola", "holadios", 40, true, "piso");
-			//	User u = new User("Pepito", "grillo");
-				//Booking b = new Booking(fe, fs, 300.0, a, u);
-				bs.save(new Booking(fe, fs, (double)400));
-				bs.save(new Booking(t1, t2, (double)1000));
-			}
+			 Apartment a1=null;
+			 User u1=null;
+			 
 
 			if(ap.findAll().size()==0)
 			{
-				ap.save(new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar"));
+				a1=new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar");
+				ap.save(a1);
 				//PONER AQUI BOOKING SERVICE
 			}
 			if(re.findAll().size()==0)
@@ -72,8 +65,9 @@ public class ProyectoCompletoApplication {
 				re.save(new Report("23/03/91", "hola", "vater sucio", "el vater esta muy sucio loco"));
 			}
 			if (service.findAll().size() == 0) {
+				u1=new User("Juan", "Bauer");
 				// save a couple of users with default password: default
-				service.save(new User("Juan", "Bauer"));
+				service.save(u1);
 				service.save(new User("Chloe", "O'Brian"));
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
@@ -107,6 +101,18 @@ public class ProyectoCompletoApplication {
 				}
 				log.info("");
 			}
+
+			//Esto para probar la tabla del booking
+			if(bs.findAll().size()==0)
+			{
+
+			//	Apartment a = new Apartment("hola", "holadios", 40, true, "piso");
+			//	User u = new User("Pepito", "grillo");
+				//Booking b = new Booking(fe, fs, 300.0, a, u);
+				bs.save(new Booking(fe, fs, (double)400, a1, u1));
+
+			}
+
 		};
 	}	
 
