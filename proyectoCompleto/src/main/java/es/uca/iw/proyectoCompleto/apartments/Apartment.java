@@ -65,7 +65,7 @@ public class Apartment{
 	}
 	
 	public void addImage(ImageApartment image)
-	{
+   {
 		this.images.add(image);
         if (image.getApartment() != this) {
             image.setApartment(this);
