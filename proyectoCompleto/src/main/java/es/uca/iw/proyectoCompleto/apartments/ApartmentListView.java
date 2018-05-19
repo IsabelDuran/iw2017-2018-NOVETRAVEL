@@ -82,26 +82,32 @@ public class ApartmentListView extends VerticalLayout implements View
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
 			List<Apartment> aps=service.findAll();
+			Button[] vermas=new Button[aps.size()];
 			for(int i = 0;i<aps.size();i++)
 			{
 				VerticalLayout contenedor = new VerticalLayout();
 				ap = aps.get(i);
-				Button ver_mas = new Button("Ver mas...");
+				vermas[i] = new Button("Ver mas...");
 				panel[i]=new Panel(aps.get(i).getName());
 				panel[i].setHeight(300,Unit.PIXELS);
 				panel[i].setWidth(300,Unit.PIXELS);
 				VerticalLayout content = new VerticalLayout();
-				desplegarImagen(content, aps.get(0).getImages().get(0));
+				if(aps.get(i).getImages().size()>0)
+				{
+					desplegarImagen(content, aps.get(i).getImages().get(0));
+				}
+				
 				content.addComponent(new Label(aps.get(i).getDescription()));
-				content.addComponent(ver_mas);
-				ver_mas.addClickListener(e->ultimo(ap));
-				ver_mas.addClickListener(e->getUI().getNavigator().navigateTo("apartmentView"));
+				content.addComponent(vermas[i]);
+				vermas[i].addClickListener(e->ultimo(ap));
+				vermas[i].addClickListener(e->getUI().getNavigator().navigateTo("apartmentView"));
 				content.setSizeUndefined(); // Shrink to fit
 				contenedor.addComponent(content);
 				contenedor.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 				panel[i].setContent(contenedor);
 				lista.addComponents(panel[i]);
 			}
+			
 		} 
 	}
 	
