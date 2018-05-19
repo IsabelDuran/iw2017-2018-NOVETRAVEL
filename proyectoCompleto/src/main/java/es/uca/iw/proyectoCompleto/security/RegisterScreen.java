@@ -67,7 +67,7 @@ public class RegisterScreen extends VerticalLayout implements View
         addComponent(navbar_);
 		
         this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        Label title_ = new Label("Iniciar sesión: ");
+        Label title_ = new Label("Registrate en Novetravel: ");
         title_.setStyleName("title-text");
         addComponent(title_);
        
