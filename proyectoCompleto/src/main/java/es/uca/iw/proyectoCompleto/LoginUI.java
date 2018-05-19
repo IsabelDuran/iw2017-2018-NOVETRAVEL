@@ -42,6 +42,8 @@ public class LoginUI extends UI {
 
 		if (!SecurityUtils.isLoggedIn()) 
 			showLoginScreen();
+		else
+			showMainScreen();
 	}
 	
 	private void showLoginScreen() {
