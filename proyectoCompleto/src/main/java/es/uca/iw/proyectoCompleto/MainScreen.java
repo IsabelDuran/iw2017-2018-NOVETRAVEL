@@ -34,8 +34,13 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	private static Object ultimoPinchado;
 	private static final long serialVersionUID = 1L;
 	private Panel springViewDisplay;
+	Navbar navbar_;
 	
-	
+	public MainScreen()
+	{
+		setMargin(false);
+        setSpacing(true);
+	}
 	
 	@Override
     public void attach() {
@@ -45,14 +50,13 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 	
 	@PostConstruct
 	void init() {
+		
+		navbar_ = new Navbar(1);
+		addComponent(navbar_);
 
 		final VerticalLayout root = new VerticalLayout();
 		root.setSizeFull();
 		
-		Button logoutButton = new Button("Logout", event -> logout());
-		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		root.addComponent(logoutButton);
-
 		// Creamos l barra de navegación
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
@@ -62,6 +66,7 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Clientes", ApartmentListView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
+		//navigationBar.addComponent(createNavigationButton("Disputas", DisputeManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Imagenes",ImageApartmentView.VIEW_NAME));
 		root.addComponent(navigationBar);
@@ -97,10 +102,5 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 
 	public static void setUltimoPinchado(Object ultimoPinchado) {
 		MainScreen.ultimoPinchado = ultimoPinchado;
-	}
-
-	private void logout() {
-		getUI().getPage().reload();
-		getSession().close();
 	}
 }
