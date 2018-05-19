@@ -30,6 +30,9 @@ public class LoginUI extends UI {
 
 	@Autowired	
 	AuthenticationManager authenticationManager;
+	
+	@Autowired
+    MainScreen mainScreen;
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -45,6 +48,11 @@ public class LoginUI extends UI {
 		setContent(new LoginScreen(this::login));
 	}
 	
+	private void showMainScreen() {
+		setContent(mainScreen);
+	}
+	
+	
 	private boolean login(String username, String password) {
 		try {
 			Authentication token = authenticationManager
@@ -53,6 +61,9 @@ public class LoginUI extends UI {
 			// attacks. This does not work with websocket communication.
 			VaadinService.reinitializeSession(VaadinService.getCurrentRequest());
 			SecurityContextHolder.getContext().setAuthentication(token);
+			
+			// Show the main UI
+			showMainScreen();
 			return true;
 		} catch (AuthenticationException ex) {
 			return false;
