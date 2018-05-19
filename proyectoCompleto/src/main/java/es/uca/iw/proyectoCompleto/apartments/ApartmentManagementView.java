@@ -87,13 +87,6 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 	}
 
 	private void listApartments(String filterText) {
-		/*
-		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(service.findAll());
-		} else {
-			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
-		}
-		*/
 		grid.setItems(service.findAll());
 	}
 	

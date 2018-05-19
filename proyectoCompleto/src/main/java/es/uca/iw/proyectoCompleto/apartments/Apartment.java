@@ -29,13 +29,12 @@ public class Apartment{
 	
 	private String apartment_type;
 	
-	/*
-	@OneToOne(fetch=FetchType.LAZY)
-	private Booking booking;
-	*/
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
+	
+	@OneToMany(mappedBy="apartment")
+	private List<Booking> bookings;
 	
 	protected Apartment() {
 	}
@@ -66,7 +65,7 @@ public class Apartment{
 	}
 	
 	public void addImage(ImageApartment image)
-	{
+    {
 		this.images.add(image);
         if (image.getApartment() != this) {
             image.setApartment(this);
@@ -112,7 +111,21 @@ public class Apartment{
 	public void setApartment_type(String apartment_type) {
 		this.apartment_type = apartment_type;
 	}
+	
+	public List<Booking> getBookings() {
+		return bookings;
+	}
 
-	
-	
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
+	public void addBooking(Booking book)
+	{
+		this.bookings.add(book);
+        if (book.getApartment() != this) {
+            book.setApartment(this);
+        }
+	}
+
 }
