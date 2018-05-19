@@ -14,8 +14,10 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.annotation.UIScope;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -63,10 +65,12 @@ public class RegisterScreen extends VerticalLayout implements View
 		
         Navbar navbar_ = new Navbar(0);
         addComponent(navbar_);
-        
-        
-        
 		
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        Label title_ = new Label("Iniciar sesión: ");
+        title_.setStyleName("title-text");
+        addComponent(title_);
+       
 		addComponents(firstName, lastName, username, password, direccion, zipcodee);
 		addComponent(save);
 		
