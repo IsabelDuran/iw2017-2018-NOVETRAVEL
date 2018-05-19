@@ -43,11 +43,16 @@ public class VaadinUI extends UI {
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
-			showLoginScreen();
+			showFrontPage();
 		}
 
 	}
 	
+	private void showFrontPage() {
+		setContent(new FrontPage());
+		
+	}
+
 	private void showLoginScreen() {
 		setContent(new LoginScreen(this::login));
 	}
