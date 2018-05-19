@@ -39,7 +39,6 @@ public class BookingManagementView extends HorizontalLayout implements View{
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>();
-	//	this.filter = new TextField();
 		    
 	}
 
@@ -64,7 +63,8 @@ public class BookingManagementView extends HorizontalLayout implements View{
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			//listBookings(e.getValue());
+			//Bookings(editor.getValue());
+			listBookings(null);
 		}); 
 		
 		
@@ -75,13 +75,6 @@ public class BookingManagementView extends HorizontalLayout implements View{
 	}
 
 	private void listBookings(String filterText) {
-		/*
-		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(service.findAll());
-		} else {
-			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
-		}
-		*/
 		grid.setItems(service.findAll());
 	}
 	

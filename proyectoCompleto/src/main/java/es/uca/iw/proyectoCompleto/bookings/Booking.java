@@ -5,7 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.users.User;
@@ -25,40 +25,25 @@ public class Booking{
 	
 	private Double totalPrice_ = 0.0;
 	
-	@OneToOne (fetch=FetchType.LAZY)
-	 @JoinColumn(name="apartment_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name="apartment_id")
 	private Apartment apartment;
 	
-	//private User user;
+	@ManyToOne(fetch=FetchType.EAGER)
+	//@JoinColumn(name="user_id")
+	private User user;
 	
-	
-	public Booking(LocalDate entryDate_, LocalDate departureDate_, Double totalPrice) {
+	protected Booking() {
+		super();
+	}
+			
+	public Booking(LocalDate entryDate_, LocalDate departureDate_, Double totalPrice, Apartment apartment, User user) {
 		super();
 		this.entryDate_ = entryDate_;
 		this.departureDate_ = departureDate_;
 		this.totalPrice_ = totalPrice;
-	//	this.apartment = apartment;
-	//	this.user = user;
-	}
-
-	/*public Apartment getApartment() {
-		return apartment;segfsgsd
-	}
-
-	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
 		this.user = user;
-	}*/
-
-	protected Booking() {
-		super();
 	}
 
 	public Long getId() {
@@ -92,6 +77,22 @@ public class Booking{
 	public void setTotalPrice(Double totalPrice_) {
 		this.totalPrice_ = totalPrice_;
 	
-}
+	}
+
+	public Apartment getApartment() {
+		return apartment;
+	}
+
+	public void setApartment(Apartment apartment) {
+		this.apartment = apartment;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 }
