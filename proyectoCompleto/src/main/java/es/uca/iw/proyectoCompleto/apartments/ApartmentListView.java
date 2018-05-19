@@ -83,29 +83,29 @@ public class ApartmentListView extends VerticalLayout implements View
 			addComponents(lista);
 			List<Apartment> aps=service.findAll();
 			Button[] vermas=new Button[aps.size()];
-			for(int i = 0;i<aps.size();i++)
+			for(int contador = 0;contador<aps.size();contador++)
 			{
 				VerticalLayout contenedor = new VerticalLayout();
-				ap = aps.get(i);
-				vermas[i] = new Button("Ver mas...");
-				panel[i]=new Panel(aps.get(i).getName());
-				panel[i].setHeight(300,Unit.PIXELS);
-				panel[i].setWidth(300,Unit.PIXELS);
+				ap = aps.get(contador);
+				vermas[contador] = new Button("Ver mas...");
+				panel[contador]=new Panel(aps.get(contador).getName());
+				panel[contador].setHeight(300,Unit.PIXELS);
+				panel[contador].setWidth(300,Unit.PIXELS);
 				VerticalLayout content = new VerticalLayout();
-				if(aps.get(i).getImages().size()>0)
+				if(aps.get(contador).getImages().size()>0)
 				{
-					desplegarImagen(content, aps.get(i).getImages().get(0));
+					desplegarImagen(content, aps.get(contador).getImages().get(0));
 				}
 				
-				content.addComponent(new Label(aps.get(i).getDescription()));
-				content.addComponent(vermas[i]);
-				vermas[i].addClickListener(e->ultimo(ap));
-				vermas[i].addClickListener(e->getUI().getNavigator().navigateTo("apartmentView"));
+				content.addComponent(new Label(aps.get(contador).getDescription()));
+				content.addComponent(vermas[contador]);
+				System.out.println(ap.getName());
+				vermas[contador].addClickListener(e->ultimo(ap));
 				content.setSizeUndefined(); // Shrink to fit
 				contenedor.addComponent(content);
 				contenedor.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
-				panel[i].setContent(contenedor);
-				lista.addComponents(panel[i]);
+				panel[contador].setContent(contenedor);
+				lista.addComponents(panel[contador]);
 			}
 			
 		} 
@@ -135,7 +135,9 @@ public class ApartmentListView extends VerticalLayout implements View
 	}
 	
 	public void ultimo(Apartment pinchado) {
+		System.out.println(pinchado.getName());
 		MainScreen.setUltimoPinchado(pinchado);
+		getUI().getNavigator().navigateTo("apartmentView");
 	}
 	
 	@Override
