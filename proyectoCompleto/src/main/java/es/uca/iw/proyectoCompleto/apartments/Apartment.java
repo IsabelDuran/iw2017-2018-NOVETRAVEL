@@ -39,14 +39,14 @@ public class Apartment{
 	protected Apartment() {
 	}
 	
-	public Apartment(String name, String description, int price_per_day, boolean book, String type) {
+	public Apartment(String name, String description, int price_per_day, boolean book, String type ) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.price_per_day = price_per_day;
 		this.book = book;
 		this.apartment_type = type;
-	}
+	}	
 
 	public Long getId() {
 		return id;
@@ -116,16 +116,9 @@ public class Apartment{
 		return bookings;
 	}
 
-	public void setBookings(List<Booking> bookings) {
-		this.bookings = bookings;
-	}
-
-	public void addBooking(Booking book)
-	{
-		this.bookings.add(book);
-        if (book.getApartment() != this) {
-            book.setApartment(this);
-        }
+	public void setBooking(Booking booking) {
+		if(booking != null)
+			this.bookings.add(booking);
 	}
 
 }

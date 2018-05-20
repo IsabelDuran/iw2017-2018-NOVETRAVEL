@@ -62,15 +62,15 @@ public class BookingEditor extends VerticalLayout  {
 		this.service = service;
         
 		editDate();
-		addComponents(entryDate,departureDate,totalPrice,actions);
+		addComponents(name,entryDate,departureDate,totalPrice,actions);
  
-		/// bind using naming convention svsd
+		/// bind using naming convention 
+		
+		//binder.forField(name).bind(Booking::getApartment::getName);
 		binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
 		binder.setReadOnly(true);
 		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
 		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);
-		
-		
 		
 		// Configure and style components
 		setSpacing(true);
