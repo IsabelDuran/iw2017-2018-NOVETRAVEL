@@ -44,42 +44,41 @@ public class ProyectoCompletoApplication {
 	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
 				
-			 LocalDate fe = LocalDate.of(2018, 07, 03);
-			 LocalDate fs = LocalDate.of(2018, 07, 13);
+			 LocalDate fe = LocalDate.of(2018, 8, 03);
+			 LocalDate fs = LocalDate.of(2018, 8, 13);
 			 
-		//	 LocalDate t1 = LocalDate.of(2018, 10, 13);
-		//	 LocalDate t2 = LocalDate.of(2018, 10, 23);
+			 LocalDate t1 = LocalDate.of(2018, 12, 13);
+			 LocalDate t2 = LocalDate.of(2018, 12, 23);
 			 
-			 Apartment a1=null;
-			 User u1=null;
+			 Apartment a1=null, a2 = null;
+			 User u1=null, u2 = null;
 			 
-
-			if(ap.findAll().size()==0)
-			{
-				a1=new Apartment("apartamento", "es un apartamento",3,false,"unifamiliar");
-				ap.save(a1);
-				//PONER AQUI BOOKING SERVICE
-			}
 			if(re.findAll().size()==0)
 			{
 				re.save(new Report("23/03/91", "hola", "vater sucio", "el vater esta muy sucio loco"));
 			}
-			if (service.findAll().size() == 0) {
+			
+			if (service.findAll().size() == 0) 
+			{
+				
 				u1=new User("Juan", "Bauer");
+				u2 = new User("Michelle", "Dessler");
 				// save a couple of users with default password: default
-				service.save(u1);
 				service.save(new User("Chloe", "O'Brian"));
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
-				service.save(new User("Michelle", "Dessler"));
+				service.save(u1);
+				service.save(u2);
 
 
 				User root = new User("root", "root");
 				root.setPassword("root");
 				service.save(root);
+				
+				System.out.println("USUARIOS 1 CREADOS!!!!!!! ");
 
 				// fetch all users
-				log.info("Users found with findAll():");
+			/*	log.info("Users found with findAll():");
 				log.info("-------------------------------");
 				for (User user : service.findAll()) {
 					log.info(user.toString());
@@ -99,18 +98,28 @@ public class ProyectoCompletoApplication {
 				for (User bauer : service.findByLastNameStartsWithIgnoreCase("Bauer")) {
 					log.info(bauer.toString());
 				}
-				log.info("");
+				log.info("");*/
+				
+				System.out.println("USUARIOS final CREADOS!!!!!!! ");
 			}
-
-			//Esto para probar la tabla del booking
-			if(bs.findAll().size()==0)
+			
+			if(ap.findAll().size()==0)
 			{
-
-			//	Apartment a = new Apartment("hola", "holadios", 40, true, "piso");
-			//	User u = new User("Pepito", "grillo");
-				//Booking b = new Booking(fe, fs, 300.0, a, u);
-				bs.save(new Booking(fe, fs, (double)400, a1, u1));
-
+			
+				a1=new Apartment("apartamento", "es un apartamento",3,true,"unifamiliar");
+				a2 = new Apartment("apartamento2", "aaa", 20, true, "piso");
+				ap.save(a1);
+				ap.save(a2);
+				
+				System.out.println("APARTAMENTOS CREADOS!!!!");
+				
+			}
+			
+			if(bs.findAll().size()==0 && ap.findAll().size() != 0 && service.findAll().size() != 0)
+			{
+				bs.save(new Booking(fe, fs, (double)300, a1, u1));
+				bs.save(new Booking(t1,t2, (double) 500, a2, u2));
+				System.out.println(" RESERVAS CREADAS!!!!!");
 			}
 
 		};

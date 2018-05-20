@@ -26,11 +26,11 @@ public class Booking{
 	private Double totalPrice_ = 0.0;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name="apartment_id")
+	//@JoinColumn(nullable = false)
 	private Apartment apartment;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(name="user_id")
+	//@JoinColumn(nullable = false)
 	private User user;
 	
 	protected Booking() {

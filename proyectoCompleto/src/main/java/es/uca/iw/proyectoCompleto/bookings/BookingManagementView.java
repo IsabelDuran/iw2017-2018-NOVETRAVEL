@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -48,7 +49,11 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		
 		/// build layout
 		addComponents(grid,editor);
-				
+		
+		grid.setHeight(300, Unit.PIXELS);
+		grid.setWidth(1000, Unit.PIXELS);
+		
+		//grid.addColumn(Booking::getApartment).setCaption("Nombre del apartamento").setResizable(false);
 		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada" ).setResizable(false);
 		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
 		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);

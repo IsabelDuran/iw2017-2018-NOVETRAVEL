@@ -43,7 +43,6 @@ public class User implements UserDetails{
 	private int zipcode;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-//	@JoinColumn(name="booking_id")
 	private List<Booking> booking;
 	
 	protected User() {
