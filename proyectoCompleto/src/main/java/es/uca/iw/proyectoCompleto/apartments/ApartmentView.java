@@ -105,7 +105,7 @@ public class ApartmentView extends VerticalLayout implements View
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
-			abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
+			//abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
 			HorizontalLayout imagenes=new HorizontalLayout();
 			desplegarImagenes(imagenes);  	
 			abajo.addComponent(imagenes);
@@ -118,13 +118,12 @@ public class ApartmentView extends VerticalLayout implements View
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
-		if(apartment.getImages().size()!=0)
-		{
+
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
 				desplegarImagen(contenedor, apartment.getImages().get(i));
 			}
-		}
+		
 	}
 	
 	public void ponerContenedorImagenes(Layout l,Layout contenedorImagenes){

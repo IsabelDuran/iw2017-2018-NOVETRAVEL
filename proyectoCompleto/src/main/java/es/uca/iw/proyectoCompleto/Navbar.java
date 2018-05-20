@@ -1,9 +1,11 @@
 package es.uca.iw.proyectoCompleto;
 
+import com.vaadin.navigator.View;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
@@ -66,6 +68,8 @@ public class Navbar extends HorizontalLayout
 	
 	private void register()
 	{
-		
+		getUI().getPage().replaceState("/RegisterUI");
+		getUI().getPage().reload();
 	}
+	
 }

@@ -35,7 +35,7 @@ public class ImageApartment {
 	public ImageApartment(byte[] file, Apartment apartment) {
 		super();
 		this.file = file;
-		this.apartment = apartment;
+		setApartment(apartment);
 	}
 	
 	public Long getId() {
@@ -71,6 +71,7 @@ public class ImageApartment {
 
 	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
+		apartment.addImage(this);
 }
 	
 }

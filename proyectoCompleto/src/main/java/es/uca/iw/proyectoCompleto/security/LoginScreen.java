@@ -10,10 +10,13 @@ import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.Navbar;
 import es.uca.iw.proyectoCompleto.reports.Report;
 import es.uca.iw.proyectoCompleto.users.*;
+
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -50,12 +53,19 @@ public class LoginScreen extends VerticalLayout {
         
         Navbar navbar_ = new Navbar(0);
         addComponent(navbar_);
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        Label title_ = new Label("Iniciar sesión: ");
+        title_.setStyleName("title-text");
+        addComponent(title_);
+        
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         TextField username = new TextField("Username");
         addComponent(username);
-
+ 
         PasswordField password = new PasswordField("Password");
         addComponent(password);
-
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        
         Button login = new Button("Login", evt -> {
             String pword = password.getValue();
             password.setValue("");
