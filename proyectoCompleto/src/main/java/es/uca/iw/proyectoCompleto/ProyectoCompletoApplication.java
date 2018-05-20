@@ -60,23 +60,25 @@ public class ProyectoCompletoApplication {
 			
 			if (service.findAll().size() == 0) 
 			{
-				System.out.println("SE CREAN LOS USUARIOS ");
+				
 				u1=new User("Juan", "Bauer");
+				u2 = new User("Michelle", "Dessler");
 				// save a couple of users with default password: default
-				service.save(u1);
 				service.save(new User("Chloe", "O'Brian"));
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
-				u2 = new User("Michelle", "Dessler");
+				service.save(u1);
 				service.save(u2);
 
 
 				User root = new User("root", "root");
 				root.setPassword("root");
 				service.save(root);
+				
+				System.out.println("USUARIOS 1 CREADOS!!!!!!! ");
 
 				// fetch all users
-				log.info("Users found with findAll():");
+			/*	log.info("Users found with findAll():");
 				log.info("-------------------------------");
 				for (User user : service.findAll()) {
 					log.info(user.toString());
@@ -96,26 +98,28 @@ public class ProyectoCompletoApplication {
 				for (User bauer : service.findByLastNameStartsWithIgnoreCase("Bauer")) {
 					log.info(bauer.toString());
 				}
-				log.info("");
+				log.info("");*/
+				
+				System.out.println("USUARIOS final CREADOS!!!!!!! ");
 			}
 			
 			if(ap.findAll().size()==0)
 			{
-				System.out.println("SE CREAN LOS APARTAMENTOS");
+			
 				a1=new Apartment("apartamento", "es un apartamento",3,true,"unifamiliar");
 				a2 = new Apartment("apartamento2", "aaa", 20, true, "piso");
 				ap.save(a1);
 				ap.save(a2);
 				
+				System.out.println("APARTAMENTOS CREADOS!!!!");
+				
 			}
 			
-			if(bs.findAll().size()==0 && ap.findAll().size() != 0 && re.findAll().size() != 0)
+			if(bs.findAll().size()==0 && ap.findAll().size() != 0 && service.findAll().size() != 0)
 			{
-				
-				//Booking b = new Booking(fe, fs, 300.0, a, u);
 				bs.save(new Booking(fe, fs, (double)300, a1, u1));
-				bs.save(new Booking(t1,t2, (double) 500, a2,u2));
-				System.out.println("SE CREAN LAS RESERVAS");
+				bs.save(new Booking(t1,t2, (double) 500, a2, u2));
+				System.out.println(" RESERVAS CREADAS!!!!!");
 			}
 
 		};
