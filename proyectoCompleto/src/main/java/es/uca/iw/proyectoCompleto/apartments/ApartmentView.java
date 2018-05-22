@@ -118,11 +118,14 @@ public class ApartmentView extends VerticalLayout implements View
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
-
+		
+			contenedor.removeAllComponents();
+			
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
 				desplegarImagen(contenedor, apartment.getImages().get(i));
 			}
+		
 		
 	}
 	

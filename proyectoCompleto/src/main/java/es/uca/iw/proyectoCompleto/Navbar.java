@@ -7,6 +7,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
 
@@ -30,7 +31,13 @@ public class Navbar extends HorizontalLayout
         setStyleName("pink-header");
         addStyleName("pink-header");
 		
-        TextField searchbar = new TextField("Búsqueda");
+        this.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
+        Button frontPage = new Button("NOVETRAVEL", event -> frontPage());
+        frontPage.addStyleNames(Button.DESIGN_ATTR_PLAIN_TEXT, "white-title");
+		addComponent(frontPage);
+		
+		this.setComponentAlignment(frontPage, Alignment.MIDDLE_RIGHT);
+        TextField searchbar = new TextField("BUSCAR");
         addComponent(searchbar);
         
        if (loggedin == 1)
@@ -55,6 +62,11 @@ public class Navbar extends HorizontalLayout
 
 	}
 	
+	private void frontPage() {
+		getUI().getPage().replaceState("/");
+		getUI().getPage().reload();
+	}
+
 	private void logout() {
 		getUI().getPage().reload();
 		getSession().close();

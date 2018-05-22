@@ -9,6 +9,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -29,12 +30,12 @@ public class DisputeEditor extends VerticalLayout
 	
 	private Binder<Dispute> binder = new Binder<>(Dispute.class);
 	
-	TextField date =  new TextField("Fecha");
+	DateField date =  new DateField();
 	TextField dispute_description =  new TextField("Motivo de la disputa");
 	
-	Button save = new Button("Save");
-	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete");
+	Button save = new Button("Guardar");
+	Button cancel = new Button("Cancelar");
+	Button delete = new Button("Eliminar");
 			
 	CssLayout actions = new CssLayout(save, cancel, delete);
 	

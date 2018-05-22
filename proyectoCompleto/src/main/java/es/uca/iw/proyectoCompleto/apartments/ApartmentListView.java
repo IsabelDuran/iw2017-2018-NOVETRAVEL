@@ -20,6 +20,8 @@ import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
@@ -48,6 +50,7 @@ public class ApartmentListView extends VerticalLayout implements View
 	
 	private Panel panel[];
 	private ApartmentEditor editor;
+	Button[] vermas;
 
 	
 	private final ApartmentService service;
@@ -82,7 +85,8 @@ public class ApartmentListView extends VerticalLayout implements View
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
 			List<Apartment> aps=service.findAll();
-			Button[] vermas=new Button[aps.size()];
+			vermas=new Button[aps.size()];
+		
 			for(int contador = 0;contador<aps.size();contador++)
 			{
 				VerticalLayout contenedor = new VerticalLayout();
@@ -99,8 +103,23 @@ public class ApartmentListView extends VerticalLayout implements View
 				
 				content.addComponent(new Label(aps.get(contador).getDescription()));
 				content.addComponent(vermas[contador]);
-				System.out.println(ap.getName());
-				vermas[contador].addClickListener(e->ultimo(ap));
+
+				vermas[contador].addClickListener(new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						int contador=0;
+						for(Button b:vermas)
+						{
+							if(event.getButton()==b)
+							{
+								ultimo(aps.get(contador));
+							}
+							contador++;
+						}
+					}
+				});
+			
 				content.setSizeUndefined(); // Shrink to fit
 				contenedor.addComponent(content);
 				contenedor.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
@@ -135,9 +154,9 @@ public class ApartmentListView extends VerticalLayout implements View
 	}
 	
 	public void ultimo(Apartment pinchado) {
-		System.out.println(pinchado.getName());
 		MainScreen.setUltimoPinchado(pinchado);
 		getUI().getNavigator().navigateTo("apartmentView");
+
 	}
 	
 	@Override

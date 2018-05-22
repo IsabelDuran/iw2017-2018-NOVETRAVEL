@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,16 +17,16 @@ public class Dispute{
 	
 	private Long id_host;
 	
-	private String opening_date;
+	private LocalDate opening_date;
 	
-	private String closing_date;
+	private LocalDate closing_date;
 
 	private String description;
 	
 	protected Dispute() {
 	}
 
-	public Dispute(String date_opening, String date_closing, String description) {
+	public Dispute(LocalDate date_opening, LocalDate date_closing, String description) {
 		super();
 		this.opening_date = date_opening;
 		this.closing_date = date_closing;
@@ -39,22 +41,22 @@ public class Dispute{
 		this.id = id;
 	}
 
-	public String getOpening_date() {
+	public LocalDate getOpening_date() {
 		return opening_date;
 	}
 
 
-	public void setOpening_date(String opening_date) {
+	public void setOpening_date(LocalDate opening_date) {
 		this.opening_date = opening_date;
 	}
 
 
-	public String getClosing_date() {
+	public LocalDate getClosing_date() {
 		return closing_date;
 	}
 
 
-	public void setClosing_date(String closing_date) {
+	public void setClosing_date(LocalDate closing_date) {
 		this.closing_date = closing_date;
 	}
 
