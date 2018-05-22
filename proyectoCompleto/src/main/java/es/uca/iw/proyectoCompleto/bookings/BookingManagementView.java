@@ -117,7 +117,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 				if(book.getApartment().getId() == apart.getId())
 				{
 					a.add(apart);
-					b.add(book) ;
+					b.add(book);
 				}
 			}
 			
