@@ -16,9 +16,11 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.List;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 //import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 
 @SpringComponent
 @UIScope
@@ -30,6 +32,8 @@ public class BookingEditor extends VerticalLayout  {
 	private static final long serialVersionUID = 1L;
 
 	private final BookingService service;
+	
+	private final ApartmentService serviceAp;
 
 	private Booking booking_;
 	
@@ -39,6 +43,8 @@ public class BookingEditor extends VerticalLayout  {
 	
 
 	private Binder<Booking> binder = new Binder<>(Booking.class);
+	
+	private Binder<Apartment> binder2 = new Binder<>(Apartment.class);
 	
 	/* Fields to edit properties in Booking entity */
 	TextField name = new TextField("Nombre");
@@ -58,20 +64,21 @@ public class BookingEditor extends VerticalLayout  {
 
 
 	@Autowired
-	public BookingEditor(BookingService service) {
+	public BookingEditor(BookingService service, ApartmentService serviceAp) {
 		this.service = service;
+		this.serviceAp = serviceAp;
         
 		editDate();
 		addComponents(name,entryDate,departureDate,totalPrice,actions);
  
 		/// bind using naming convention 
 		
-		//binder.forField(name).bind(Booking::getApartment::getName);
+		binder2.forField(name).bind(Apartment::getName, Apartment::setName);	
 		binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
 		binder.setReadOnly(true);
 		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
-		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);
-		
+		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);		
+	
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
