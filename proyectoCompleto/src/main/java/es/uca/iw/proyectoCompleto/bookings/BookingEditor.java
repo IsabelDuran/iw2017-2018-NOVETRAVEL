@@ -66,7 +66,7 @@ public class BookingEditor extends VerticalLayout  {
 	@Autowired
 	public BookingEditor(BookingService service, ApartmentService serviceAp) {
 		this.service = service;
-		this.serviceAp = serviceAp;
+		this.serviceAp = serviceAp ;
         
 		editDate();
 		addComponents(name,entryDate,departureDate,totalPrice,actions);
