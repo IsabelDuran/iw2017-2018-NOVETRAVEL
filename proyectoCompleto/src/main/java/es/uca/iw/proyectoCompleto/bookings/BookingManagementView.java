@@ -5,14 +5,13 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.ValueChangeMode;
+
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
 
+import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
 import java.util.List;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
@@ -110,12 +109,23 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		List<Apartment> a = new ArrayList<Apartment>();
 		List<Booking> b = new ArrayList<Booking>();
 		
+		LocalDate entryDate;
+		LocalDate departureDate;
+		
+		Double price;
+		
 		for(Booking book: service.findAll())
 		{
 			for(Apartment apart: service2.findAll())
 			{
 				if(book.getApartment().getId() == apart.getId())
 				{
+					entryDate = book.getEntryDate();
+					departureDate = book.getDepartureDate();
+					
+					price = ((double)DAYS.between(entryDate, departureDate)+1) * apart.getPrice_per_day();
+					book.setTotalPrice(price);
+					
 					a.add(apart);
 					b.add(book);
 				}
