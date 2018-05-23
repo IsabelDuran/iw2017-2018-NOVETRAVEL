@@ -46,8 +46,8 @@ public class User implements UserDetails{
 	
 	private int zipcode;
 	
-//	@OneToMany(fetch=FetchType.EAGER)
-//	private List<CreditCard> creditCard;
+	@OneToMany(fetch=FetchType.EAGER)
+	private List<CreditCard> creditCard;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Booking> booking;
