@@ -17,13 +17,13 @@ public class Manager extends User{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Manager(String firstName, String lastName, String address, int zipcode) {
-		super(firstName, lastName, address, zipcode);
+	public Manager(String firstName, String lastName, String address, int zipcode, String email) {
+		super(firstName, lastName, address, zipcode, email);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Manager(String firstName, String lastName, String username, String address, int zipcode) {
-		super(firstName, lastName, username, address, zipcode);
+	public Manager(String firstName, String lastName, String username, String address, int zipcode, String email) {
+		super(firstName, lastName, username, address, zipcode, email);
 		// TODO Auto-generated constructor stub
 	}
 
