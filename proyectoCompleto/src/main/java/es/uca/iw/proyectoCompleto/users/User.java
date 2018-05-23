@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.creditCard.CreditCard;
 
 @Entity
 public class User implements UserDetails{
@@ -43,6 +45,9 @@ public class User implements UserDetails{
 	private String address;
 	
 	private int zipcode;
+	
+//	@OneToMany(fetch=FetchType.EAGER)
+//	private List<CreditCard> creditCard;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Booking> booking;
