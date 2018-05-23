@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.creditCard.CreditCard;
 
 @Entity
 public class User implements UserDetails{
@@ -38,9 +40,14 @@ public class User implements UserDetails{
 
 	private String password;
 	
+	private String email;
+	
 	private String address;
 	
 	private int zipcode;
+	
+//	@OneToMany(fetch=FetchType.EAGER)
+//	private List<CreditCard> creditCard;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Booking> booking;
@@ -48,20 +55,21 @@ public class User implements UserDetails{
 	protected User() {
 	}
 
-	public User(String firstName, String lastName, String username, String address, int zipcode) {
+	public User(String firstName, String lastName, String username, String address, int zipcode, String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.username = username;
 		this.address = address;
 		this.zipcode = zipcode;
+		this.email = email;
 	}
 
-	public User(String firstName, String lastName, String address, int zipcode) {
-		this(firstName,lastName,firstName, address, zipcode);
+	public User(String firstName, String lastName, String address, int zipcode, String email) {
+		this(firstName,lastName,firstName, address, zipcode, email);
 	}
 	
 	public User(String firstName, String lastName) {
-		this(firstName,lastName,firstName, "sad",3321);
+		this(firstName,lastName,firstName, "sad",3321, lastName);
 	}
 	
 	public Long getId() {
@@ -128,14 +136,14 @@ public class User implements UserDetails{
 		
 	@Override
 	public String toString() {
-		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s']", id,
+		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s', email='%s']", id,
 				firstName, lastName,username,password);
 	}
-
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
-		list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+		//list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
 		return list;
 		
 	}
@@ -174,6 +182,14 @@ public class User implements UserDetails{
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

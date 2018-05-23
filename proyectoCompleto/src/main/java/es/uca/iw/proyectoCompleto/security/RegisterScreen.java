@@ -52,12 +52,17 @@ public class RegisterScreen extends VerticalLayout implements View
 	PasswordField password = new PasswordField("Contraseña");
 	TextField zipcodee = new TextField("Codigo postal:");
 	TextField direccion = new TextField("Direccion");
+	TextField email = new TextField("Email");
 	
 	private static long serialVersionUID = 1L;
 	
 	Button save = new Button("Guardar");
 	
-	
+	@Override
+    public void attach() {
+        super.attach();
+        this.getUI().getNavigator().navigateTo("");
+    }
 	
 	@Autowired
 	public RegisterScreen()
@@ -71,7 +76,7 @@ public class RegisterScreen extends VerticalLayout implements View
         title_.setStyleName("title-text");
         addComponent(title_);
        
-		addComponents(firstName, lastName, username, password, direccion, zipcodee);
+		addComponents(firstName, lastName, username, password, direccion, zipcodee, email);
 		addComponent(save);
 		
 		binder.forField(firstName).bind(User::getFirstName, User::setFirstName);
@@ -80,6 +85,8 @@ public class RegisterScreen extends VerticalLayout implements View
 		binder.forField(password).bind(User::getPassword, User::setPassword);
 		binder.forField(zipcodee).withConverter(new StringToIntegerConverter("Introducir un numero")).bind(User::getZipcode, User::setZipcode);
 		binder.forField(direccion).bind(User::getAddress, User::setAddress);
+		binder.forField(email).bind(User::getEmail, User::setEmail);
+		
 		
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		
@@ -112,7 +119,7 @@ public class RegisterScreen extends VerticalLayout implements View
 				"lastName", 
 				"username", 
 				"address", 
-				1111); 
+				1111, "jaja"); 
 	}
 	
 	public void setChangeHandler(ChangeHandler h) {

@@ -2,6 +2,7 @@ package es.uca.iw.proyectoCompleto.apartments;
 
 import java.util.List;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,9 @@ public class Apartment{
 	private boolean book;
 	
 	private String apartment_type;
+	
+	@Embedded
+	private Apartment_OfferedServices offered_services;
 	
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)

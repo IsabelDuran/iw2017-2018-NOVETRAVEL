@@ -15,9 +15,6 @@ import es.uca.iw.proyectoCompleto.users.UserService;
 @SpringUI(path = "/RegisterUI")
 @Theme("vaadinlayouts")
 public class RegisterUI extends UI{
-	
-	
-	
 	@Override
 	protected void init(VaadinRequest request) {
 		

@@ -16,7 +16,6 @@ public class CreditCard {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
 	private String card_number;
 	private int CVC_CVV;
 	private LocalDate expiration_date;

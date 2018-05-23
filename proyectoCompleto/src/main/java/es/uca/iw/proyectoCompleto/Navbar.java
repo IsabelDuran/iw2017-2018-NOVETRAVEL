@@ -31,15 +31,16 @@ public class Navbar extends HorizontalLayout
         setStyleName("pink-header");
         addStyleName("pink-header");
 		
-        this.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT);
-        Button frontPage = new Button("NOVETRAVEL", event -> frontPage());
-        frontPage.addStyleNames(Button.DESIGN_ATTR_PLAIN_TEXT, "white-title");
-		addComponent(frontPage);
 		
-		this.setComponentAlignment(frontPage, Alignment.MIDDLE_RIGHT);
         TextField searchbar = new TextField("BUSCAR");
         addComponent(searchbar);
         
+       
+        Button frontPage = new Button("NOVETRAVEL", event -> frontPage());
+        frontPage.addStyleNames(ValoTheme.BUTTON_DANGER);
+		addComponent(frontPage);
+		 this.setComponentAlignment(frontPage, Alignment.MIDDLE_RIGHT);
+		
        if (loggedin == 1)
         {
         	Button logoutButton = new Button("Logout", event -> logout());
