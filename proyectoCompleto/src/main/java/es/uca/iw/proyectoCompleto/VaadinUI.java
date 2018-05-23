@@ -14,7 +14,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
 
-
+import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
@@ -34,12 +34,16 @@ public class VaadinUI extends UI {
 	@Autowired
     MainScreen mainScreen;
 	
+	@Autowired
+	ApartmentService servicio;
+	
 	@Override
 	protected void init(VaadinRequest request) {
-	
+		
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-
+			
+		
 		if (SecurityUtils.isLoggedIn()) {
 			showMainScreen();
 		} else {
@@ -49,7 +53,7 @@ public class VaadinUI extends UI {
 	}
 	
 	private void showFrontPage() {
-		setContent(new FrontPage());
+		setContent(new FrontPage(servicio));
 		
 	}
 
