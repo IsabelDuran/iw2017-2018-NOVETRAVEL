@@ -48,7 +48,7 @@ public class Apartment{
 		this.name = name;
 		this.description = description;
 		this.price_per_day = price_per_day;
-		this.book = book;
+		this.book = true;
 		this.apartment_type = type;
 	}	
 
@@ -123,6 +123,11 @@ public class Apartment{
 	public void setBooking(Booking booking) {
 		if(booking != null)
 			this.bookings.add(booking);
+	}
+	
+	public Apartment_OfferedServices getServices()
+	{
+		return this.offered_services;
 	}
 
 }
