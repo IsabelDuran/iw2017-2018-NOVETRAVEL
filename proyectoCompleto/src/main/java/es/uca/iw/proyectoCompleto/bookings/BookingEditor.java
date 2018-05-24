@@ -47,7 +47,6 @@ public class BookingEditor extends VerticalLayout  {
 	private Binder<Apartment> binder2 = new Binder<>(Apartment.class);
 	
 	/* Fields to edit properties in Booking entity */
-	TextField name = new TextField("Nombre");
 	TextField totalPrice = new TextField("Precio total");
 	// Create a DateField with the default style	
 	DateField entryDate = new DateField();
@@ -69,13 +68,12 @@ public class BookingEditor extends VerticalLayout  {
 		this.serviceAp = serviceAp;
         
 		editDate();
-		addComponents(name,entryDate,departureDate,totalPrice,actions);
+		addComponents(entryDate,departureDate,totalPrice,actions);
  
 		/// bind using naming convention 
-		
-		binder2.forField(name).bind(Apartment::getName, Apartment::setName);	
+
 		binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
-		binder.setReadOnly(true);
+		//binder.setReadOnly(true);
 		binder.forField(entryDate).bind(Booking::getEntryDate, Booking::setEntryDate);
 		binder.forField(departureDate).bind(Booking::getDepartureDate, Booking::setDepartureDate);		
 	
