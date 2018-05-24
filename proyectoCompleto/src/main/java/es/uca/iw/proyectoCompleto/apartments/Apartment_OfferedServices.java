@@ -1,8 +1,5 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
-import javax.persistence.Embeddable;
-
-@Embeddable
 public class Apartment_OfferedServices {
 	
 	boolean wifi;
@@ -18,7 +15,6 @@ public class Apartment_OfferedServices {
 	int max_hosts;
 	int number_beds;
 	int squared_meters;
-	
 	public boolean isWifi() {
 		return wifi;
 	}
