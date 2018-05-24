@@ -134,11 +134,11 @@ public class User implements UserDetails{
 		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s', email='%s']", id,
 				firstName, lastName,username,password);
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
-		//list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+		list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
 		return list;
 		
 	}
