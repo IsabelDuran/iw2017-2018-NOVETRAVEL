@@ -116,7 +116,12 @@ public class RegisterScreenView extends VerticalLayout implements View
 				
 				user = new User(firstName_, lastName_, userName_, direccion_, zipcodee_, email_);
 				
+				user.setPassword(password.getValue());
+				
+				//if(se.findOne(userName_))
 				se.save(user);
+				
+				Notification.show("Registro completado!");
 			});
 			System.out.println(user.getFirstName());
 		} catch(Exception e)
