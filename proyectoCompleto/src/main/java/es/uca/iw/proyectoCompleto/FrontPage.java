@@ -15,6 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringViewDisplay
 public class FrontPage extends VerticalLayout implements ViewDisplay{
@@ -33,18 +34,19 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
         
     }
 	
-	public FrontPage(ApartmentService s)
+	public FrontPage(ApartmentService s,UserService se)
 	{
 		setMargin(false);
         setSpacing(true);
        
+        Navbar navbar_;
         if (SecurityUtils.isLoggedIn()) {
-        	 Navbar navbar_ = new Navbar(1);
-             addComponent(navbar_);
-		} else {
-			 Navbar navbar_ = new Navbar(0);
-		        addComponent(navbar_);
-		}
+          	   navbar_ = new Navbar(1);
+               addComponent(navbar_);
+   		} else {
+   			 navbar_ = new Navbar(0);
+   		     addComponent(navbar_);
+   		}
        
         
         this.setDefaultComponentAlignment(Alignment.TOP_LEFT);
@@ -59,10 +61,13 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
 		setExpandRatio(springViewDisplay, 1.0f);
 		
 
-		System.out.println(s.findAll().size());
 		ApartmentListView v=new ApartmentListView(s);
 		
+		navbar_.setDisplay(springViewDisplay);
+		navbar_.setUserService(se);
         addComponent(springViewDisplay);
+        
+        
         
         
         springViewDisplay.setContent(v);

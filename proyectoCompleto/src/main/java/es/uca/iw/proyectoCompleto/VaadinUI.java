@@ -19,6 +19,7 @@ import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.users.UserService;
 
 
 @SpringUI
@@ -37,6 +38,9 @@ public class VaadinUI extends UI {
 	@Autowired
 	ApartmentService servicio;
 	
+	@Autowired
+	UserService se;
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		
@@ -53,7 +57,7 @@ public class VaadinUI extends UI {
 	}
 	
 	private void showFrontPage() {
-		setContent(new FrontPage(servicio));
+		setContent(new FrontPage(servicio,se));
 		
 	}
 

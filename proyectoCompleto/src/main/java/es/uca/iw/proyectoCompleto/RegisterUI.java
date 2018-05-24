@@ -10,7 +10,7 @@ import com.vaadin.ui.UI;
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
-import es.uca.iw.proyectoCompleto.security.RegisterScreen;
+
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -24,7 +24,7 @@ public class RegisterUI extends UI{
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		setContent(new RegisterScreen(service));
+		//setContent(new RegisterScreen(service));
 	   	
 	}
 
