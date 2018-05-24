@@ -3,7 +3,6 @@ package es.uca.iw.proyectoCompleto.apartments;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
-import com.vaadin.data.converter.StringToBooleanConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
@@ -85,35 +84,47 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);
 		binder.forField(price_per_day).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getPrice_per_day,Apartment::setPrice_per_day);
 		binder.forField(apartment_type).bind(Apartment::getApartment_type,Apartment::setApartment_type);
-		services_binder.forField(max_hosts).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getMax_hosts, 
-																														Apartment_OfferedServices::setMax_hosts);
-		
-		services_binder.forField(number_beds).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getNumber_beds, 
-																													Apartment_OfferedServices::setNumber_beds);
-		
-		services_binder.forField(number_rooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getRooms, 
-																														Apartment_OfferedServices::setRooms);
-		
-		services_binder.forField(number_bathrooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getNumber_bathrooms, 
-																													Apartment_OfferedServices::setNumber_bathrooms);
-		
-		services_binder.forField(squared_meters).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getSquared_meters, 
-																						Apartment_OfferedServices::setSquared_meters);
-		
-		
-		services_binder.forField(crib).bind(Apartment_OfferedServices::isCrib, Apartment_OfferedServices::setCrib);
-		services_binder.forField(parking).bind(Apartment_OfferedServices::isParking, Apartment_OfferedServices::setParking);
-		services_binder.forField(wifi).bind(Apartment_OfferedServices::isWifi, Apartment_OfferedServices::setWifi);
-		services_binder.forField(own_bathroom).bind(Apartment_OfferedServices::isOwn_bathroom, Apartment_OfferedServices::setOwn_bathroom);
-		services_binder.forField(own_kitchen).bind(Apartment_OfferedServices::isKitchen, Apartment_OfferedServices::setKitchen);
-		services_binder.forField(pets_allowed).bind(Apartment_OfferedServices::isPets_allowed, Apartment_OfferedServices::setPets_allowed);
-		services_binder.forField(kids_allowed).bind(Apartment_OfferedServices::isKids_allowed, Apartment_OfferedServices::setKids_allowed);
-		services_binder.forField(smoking_allowed).bind(Apartment_OfferedServices::isSmoking_allowed, Apartment_OfferedServices::setSmoking_allowed);
-		
-		
-		
+		binder.forField(max_hosts).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getMax_hosts, Apartment::setMax_hosts);
+		binder.forField(number_beds).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getNumber_beds, Apartment::setNumber_beds);
+		binder.forField(number_rooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getRooms, Apartment::setRooms);
+		binder.forField(number_bathrooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getNumber_bathrooms, Apartment::setNumber_bathrooms);
 
+		binder.forField(squared_meters).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getSquared_meters, 
+				Apartment::setSquared_meters);
+		binder.forField(crib).bind(Apartment::isCrib, Apartment::setCrib);
+		binder.forField(parking).bind(Apartment::isParking, Apartment::setParking);
+		binder.forField(wifi).bind(Apartment::isWifi, Apartment::setWifi);
+		binder.forField(own_bathroom).bind(Apartment::isOwn_bathroom, Apartment::setOwn_bathroom);
+		binder.forField(own_kitchen).bind(Apartment::isKitchen, Apartment::setKitchen);
+		binder.forField(pets_allowed).bind(Apartment::isPets_allowed, Apartment::setPets_allowed);
+		binder.forField(kids_allowed).bind(Apartment::isKids_allowed, Apartment::setKids_allowed);
+		binder.forField(smoking_allowed).bind(Apartment::isSmoking_allowed, Apartment::setSmoking_allowed);
 
+//		services_binder.forField(max_hosts).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getMax_hosts, 
+//																														Apartment_OfferedServices::setMax_hosts);
+//		
+//		services_binder.forField(number_beds).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getNumber_beds, 
+//																													Apartment_OfferedServices::setNumber_beds);
+//		
+//		services_binder.forField(number_rooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getRooms, 
+//																														Apartment_OfferedServices::setRooms);
+//		
+//		services_binder.forField(number_bathrooms).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getNumber_bathrooms, 
+//																													Apartment_OfferedServices::setNumber_bathrooms);
+//		
+//		services_binder.forField(squared_meters).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment_OfferedServices::getSquared_meters, 
+//																						Apartment_OfferedServices::setSquared_meters);
+//		
+//		
+//		services_binder.forField(crib).bind(Apartment_OfferedServices::isCrib, Apartment_OfferedServices::setCrib);
+//		services_binder.forField(parking).bind(Apartment_OfferedServices::isParking, Apartment_OfferedServices::setParking);
+//		services_binder.forField(wifi).bind(Apartment_OfferedServices::isWifi, Apartment_OfferedServices::setWifi);
+//		services_binder.forField(own_bathroom).bind(Apartment_OfferedServices::isOwn_bathroom, Apartment_OfferedServices::setOwn_bathroom);
+//		services_binder.forField(own_kitchen).bind(Apartment_OfferedServices::isKitchen, Apartment_OfferedServices::setKitchen);
+//		services_binder.forField(pets_allowed).bind(Apartment_OfferedServices::isPets_allowed, Apartment_OfferedServices::setPets_allowed);
+//		services_binder.forField(kids_allowed).bind(Apartment_OfferedServices::isKids_allowed, Apartment_OfferedServices::setKids_allowed);
+//		services_binder.forField(smoking_allowed).bind(Apartment_OfferedServices::isSmoking_allowed, Apartment_OfferedServices::setSmoking_allowed);
+//	
 		
 		// Configure and style components
 		setSpacing(true);
