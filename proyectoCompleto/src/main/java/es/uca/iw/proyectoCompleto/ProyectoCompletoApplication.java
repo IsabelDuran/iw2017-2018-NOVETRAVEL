@@ -120,8 +120,8 @@ public class ProyectoCompletoApplication {
 			if(ap.findAll().size()==0)
 			{
 			
-				a1=new Apartment("apartamento", "es un apartamento",3,true,"unifamiliar");
-				a2 = new Apartment("apartamento2", "aaa", 20, true, "piso");
+				a1=new Apartment("apartamento", "es un apartamento",3.0,true,"unifamiliar");
+				a2 = new Apartment("apartamento2", "aaa", 20.0, true, "piso");
 				ap.save(a1);
 				ap.save(a2);
 				

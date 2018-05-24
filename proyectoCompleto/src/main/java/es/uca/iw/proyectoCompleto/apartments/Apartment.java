@@ -24,7 +24,7 @@ public class Apartment{
 
 	private String description;
 	
-	private int price_per_day;
+	private Double price_per_day;
 
 	private boolean book;
 	
@@ -43,7 +43,7 @@ public class Apartment{
 	protected Apartment() {
 	}
 	
-	public Apartment(String name, String description, int price_per_day, boolean book, String type) {
+	public Apartment(String name, String description, Double price_per_day, boolean book, String type) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -93,11 +93,11 @@ public class Apartment{
 		this.description = description;
 	}
 
-	public int getPrice_per_day() {
+	public Double getPrice_per_day() {
 		return price_per_day;
 	}
 
-	public void setPrice_per_day(int price_per_day) {
+	public void setPrice_per_day(Double price_per_day) {
 		this.price_per_day = price_per_day;
 	}
 
