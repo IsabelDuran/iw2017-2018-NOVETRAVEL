@@ -17,13 +17,13 @@ public class Registered extends User{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registered(String firstName, String lastName, String address, int zipcode, String email) {
-		super(firstName, lastName, address, zipcode, email);
+	public Registered(String firstName, String lastName, String address, int zipcode) {
+		super(firstName, lastName, address, zipcode);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registered(String firstName, String lastName, String username, String address, int zipcode, String email) {
-		super(firstName, lastName, username, address, zipcode, email);
+	public Registered(String firstName, String lastName, String username, String address, int zipcode) {
+		super(firstName, lastName, username, address, zipcode);
 		// TODO Auto-generated constructor stub
 	}
 
