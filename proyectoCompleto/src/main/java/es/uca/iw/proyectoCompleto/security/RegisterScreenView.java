@@ -97,16 +97,27 @@ public class RegisterScreenView extends VerticalLayout implements View
 		
 		// bind using naming convention
 		binder.bindInstanceFields(this);
+
 		
 		
-		
-		
+			
 		Label aux = new Label(firstName.getCaption());
 		addComponent(aux);
 		
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		try{
-			save.addClickListener(ev-> se.save(user));
+			save.addClickListener(ev-> {
+				String firstName_ = firstName.getValue();
+				String lastName_ = lastName.getValue();
+				String userName_ = username.getValue();
+				String direccion_ = direccion.getValue();
+				int zipcodee_ = Integer.parseInt(zipcodee.getValue());
+				String email_ = email.getValue();
+				
+				user = new User(firstName_, lastName_, userName_, direccion_, zipcodee_, email_);
+				
+				se.save(user);
+			});
 			System.out.println(user.getFirstName());
 		} catch(Exception e)
 		{
