@@ -120,7 +120,6 @@ public class ApartmentEditor extends VerticalLayout {
 		// is clicked
 		save.addClickListener(e -> h.onChange());
 		delete.addClickListener(e -> h.onChange());
-		cancel.addClickListener(e -> h.onChange());
 	}
 
 }

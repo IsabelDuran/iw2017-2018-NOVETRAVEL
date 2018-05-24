@@ -13,6 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringViewDisplay
@@ -29,9 +30,10 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
     public void attach() {
         super.attach();
         this.getUI().getNavigator().navigateTo("");
+        
     }
 	
-	public FrontPage()
+	public FrontPage(ApartmentService s)
 	{
 		setMargin(false);
         setSpacing(true);
@@ -49,8 +51,23 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
         Label title_ = new Label("Pisos destacados: ");
         title_.setStyleName("title-text");
         addComponent(title_);
-           
+        
+        // Creamos el panel
+		springViewDisplay = new Panel();
+		springViewDisplay.setSizeFull();
+		addComponent(springViewDisplay);
+		setExpandRatio(springViewDisplay, 1.0f);
+		
 
+		System.out.println(s.findAll().size());
+		ApartmentListView v=new ApartmentListView(s);
+		
+        addComponent(springViewDisplay);
+        
+        
+        springViewDisplay.setContent(v);
+        v.listApartments(null);
+             
 	}
 	
 	@Override
