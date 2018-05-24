@@ -41,6 +41,10 @@ public class UserService implements UserDetailsService {
 	public List<User> findByLastNameStartsWithIgnoreCase(String lastName) {
 		return repo.findByLastNameStartsWithIgnoreCase(lastName);
 	}
+	
+	public User findByUsername(String username) {
+		return repo.findByUsername(username);
+	}
 
 	public User findOne(Long arg0) {
 		return repo.findOne(arg0);
