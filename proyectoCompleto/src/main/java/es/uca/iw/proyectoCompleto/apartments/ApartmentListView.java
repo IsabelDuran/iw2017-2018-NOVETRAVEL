@@ -35,21 +35,36 @@ import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.reports.Report;
+import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.bookings.*;
 
+///////////PARA SABER EL USUARIO AUTENTICADO//////////////
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+/////////////////////////////////////////////////////////
+
+@Controller
 @SpringView(name = ApartmentListView.VIEW_NAME)
 public class ApartmentListView extends VerticalLayout implements View
 {
 	public static final String VIEW_NAME = "apartmentListView";
 
-	private TextField filter;
-	private Button addNewBtn;
+	//private TextField filter;
+	//private Button addNewBtn;
 	
 	private Apartment ap;
+	
+	private Authentication auth;
 	
 	
 	private Panel panel[];
 	Button[] vermas;
+	Button[] reservar;
 
 	
 	private final ApartmentService service;
@@ -73,19 +88,23 @@ public class ApartmentListView extends VerticalLayout implements View
 		
 	}
 
+	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public void listApartments(String filterText) {
 		
 		if (StringUtils.isEmpty(filterText)) {
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
 			List<Apartment> aps=service.findAll();
-			vermas=new Button[aps.size()];
-		
+			vermas = new Button[aps.size()];
+			reservar = new Button[aps.size()]; //Tantos botones como apartamentos haya
+			
 			for(int contador = 0;contador<aps.size();contador++)
 			{
 				VerticalLayout contenedor = new VerticalLayout();
 				ap = aps.get(contador);
 				vermas[contador] = new Button("Ver mas...");
+				reservar[contador] = new Button("Reservar");
+				
 				panel[contador]=new Panel(aps.get(contador).getName());
 				panel[contador].setHeight(300,Unit.PIXELS);
 				panel[contador].setWidth(300,Unit.PIXELS);
@@ -97,6 +116,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				
 				content.addComponent(new Label(aps.get(contador).getDescription()));
 				content.addComponent(vermas[contador]);
+				content.addComponent(reservar[contador]);
 
 				vermas[contador].addClickListener(new Button.ClickListener() {
 					
@@ -112,16 +132,41 @@ public class ApartmentListView extends VerticalLayout implements View
 							contador++;
 						}
 					}
-				});
+				  }
+				);
+				
+			/*	reservar[contador].addClickListener(new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event2) {
+						int contador=0;
+						for(Button b:reservar)
+						{
+							if(event2.getButton()==b)
+							{
+								Apartment a = aps.get(contador);
+								
+							}
+							contador++;
+						}
+					}
+				  }
+				);*/
+				
+			/*	 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			      String name = user.getUsername(); //get logged in username
+				System.out.println("USERNAME USUARIOOOO "+name);
 			
 				content.setSizeUndefined(); // Shrink to fit
 				contenedor.addComponent(content);
 				contenedor.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 				panel[contador].setContent(contenedor);
-				lista.addComponents(panel[contador]);
+				lista.addComponents(panel[contador]); */
 			}
 			
 		} 
+		
+		//System.out.println("NOMBREEEEEEEE " + auth.getName());
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {

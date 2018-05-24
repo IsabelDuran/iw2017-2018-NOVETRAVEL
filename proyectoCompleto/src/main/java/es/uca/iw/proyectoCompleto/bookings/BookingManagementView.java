@@ -37,20 +37,17 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	//private TextField filter;
 
 	private BookingEditor editor;
-	
-	private ApartmentEditor editor2;
 
 	private final BookingService service;
 	
 	private final ApartmentService service2;
 
 	@Autowired
-	public BookingManagementView(BookingService service, BookingEditor editor, ApartmentService service2, ApartmentEditor editor2) {
+	public BookingManagementView(BookingService service, BookingEditor editor, ApartmentService service2 ) {
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>();
 		this.grid2 = new Grid<>();
-		this.editor2 = editor2;
 		this.service2 = service2;
 		    
 	}
@@ -60,7 +57,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	void init() {
 		
 		/// build layout
-		addComponents(grid2,grid,editor,editor2);
+		addComponents(grid2,grid,editor);
 		
 		grid2.setHeight(300, Unit.PIXELS);
 		grid2.setWidth(200, Unit.PIXELS);
@@ -80,23 +77,13 @@ public class BookingManagementView extends HorizontalLayout implements View {
 			editor.editBooking(e.getValue());
 		});
 		
-		grid2.asSingleSelect().addValueChangeListener( b -> {
-			editor2.editApartment(b.getValue());
-		});
-		
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
 			//Bookings(editor.getValue());
 		
 		}); 
-		
-		editor2.setChangeHandler(() -> {
-			editor2.setVisible(false);
-			//Bookings(editor.getValue());
-		}); 
-		
-		
+			
 		
 		// Initialize listing
 		listBookings(null);
