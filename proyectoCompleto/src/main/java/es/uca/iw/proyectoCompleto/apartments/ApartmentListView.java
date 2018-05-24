@@ -4,6 +4,7 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,7 @@ import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.reports.Report;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.bookings.*;
+import es.uca.iw.proyectoCompleto.users.*;
 
 ///////////PARA SABER EL USUARIO AUTENTICADO//////////////
 
@@ -61,6 +63,10 @@ public class ApartmentListView extends VerticalLayout implements View
 	
 	private Authentication auth;
 	
+	private BookingEditor editor;
+	
+	private UserRepository repository;
+	
 	
 	private Panel panel[];
 	Button[] vermas;
@@ -70,7 +76,8 @@ public class ApartmentListView extends VerticalLayout implements View
 	private final ApartmentService service;
 
 	@Autowired
-	public ApartmentListView(ApartmentService service) {
+	public ApartmentListView(ApartmentService service, BookingEditor editor) {
+		this.editor = editor;
 		this.service = service;
 		panel = new Panel[10];
 	    
@@ -88,7 +95,7 @@ public class ApartmentListView extends VerticalLayout implements View
 		
 	}
 
-	@RequestMapping(value="/login", method = RequestMethod.GET)
+	 @RequestMapping(method = RequestMethod.GET)
 	public void listApartments(String filterText) {
 		
 		if (StringUtils.isEmpty(filterText)) {
@@ -117,6 +124,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				content.addComponent(new Label(aps.get(contador).getDescription()));
 				content.addComponent(vermas[contador]);
 				content.addComponent(reservar[contador]);
+				content.addComponent(editor);
 
 				vermas[contador].addClickListener(new Button.ClickListener() {
 					
@@ -135,7 +143,7 @@ public class ApartmentListView extends VerticalLayout implements View
 				  }
 				);
 				
-			/*	reservar[contador].addClickListener(new Button.ClickListener() {
+				reservar[contador].addClickListener(new Button.ClickListener() {
 					
 					@Override
 					public void buttonClick(ClickEvent event2) {
@@ -145,28 +153,28 @@ public class ApartmentListView extends VerticalLayout implements View
 							if(event2.getButton()==b)
 							{
 								Apartment a = aps.get(contador);
+								User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+								LocalDate f1 = LocalDate.now();
+								LocalDate f2 = LocalDate.now();
+						
+								editor.editBooking(new Booking(f1, f2, 0.0, a, currentUser));
 								
 							}
 							contador++;
 						}
 					}
 				  }
-				);*/
-				
-			/*	 User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			      String name = user.getUsername(); //get logged in username
-				System.out.println("USERNAME USUARIOOOO "+name);
+				); 
 			
 				content.setSizeUndefined(); // Shrink to fit
 				contenedor.addComponent(content);
 				contenedor.setComponentAlignment(content, Alignment.MIDDLE_CENTER);
 				panel[contador].setContent(contenedor);
-				lista.addComponents(panel[contador]); */
+				lista.addComponents(panel[contador]); 
 			}
 			
-		} 
+		} 		
 		
-		//System.out.println("NOMBREEEEEEEE " + auth.getName());
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {
