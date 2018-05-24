@@ -73,7 +73,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		});
 
 		// Instantiate and edit new Apartment the new button is clicked
-		addNewBtn.addClickListener(e -> editor.editApartment(new Apartment("", "", 1231,false,"")));
+		addNewBtn.addClickListener(e -> editor.editApartment(new Apartment("", "",0.0,false,"")));
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {

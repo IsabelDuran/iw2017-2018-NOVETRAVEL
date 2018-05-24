@@ -26,7 +26,7 @@ public class ApartmentService {
 
 		Apartment apartamento = repo.findById(id);
 		if (apartamento == null) {
-			//throw new ApartmentnameNotFoundException(apartamentoname);
+			//throw new ApartmentnameNotFoundException(apartamento);
 		}
 		return apartamento;
 		//
