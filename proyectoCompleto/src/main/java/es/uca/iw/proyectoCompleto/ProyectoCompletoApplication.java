@@ -27,9 +27,6 @@ import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.Registered;
-import es.uca.iw.proyectoCompleto.users.Administrator;
-import es.uca.iw.proyectoCompleto.users.Manager;
 import es.uca.iw.proyectoCompleto.users.UserService;
 import es.uca.iw.proyectoCompleto.reports.ReportService;
 import es.uca.iw.proyectoCompleto.reports.Report;
@@ -72,19 +69,8 @@ public class ProyectoCompletoApplication {
 				service.save(new User("David", "Palmer"));
 				service.save(u1);
 				service.save(u2);
-				
-				Registered registrado = new Registered("registrado", "registrado");
-				registrado.setPassword("registrado");
-				service.save(registrado);
-				
-				Manager manager = new Manager("manager", "manager");
-				manager.setPassword("manager");
-				service.save(manager);
-				
-				Administrator admin = new Administrator("admin", "admin");
-				admin.setPassword("admin");
-				service.save(admin);
-				
+
+
 				User root = new User("root", "root");
 				root.setPassword("root");
 				service.save(root);

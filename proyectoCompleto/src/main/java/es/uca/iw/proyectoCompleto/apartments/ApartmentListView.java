@@ -49,14 +49,16 @@ public class ApartmentListView extends VerticalLayout implements View
 	
 	
 	private Panel panel[];
+	private ApartmentEditor editor;
 	Button[] vermas;
 
 	
 	private final ApartmentService service;
 
 	@Autowired
-	public ApartmentListView(ApartmentService service) {
+	public ApartmentListView(ApartmentService service, ApartmentEditor editor) {
 		this.service = service;
+		this.editor = editor;
 		panel = new Panel[10];
 	    
 	}
@@ -67,13 +69,17 @@ public class ApartmentListView extends VerticalLayout implements View
 		// Hook logic to components
 
 		
+		// Listen changes made by the editor, refresh data from backend
+		editor.setChangeHandler(() -> {
+			editor.setVisible(false);
+		});
 
 		// Initialize listing
 		listApartments(null);
 		
 	}
 
-	public void listApartments(String filterText) {
+	private void listApartments(String filterText) {
 		
 		if (StringUtils.isEmpty(filterText)) {
 			HorizontalLayout lista = new HorizontalLayout();
