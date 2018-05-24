@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
@@ -15,10 +17,14 @@ import es.uca.iw.proyectoCompleto.users.UserService;
 @SpringUI(path = "/RegisterUI")
 @Theme("vaadinlayouts")
 public class RegisterUI extends UI{
+	
+	@Autowired
+	UserService service;
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		
-		setContent(new RegisterScreen());
+		setContent(new RegisterScreen(service));
 	   	
 	}
 

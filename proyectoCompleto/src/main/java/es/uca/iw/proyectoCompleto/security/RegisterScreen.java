@@ -33,17 +33,13 @@ import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringComponent
-@UIScope
-public class RegisterScreen extends VerticalLayout implements View
+public class RegisterScreen extends VerticalLayout implements ViewDisplay
 {
 	/**
 	 * 
 	 */
 	
 	private User user;
-	
-	private final UserService se = new UserService();
-
 	private Binder<User> binder = new Binder<>(User.class);
     
     TextField firstName = new TextField("Nombre:");
@@ -65,8 +61,10 @@ public class RegisterScreen extends VerticalLayout implements View
     }
 	
 	@Autowired
-	public RegisterScreen()
+	public RegisterScreen(UserService se)
 	{
+		setMargin(false);
+		setSpacing(true); 
 		
         Navbar navbar_ = new Navbar(0);
         addComponent(navbar_);
@@ -87,44 +85,36 @@ public class RegisterScreen extends VerticalLayout implements View
 		binder.forField(direccion).bind(User::getAddress, User::setAddress);
 		binder.forField(email).bind(User::getEmail, User::setEmail);
 		
+		binder.setBean(user);
+		Label aux = new Label(firstName.getCaption());
+		addComponent(aux);
 		
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-		
-		binder.readBean(user);
-		
-		save.addClickListener(ev-> se.save(user));
-	
-		setMargin(false);
-		setSpacing(true); 
-		
-	}
+		try{
+			save.addClickListener(ev-> se.save(user));
+			System.out.println(user.getFirstName());
+		} catch(Exception e)
+		{
+			System.out.println("Usuario llega vacío");
+		}
 	
 	
-	
-	@PostConstruct
-	void init()
-	{
-		
-	}
-	
+	}	
 
 	public interface ChangeHandler {
 
 		void onChange();
 	}
 	
-	private void addUser()
-	{
-		User new_user = new User("firstName", 
-				"lastName", 
-				"username", 
-				"address", 
-				1111, "jaja"); 
-	}
-	
 	public void setChangeHandler(ChangeHandler h) {
 		// ChangeHandler is notified when either save or delete
 		// is clicked
 		save.addClickListener(e -> h.onChange());
+	}
+
+	@Override
+	public void showView(View view) {
+		// TODO Auto-generated method stub
+		
 	}
 }

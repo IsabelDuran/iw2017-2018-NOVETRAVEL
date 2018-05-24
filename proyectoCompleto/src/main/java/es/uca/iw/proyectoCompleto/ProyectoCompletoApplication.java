@@ -73,13 +73,13 @@ public class ProyectoCompletoApplication {
 				service.save(u1);
 				service.save(u2);
 				
-//				Registered registrado = new Registered("registrado", "registrado");
-//				registrado.setPassword("registrado");
-//				service.save(registrado);
-//				
-//				Manager manager = new Manager("manager", "manager");
-//				manager.setPassword("manager");
-//				service.save(manager);
+				Registered registrado = new Registered("registrado", "registrado");
+				registrado.setPassword("registrado");
+				service.save(registrado);
+				
+				Manager manager = new Manager("manager", "manager");
+				manager.setPassword("manager");
+				service.save(manager);
 				
 				Administrator admin = new Administrator("admin", "admin");
 				admin.setPassword("admin");
