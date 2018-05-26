@@ -15,6 +15,7 @@ import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.UI;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
 import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
@@ -41,6 +42,9 @@ public class VaadinUI extends UI {
 	@Autowired
 	UserService se;
 	
+	@Autowired 
+	BookingEditor be;
+	
 	@Override
 	protected void init(VaadinRequest request) {
 		
@@ -57,7 +61,7 @@ public class VaadinUI extends UI {
 	}
 	
 	private void showFrontPage() {
-		setContent(new FrontPage(servicio,se));
+		setContent(new FrontPage(servicio,se,be));
 		
 	}
 
