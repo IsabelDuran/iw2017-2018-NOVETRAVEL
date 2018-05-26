@@ -61,7 +61,7 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
 		setExpandRatio(springViewDisplay, 1.0f);
 		
 
-		ApartmentListView v=new ApartmentListView(s);
+		//ApartmentListView v=new ApartmentListView(s);
 		
 		navbar_.setDisplay(springViewDisplay);
 		navbar_.setUserService(se);
@@ -70,8 +70,8 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
         
         
         
-        springViewDisplay.setContent(v);
-        v.listApartments(null);
+//        springViewDisplay.setContent(v);
+//        v.listApartments(null);
              
 	}
 	

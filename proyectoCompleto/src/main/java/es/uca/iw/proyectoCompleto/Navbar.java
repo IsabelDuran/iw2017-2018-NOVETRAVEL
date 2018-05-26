@@ -40,11 +40,7 @@ public class Navbar extends HorizontalLayout
         setHeight("70px");
         setStyleName("pink-header");
         addStyleName("pink-header");
-		
-		
-        TextField searchbar = new TextField("BUSCAR");
-        addComponent(searchbar);
-        
+	
        
         Button frontPage = new Button("NOVETRAVEL", event -> frontPage());
         frontPage.addStyleNames(ValoTheme.BUTTON_DANGER);
