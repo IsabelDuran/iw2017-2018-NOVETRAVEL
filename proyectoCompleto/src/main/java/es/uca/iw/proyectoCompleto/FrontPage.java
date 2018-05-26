@@ -16,6 +16,7 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.UserService;
+import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 
 @SpringViewDisplay
 public class FrontPage extends VerticalLayout implements ViewDisplay{
@@ -34,7 +35,7 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
         
     }
 	
-	public FrontPage(ApartmentService s,UserService se)
+	public FrontPage(ApartmentService s,UserService se, BookingEditor be)
 	{
 		setMargin(false);
         setSpacing(true);
@@ -61,7 +62,7 @@ public class FrontPage extends VerticalLayout implements ViewDisplay{
 		setExpandRatio(springViewDisplay, 1.0f);
 		
 
-		ApartmentListView v=new ApartmentListView(s);
+		ApartmentListView v=new ApartmentListView(s,be);
 		
 		navbar_.setDisplay(springViewDisplay);
 		navbar_.setUserService(se);
