@@ -40,7 +40,12 @@ public class Navbar extends HorizontalLayout
         setHeight("70px");
         setStyleName("pink-header");
         addStyleName("pink-header");
-	
+        
+       
+        Label title = new Label("NOVETRAVEL");
+        title.setStyleName("white-title");
+        addComponent(title);
+        this.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
        
         Button frontPage = new Button("NOVETRAVEL", event -> frontPage());
         frontPage.addStyleNames(ValoTheme.BUTTON_DANGER);

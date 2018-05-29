@@ -21,13 +21,13 @@ public class Location {
 	
 	private int floor_;
 	
-	private char letter_;
+	private String letter_;
 	
-	protected Location() {
+	public Location() {
 		
 	}
 
-	public Location(String city_, String postalCode_, String street_, int number_, int floor_, char letter_) {
+	public Location(String city_, String postalCode_, String street_, int number_, int floor_, String letter_) {
 		super();
 		this.city_ = city_;
 		this.postalCode_ = postalCode_;
@@ -77,11 +77,11 @@ public class Location {
 		this.floor_ = floor_;
 	}
 
-	public char getLetter_() {
+	public String getLetter_() {
 		return letter_;
 	}
 
-	public void setLetter_(char letter_) {
+	public void setLetter_(String letter_) {
 		this.letter_ = letter_;
 	}
 

@@ -10,24 +10,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
-public class Registered extends User{
+public class Host extends User{
 	
-	public Registered() {
+	public Host() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registered(String firstName, String lastName, String address, int zipcode, String email) {
+	public Host(String firstName, String lastName, String address, int zipcode, String email) {
 		super(firstName, lastName, address, zipcode, email);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registered(String firstName, String lastName, String username, String address, int zipcode, String email) {
+	public Host(String firstName, String lastName, String username, String address, int zipcode, String email) {
 		super(firstName, lastName, username, address, zipcode, email);
 		// TODO Auto-generated constructor stub
 	}
 
-	public Registered(String firstName, String lastName) {
+	public Host(String firstName, String lastName) {
 		super(firstName, lastName);
 		// TODO Auto-generated constructor stub
 	}
