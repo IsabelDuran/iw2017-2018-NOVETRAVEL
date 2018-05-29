@@ -143,7 +143,7 @@ public class User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
-		//list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+		list.add(new SimpleGrantedAuthority("ROLE_USER"));
 		return list;
 		
 	}

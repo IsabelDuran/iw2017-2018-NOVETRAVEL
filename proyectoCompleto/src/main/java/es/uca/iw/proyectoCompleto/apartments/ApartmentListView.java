@@ -36,6 +36,7 @@ import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.reports.Report;
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.bookings.*;
 import es.uca.iw.proyectoCompleto.users.*;
@@ -85,7 +86,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 		// Hook logic to components
 
 		// Initialize listing
-		listApartments(null);
+		listApartments(service.findAll());
 
 	}
 
@@ -96,12 +97,13 @@ public class ApartmentListView extends VerticalLayout implements View {
 			addComponents(lista);
 			vermas = new Button[aps.size()];
 			reservar = new Button[aps.size()]; // Tantos botones como apartamentos haya
-
+	
 			for (int contador = 0; contador < aps.size(); contador++) {
 				VerticalLayout contenedor = new VerticalLayout();
 				ap = aps.get(contador);
 				vermas[contador] = new Button("Ver mas...");
 				reservar[contador] = new Button("Reservar");
+				reservar[contador].setVisible(SecurityUtils.hasRole("ROLE_USER"));
 
 				panel[contador] = new Panel(aps.get(contador).getName());
 				panel[contador].setHeight(300, Unit.PIXELS);

@@ -124,8 +124,7 @@ public class ProyectoCompletoApplication {
 			
 				a1=new Apartment("apartamento", "es un apartamento",3.0,true,"unifamiliar");
 				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , 'c');
-				//ls.save(l1); 
-				//a1.setLocation(l1);
+				a1.setLocation(l1);
 				a2 = new Apartment("apartamento2", "aaa", 20.0, true, "piso");
 				ap.save(a1);
 				ap.save(a2);

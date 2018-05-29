@@ -16,6 +16,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.location.Location;
+import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
@@ -56,8 +58,17 @@ public class ApartmentEditor extends VerticalLayout {
 	CheckBox kids_allowed = new CheckBox("Se permiten niños");
 	CheckBox smoking_allowed = new CheckBox("Se permite fumar");
 	
+	TextField city = new TextField("Ciudad:");
+	TextField street_ = new TextField("Calle:");
+	TextField postalcode_ = new TextField("Código postal:");
+	TextField floor_ = new TextField("Piso:");
+	TextField letter_ = new TextField("Letra:");
+    TextField number_ = new TextField("Numero:");
+    
+	
 	Label description_label = new Label("Descripción del apartamento:");
 	Label service_label = new Label("Selecciona los servicios que posee tu apartamento:");
+	Label location_label = new Label("¿Dónde está tu apartamento?");
 
 
 	/* Action buttons */
@@ -75,8 +86,10 @@ public class ApartmentEditor extends VerticalLayout {
 		
 		description_label.setStyleName(ValoTheme.LABEL_H2);
 		service_label.setStyleName(ValoTheme.LABEL_H2);
+		location_label.setStyleName(ValoTheme.LABEL_H2);
 		addComponents(description_label, name, description, price_per_day, apartment_type, max_hosts, number_beds, number_rooms, number_bathrooms,
-				squared_meters, service_label, crib, parking, wifi, own_bathroom, own_kitchen, pets_allowed, kids_allowed, smoking_allowed, actions);
+				squared_meters, service_label, crib, parking, wifi, own_bathroom, own_kitchen, pets_allowed, kids_allowed, smoking_allowed, location_label, city, street_, postalcode_, 
+				floor_, letter_, number_, actions);
 
 		// bind using naming convention
 		binder.forField(name).bind(Apartment::getName,Apartment::setName);
@@ -98,7 +111,7 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(pets_allowed).bind(Apartment::isPets_allowed, Apartment::setPets_allowed);
 		binder.forField(kids_allowed).bind(Apartment::isKids_allowed, Apartment::setKids_allowed);
 		binder.forField(smoking_allowed).bind(Apartment::isSmoking_allowed, Apartment::setSmoking_allowed);
-		
+				
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
