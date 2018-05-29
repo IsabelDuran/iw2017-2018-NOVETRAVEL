@@ -65,6 +65,14 @@ public class Apartment{
 		this.id = id;
 	}
 	
+	public Apartment_OfferedServices getOffered_services() {
+		return offered_services;
+	}
+
+	public void setOffered_services(Apartment_OfferedServices offered_services) {
+		this.offered_services = offered_services;
+	}
+
 	public Location getLocation() {
 		return this.location;
 	}
