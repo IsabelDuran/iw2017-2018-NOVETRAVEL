@@ -1,6 +1,7 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToDoubleConverter;
@@ -19,6 +20,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringComponent
 @UIScope
@@ -111,7 +113,7 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(pets_allowed).bind(Apartment::isPets_allowed, Apartment::setPets_allowed);
 		binder.forField(kids_allowed).bind(Apartment::isKids_allowed, Apartment::setKids_allowed);
 		binder.forField(smoking_allowed).bind(Apartment::isSmoking_allowed, Apartment::setSmoking_allowed);
-				
+		
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
@@ -119,7 +121,10 @@ public class ApartmentEditor extends VerticalLayout {
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-		save.addClickListener(e -> service.save(apartamento));
+		save.addClickListener(e -> {service.save(apartamento);
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		user_.addApartments(apartamento);
+		});
 		delete.addClickListener(e -> service.delete(apartamento));
 		cancel.addClickListener(e -> editApartment(apartamento));
 		setVisible(false);

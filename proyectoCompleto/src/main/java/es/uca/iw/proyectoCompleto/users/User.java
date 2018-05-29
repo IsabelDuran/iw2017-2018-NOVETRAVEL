@@ -17,6 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.creditCard.CreditCard;
 
@@ -49,8 +50,11 @@ public class User implements UserDetails{
 //	@OneToMany(fetch=FetchType.EAGER)
 //	private List<CreditCard> creditCard;
 	
-	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="user")
 	private List<Booking> booking;
+	
+	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
+	private List<Apartment> apartments;
 	
 	protected User() {
 	}
@@ -62,6 +66,16 @@ public class User implements UserDetails{
 		this.address = address;
 		this.zipcode = zipcode;
 		this.email = email;
+	}
+	
+	public User(String firstName, String lastName, String username, String address, int zipcode, String email, Apartment apartment) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.username = username;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.email = email;
+		this.apartments.add(apartment);
 	}
 
 	public User(String firstName, String lastName, String address, int zipcode, String email) {
@@ -82,6 +96,20 @@ public class User implements UserDetails{
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public List<Apartment> getApartments() {
+		return apartments;
+	} 
+
+	public void addApartments(Apartment apartment) {
+		if(apartment != null)
+			this.apartments.add(apartment);
+	} 
+	
+	public void setApartments(List<Apartment> apartments)
+	{
+		this.apartments = apartments;
 	}
 
 	public String getLastName() {

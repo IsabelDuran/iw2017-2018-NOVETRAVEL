@@ -86,7 +86,8 @@ public class ApartmentListView extends VerticalLayout implements View {
 		// Hook logic to components
 
 		// Initialize listing
-		listApartments(service.findAll());
+		if(SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER"))
+			listApartments(service.findAll());
 
 	}
 

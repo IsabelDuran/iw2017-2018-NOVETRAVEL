@@ -3,6 +3,9 @@ package es.uca.iw.proyectoCompleto.location;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 
 @Entity
 public class Location {
@@ -23,6 +26,17 @@ public class Location {
 	
 	private char letter_;
 	
+	@OneToOne
+	private Apartment apartment;
+	
+	public Apartment getApartment() {
+		return apartment;
+	}
+
+	public void setApartment(Apartment apartment) {
+		this.apartment = apartment;
+	}
+
 	protected Location() {
 		
 	}
