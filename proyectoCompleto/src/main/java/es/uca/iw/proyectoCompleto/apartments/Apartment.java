@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
+import es.uca.iw.proyectoCompleto.location.Location;
 
 @Entity
 public class Apartment{
@@ -40,6 +41,9 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment")
 	private List<Booking> bookings;
 	
+	@OneToOne
+	private Location location;
+	
 	protected Apartment() {
 	}
 	
@@ -59,6 +63,15 @@ public class Apartment{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Location getLocation() {
+		return this.location;
+	}
+	
+	public void setLocation(Location location)
+	{
+		this.location = location;
 	}
 	
 	public List<ImageApartment> getImages() {
@@ -129,35 +142,6 @@ public class Apartment{
 	public Apartment_OfferedServices getServices()
 	{
 		return this.offered_services;
-	}
-	
-	public void setServices(boolean wifi,
-							boolean pets_allowed,
-							boolean own_bathroom,
-							boolean kids_allowed,
-							boolean smoking_allowed,
-							boolean crib,
-							boolean parking,
-							boolean kitchen,
-							int rooms,
-							int number_bathrooms,
-							int max_hosts,
-							int number_beds,
-							int squared_meters)
-	{
-		offered_services.wifi = wifi;
-		offered_services.pets_allowed = pets_allowed;
-		offered_services.own_bathroom = own_bathroom;
-		offered_services.kids_allowed = kids_allowed;
-		offered_services.smoking_allowed = smoking_allowed;
-		offered_services.crib = crib;
-		offered_services.parking = parking;
-		offered_services.kitchen = kitchen;
-		offered_services.rooms = rooms;
-		offered_services.number_bathrooms = number_bathrooms;
-		offered_services.max_hosts = max_hosts;
-		offered_services.number_beds = number_beds;
-		offered_services.squared_meters = squared_meters;
 	}
 	
 	public boolean isWifi() {

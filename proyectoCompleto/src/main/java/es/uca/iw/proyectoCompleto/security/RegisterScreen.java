@@ -86,13 +86,10 @@ public class RegisterScreen extends VerticalLayout implements ViewDisplay
 		binder.forField(email).bind(User::getEmail, User::setEmail);
 		
 		binder.setBean(user);
-		Label aux = new Label(firstName.getCaption());
-		addComponent(aux);
 		
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		try{
 			save.addClickListener(ev-> se.save(user));
-			System.out.println(user.getFirstName());
 		} catch(Exception e)
 		{
 			System.out.println("Usuario llega vacío");

@@ -25,14 +25,16 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
+import es.uca.iw.proyectoCompleto.location.Location;
+import es.uca.iw.proyectoCompleto.location.LocationService;
+import es.uca.iw.proyectoCompleto.reports.Report;
+import es.uca.iw.proyectoCompleto.reports.ReportService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
-import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.Registered;
 import es.uca.iw.proyectoCompleto.users.Administrator;
 import es.uca.iw.proyectoCompleto.users.Manager;
+import es.uca.iw.proyectoCompleto.users.Registered;
+import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
-import es.uca.iw.proyectoCompleto.reports.ReportService;
-import es.uca.iw.proyectoCompleto.reports.Report;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class ProyectoCompletoApplication {
@@ -121,6 +123,9 @@ public class ProyectoCompletoApplication {
 			{
 			
 				a1=new Apartment("apartamento", "es un apartamento",3.0,true,"unifamiliar");
+				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , 'c');
+				//ls.save(l1); 
+				//a1.setLocation(l1);
 				a2 = new Apartment("apartamento2", "aaa", 20.0, true, "piso");
 				ap.save(a1);
 				ap.save(a2);
@@ -137,7 +142,7 @@ public class ProyectoCompletoApplication {
 			}}
 			catch(Exception e)
 			{
-				System.out.println("Excepcion no controlada");
+				System.out.println("Excepcion no controlada" + e.getMessage());
 			}
 
 		};

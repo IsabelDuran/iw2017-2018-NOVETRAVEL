@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,13 @@ public class ApartmentService {
 	public List<Apartment> findAll() {
 		return repo.findAll();
 	}
-
+	
+	public List<Apartment> loadApartmentByLocation(String city)
+	{
+		List<Apartment> apartamentos = repo.findByLocation(city);
+		if (apartamentos == null)
+			apartamentos = new ArrayList<>();
+		return apartamentos;
+		
+	}
 }

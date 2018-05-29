@@ -61,14 +61,14 @@ public class MainScreen extends VerticalLayout implements ViewDisplay {
 		final CssLayout navigationBar = new CssLayout();
 		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		navigationBar.addComponent(createNavigationButton("Bienvenido", WelcomeView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Usuarios", UserView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Usuarios Registrados", UserView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Gestión de Usuarios", UserManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Gestión Apartamentos", ApartmentManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentListView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
-		//navigationBar.addComponent(createNavigationButton("Disputas", DisputeManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Imagenes",ImageApartmentView.VIEW_NAME));
+//		navigationBar.addComponent(createNavigationButton("Disputas", DisputeManagementView.VIEW_NAME));
+//		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
+//		navigationBar.addComponent(createNavigationButton("Imagenes",ImageApartmentView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
 		// Creamos el panel
