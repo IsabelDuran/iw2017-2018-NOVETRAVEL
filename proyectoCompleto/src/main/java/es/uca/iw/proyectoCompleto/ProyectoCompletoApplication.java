@@ -32,7 +32,7 @@ import es.uca.iw.proyectoCompleto.reports.ReportService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.Administrator;
 import es.uca.iw.proyectoCompleto.users.Manager;
-import es.uca.iw.proyectoCompleto.users.Registered;
+import es.uca.iw.proyectoCompleto.users.Host;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -75,7 +75,7 @@ public class ProyectoCompletoApplication {
 				service.save(u1);
 				service.save(u2);
 				
-				Registered registrado = new Registered("registrado", "registrado");
+				Host registrado = new Host("registrado", "registrado");
 				registrado.setPassword("registrado");
 				service.save(registrado);
 				
@@ -92,38 +92,13 @@ public class ProyectoCompletoApplication {
 				service.save(root);
 				
 				System.out.println("USUARIOS 1 CREADOS!!!!!!! ");
-
-				// fetch all users
-			/*	log.info("Users found with findAll():");
-				log.info("-------------------------------");
-				for (User user : service.findAll()) {
-					log.info(user.toString());
-				}
-				log.info("");
-
-				// fetch an individual user by ID
-				User user = service.findOne(1L);
-				log.info("User found with findOne(1L):");
-				log.info("--------------------------------");
-				log.info(user.toString());
-				log.info("");
-
-				// fetch users by last name
-				log.info("User found with findByLastNameStartsWithIgnoreCase('Bauer'):");
-				log.info("--------------------------------------------");
-				for (User bauer : service.findByLastNameStartsWithIgnoreCase("Bauer")) {
-					log.info(bauer.toString());
-				}
-				log.info("");*/
-				
-				System.out.println("USUARIOS final CREADOS!!!!!!! ");
 			}
 			
 			if(ap.findAll().size()==0)
 			{
 			
 				a1=new Apartment("apartamento", "es un apartamento",3.0,true,"unifamiliar");
-				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , 'c');
+				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , "c");
 				a1.setLocation(l1);
 				a2 = new Apartment("apartamento2", "aaa", 20.0, true, "piso");
 				ap.save(a1);
@@ -172,15 +147,6 @@ public class ProyectoCompletoApplication {
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 			auth.authenticationProvider(authenticationProvider());
-
-			// auth
-			// .inMemoryAuthentication()
-			// .withUser("admin").password("p").roles("ADMIN", "MANAGER",
-			// "USER")
-			// .and()
-			// .withUser("manager").password("p").roles("MANAGER", "USER")
-			// .and()
-			// .withUser("user").password("p").roles("USER");
 			
 		}
 
