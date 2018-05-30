@@ -22,6 +22,7 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -33,6 +34,7 @@ import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
+import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
 
@@ -45,14 +47,16 @@ public class ApartmentListView extends VerticalLayout implements View {
 
 	private BookingEditor editor;
 
-
+	Panel p;
 
 	private final ApartmentService service;
+	private final ImageApartmentService image;
 
 	@Autowired
-	public ApartmentListView(ApartmentService service, BookingEditor editor) {
+	public ApartmentListView(ApartmentService service, BookingEditor editor,ImageApartmentService imap) {
 		this.editor = editor;
 		this.service = service;
+		this.image=imap;
 	}
 
 	@PostConstruct
@@ -62,6 +66,11 @@ public class ApartmentListView extends VerticalLayout implements View {
 		// Initialize listing
 		listApartments(service.findAll());
 
+	}
+	
+	public void setPanel(Panel p)
+	{
+		this.p=p;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
@@ -105,8 +114,17 @@ public class ApartmentListView extends VerticalLayout implements View {
 	}
 
 	public void ultimo(Apartment pinchado) {
-		MainScreen.setUltimoPinchado(pinchado);
-		getUI().getNavigator().navigateTo("apartmentView");
+		if(getUI()==null)
+		{
+			MainScreen.setUltimoPinchado(pinchado);
+			getUI().getNavigator().navigateTo("apartmentView");
+		}
+		else {
+			ApartmentView ap=new ApartmentView(service,image);
+			this.p.setContent((Component)ap);
+			ap.setApartamento(pinchado);
+			ap.mostrarApartamento();
+		}
 
 	}
 
