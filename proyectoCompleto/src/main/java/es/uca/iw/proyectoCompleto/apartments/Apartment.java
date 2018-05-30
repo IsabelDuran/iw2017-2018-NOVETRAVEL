@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
@@ -25,6 +26,7 @@ public class Apartment{
 
 	private String description;
 	
+	@Min(value = 1L, message = "The value must be positive")
 	private Double price_per_day;
 
 	private boolean book;
