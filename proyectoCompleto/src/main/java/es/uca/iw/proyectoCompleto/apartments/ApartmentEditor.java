@@ -2,6 +2,7 @@ package es.uca.iw.proyectoCompleto.apartments;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
@@ -21,6 +22,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringComponent
 @UIScope
@@ -149,6 +151,9 @@ public class ApartmentEditor extends VerticalLayout {
 			}
 			ls.save(this.location);
 			
+			User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user_.addApartments(apartment);
+			apartment.setUser(user_);
 			apartment.setLocation(this.location);
 			service.save(this.apartment);
 		});
