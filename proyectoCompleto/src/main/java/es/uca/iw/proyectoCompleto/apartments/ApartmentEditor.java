@@ -2,13 +2,11 @@ package es.uca.iw.proyectoCompleto.apartments;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
-import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -23,7 +21,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringComponent
 @UIScope
@@ -100,7 +97,7 @@ public class ApartmentEditor extends VerticalLayout {
 
 		// bind using naming convention
 		binder.forField(name).bind(Apartment::getName,Apartment::setName);
-		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);	
+		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);
 		binder.forField(price_per_day).withConverter(new StringToDoubleConverter("Introducir un número")).bind(Apartment::getPrice_per_day,Apartment::setPrice_per_day);
 		binder.forField(apartment_type).bind(Apartment::getApartment_type,Apartment::setApartment_type);
 		binder.forField(max_hosts).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getMax_hosts, Apartment::setMax_hosts);
@@ -118,9 +115,6 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(pets_allowed).bind(Apartment::isPets_allowed, Apartment::setPets_allowed);
 		binder.forField(kids_allowed).bind(Apartment::isKids_allowed, Apartment::setKids_allowed);
 		binder.forField(smoking_allowed).bind(Apartment::isSmoking_allowed, Apartment::setSmoking_allowed);
-
-		
-		// Configure and style components
 				
 		
 		loc_binder.forField(city_).bind(Location::getCity_, Location::setCity_);
@@ -137,13 +131,6 @@ public class ApartmentEditor extends VerticalLayout {
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-
-		save.addClickListener(e -> {service.save(apartment);
-		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		user_.addApartments(apartment);
-		});
-		delete.addClickListener(e -> service.delete(apartment));
-		cancel.addClickListener(e -> editApartment(apartment));
 		save.addClickListener(e -> 
 		{
 			if(loc_binder == null

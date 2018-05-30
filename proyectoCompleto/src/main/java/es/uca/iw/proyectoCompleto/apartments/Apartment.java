@@ -45,7 +45,7 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment")
 	private List<Booking> bookings;
 	
-	@OneToOne(cascade = {CascadeType.ALL})	
+	@OneToOne
 	private Location location;
 	
 	@ManyToOne
