@@ -100,8 +100,7 @@ public class ApartmentEditor extends VerticalLayout {
 
 		// bind using naming convention
 		binder.forField(name).bind(Apartment::getName,Apartment::setName);
-		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);
-		price_per_day.addValidator(new IntegerRangeValidator("Please enter an integer greater than or equal to 0.", 0, null));
+		binder.forField(description).bind(Apartment::getDescription,Apartment::setDescription);	
 		binder.forField(price_per_day).withConverter(new StringToDoubleConverter("Introducir un número")).bind(Apartment::getPrice_per_day,Apartment::setPrice_per_day);
 		binder.forField(apartment_type).bind(Apartment::getApartment_type,Apartment::setApartment_type);
 		binder.forField(max_hosts).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Apartment::getMax_hosts, Apartment::setMax_hosts);

@@ -23,6 +23,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -64,7 +65,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 		// Hook logic to components
 
 		// Initialize listing
-		if(SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER"))
+		if(SecurityUtils.hasRole("ROLE_MANAGEMENT") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER"))
 			listApartments(service.findAll());
 
 	}
@@ -77,7 +78,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	@RequestMapping(method = RequestMethod.GET)
 	public void listApartments(List<Apartment> aps) {
 		if (!aps.isEmpty()) {
-			HorizontalLayout lista = new HorizontalLayout();
+			GridLayout lista = new GridLayout(3, 3);
 			addComponents(lista);
 	
 			for (Apartment i : aps) {
