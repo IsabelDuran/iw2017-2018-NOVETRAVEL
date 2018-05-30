@@ -24,7 +24,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -42,6 +41,12 @@ import es.uca.iw.proyectoCompleto.users.User;
 @Controller
 @SpringView(name = ApartmentListView.VIEW_NAME)
 public class ApartmentListView extends VerticalLayout implements View {
+
+	
+	private static final long serialVersionUID = 1L;
+
+
+
 	public static final String VIEW_NAME = "apartmentListView";
 
 
@@ -77,6 +82,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void listApartments(List<Apartment> aps) {
+		this.removeAllComponents();
 		if (!aps.isEmpty()) {
 			GridLayout lista = new GridLayout(3, 3);
 			addComponents(lista);
@@ -93,25 +99,21 @@ public class ApartmentListView extends VerticalLayout implements View {
 		}
 	}
 
-	public void desplegarImagen(Layout l, ImageApartment A) {
-
-		final String name = "";
-		// final ByteArrayOutputStream bas=new ByteArrayOutputStream(A.getFile());
-
+	public void desplegarImagen(Layout layout, ImageApartment imageApartment) {
 		final StreamResource.StreamSource streamSource = () -> {
-
-			if (A.getFile() != null) {
-				final byte[] byteArray = A.getFile();
+			
+			if (imageApartment.getFile() != null) {
+				final byte[] byteArray = imageApartment.getFile();
 
 				return new ByteArrayInputStream(byteArray);
 			}
 			return null;
 		};
-		final StreamResource resource = new StreamResource(streamSource, name);
+		final StreamResource resource = new StreamResource(streamSource, "");
 		Image im = new Image("", resource);
 		im.setWidth(100, Unit.PIXELS);
 		im.setHeight(100, Unit.PIXELS);
-		l.addComponent(im);
+		layout.addComponent(im);
 
 	}
 
