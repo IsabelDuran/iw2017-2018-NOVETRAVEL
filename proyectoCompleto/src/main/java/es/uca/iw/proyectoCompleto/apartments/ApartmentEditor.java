@@ -1,9 +1,11 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.ValidationException;
 import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction;
@@ -30,17 +32,22 @@ public class ApartmentEditor extends VerticalLayout {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final ApartmentService service;
-	private Apartment apartamento;
 	
 	/**
 	 * The currently edited apartment
 	 */
 	
-
-	private Binder<Apartment> binder = new Binder<>(Apartment.class);
-
+	@Autowired
+	private ApartmentService service;
+	@Autowired
+	private LocationService ls;
 	
+	private Apartment apartment;
+	private Location location;
+	
+	private Binder<Apartment> binder = new Binder<>();
+	private Binder<Location> loc_binder = new Binder<>();
+
 	/* Fields to edit properties in Apartment entity */
 	TextField name = new TextField("Nombre del apartamento:");
 	TextField description = new TextField("Descripcción");
@@ -60,14 +67,13 @@ public class ApartmentEditor extends VerticalLayout {
 	CheckBox kids_allowed = new CheckBox("Se permiten niños");
 	CheckBox smoking_allowed = new CheckBox("Se permite fumar");
 	
-	TextField city = new TextField("Ciudad:");
+	TextField city_ = new TextField("Ciudad:");
 	TextField street_ = new TextField("Calle:");
 	TextField postalcode_ = new TextField("Código postal:");
 	TextField floor_ = new TextField("Piso:");
 	TextField letter_ = new TextField("Letra:");
     TextField number_ = new TextField("Numero:");
-    
-	
+    	
 	Label description_label = new Label("Descripción del apartamento:");
 	Label service_label = new Label("Selecciona los servicios que posee tu apartamento:");
 	Label location_label = new Label("¿Dónde está tu apartamento?");
@@ -81,17 +87,15 @@ public class ApartmentEditor extends VerticalLayout {
 	/* Layout for buttons */
 	CssLayout actions = new CssLayout(save, cancel, delete);
 
+	public ApartmentEditor() {
 
-	@Autowired
-	public ApartmentEditor(ApartmentService service) {
-		this.service = service;
 		
 		description_label.setStyleName(ValoTheme.LABEL_H2);
 		service_label.setStyleName(ValoTheme.LABEL_H2);
 		location_label.setStyleName(ValoTheme.LABEL_H2);
 		addComponents(description_label, name, description, price_per_day, apartment_type, max_hosts, number_beds, number_rooms, number_bathrooms,
-				squared_meters, service_label, crib, parking, wifi, own_bathroom, own_kitchen, pets_allowed, kids_allowed, smoking_allowed, location_label, city, street_, postalcode_, 
-				floor_, letter_, number_, actions);
+				squared_meters, service_label, crib, parking, wifi, own_bathroom, own_kitchen, pets_allowed, kids_allowed, smoking_allowed, location_label, 
+				city_, street_, postalcode_, floor_, letter_, number_, actions);
 
 		// bind using naming convention
 		binder.forField(name).bind(Apartment::getName,Apartment::setName);
@@ -113,20 +117,56 @@ public class ApartmentEditor extends VerticalLayout {
 		binder.forField(pets_allowed).bind(Apartment::isPets_allowed, Apartment::setPets_allowed);
 		binder.forField(kids_allowed).bind(Apartment::isKids_allowed, Apartment::setKids_allowed);
 		binder.forField(smoking_allowed).bind(Apartment::isSmoking_allowed, Apartment::setSmoking_allowed);
+
 		
 		// Configure and style components
+				
+		
+		loc_binder.forField(city_).bind(Location::getCity_, Location::setCity_);
+		loc_binder.forField(street_).bind(Location::getStreet_, Location::setStreet_);
+		loc_binder.forField(postalcode_).bind(Location::getPostalCode_, Location::setPostalCode_);
+		loc_binder.forField(floor_).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Location::getFloor_, Location::setFloor_);
+		loc_binder.forField(letter_).bind(Location::getLetter_, Location::setLetter_);
+		loc_binder.forField(number_).withConverter(new StringToIntegerConverter("Introducir un número")).bind(Location::getNumber_, Location::setNumber_);
+		
+		// 		Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-		save.addClickListener(e -> {service.save(apartamento);
+
+		save.addClickListener(e -> {service.save(apartment);
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		user_.addApartments(apartamento);
+		user_.addApartments(apartment);
 		});
-		delete.addClickListener(e -> service.delete(apartamento));
-		cancel.addClickListener(e -> editApartment(apartamento));
+		delete.addClickListener(e -> service.delete(apartment));
+		cancel.addClickListener(e -> editApartment(apartment));
+		save.addClickListener(e -> 
+		{
+			if(loc_binder == null
+			   || binder == null
+			   || this.location == null
+			   || this.apartment == null)
+				System.out.println("ALGO ES NULO");
+			
+			try {
+				loc_binder.writeBean(this.location);
+				binder.writeBean(this.apartment);
+				 
+			} catch (ValidationException e1) {
+				// TODO Auto-generated catch block
+
+			}
+			ls.save(this.location);
+			
+			apartment.setLocation(this.location);
+			service.save(this.apartment);
+		});
+		
+		delete.addClickListener(e -> service.delete(apartment));
+		cancel.addClickListener(e -> editApartment(apartment));
 		setVisible(false);
 		
 		// Solo borra el admin
@@ -138,34 +178,27 @@ public class ApartmentEditor extends VerticalLayout {
 		void onChange();
 	}
 
-	public final void editApartment(Apartment c) {
-		if (c == null) {
-			setVisible(false);
-			return;
+	public final void editApartment(Apartment apartment) {
+		if(apartment == null)
+		{
+			this.apartment = new Apartment();
+			this.apartment.setOffered_services(new Apartment_OfferedServices());
+			binder.setBean(apartment);
+			this.location = new Location();
+			loc_binder.setBean(location);
 		}
-		final boolean persisted = c.getId() != null;
-		if (persisted) {
-			// Find fresh entity for editing
-			apartamento = service.findOne(c.getId());
+		else
+		{
+			this.apartment = apartment;
+			this.location = apartment.getLocation();
+			binder.setBean(apartment);
+			loc_binder.setBean(this.location);
 		}
-		else {
-			apartamento = c;
-		}
-		cancel.setVisible(persisted);
-
-		// Bind apartment properties to similarly named fields
-		// Could also use annotation or "manual binding" or programmatically
-		// moving values from fields to entities before saving
-		binder.setBean(apartamento);
-
+		
 		setVisible(true);
-
-		// A hack to ensure the whole form is visible
 		save.focus();
-		// Select all text in firstName field automatically
 		name.selectAll();
 	}
-
 	public void setChangeHandler(ChangeHandler h) {
 		// ChangeHandler is notified when either save or delete
 		// is clicked
