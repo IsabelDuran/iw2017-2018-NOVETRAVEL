@@ -59,7 +59,6 @@ public class ApartmentView extends VerticalLayout implements View
 
 	
 	private Panel panel[];
-	private ApartmentEditor editor;
 
 	private final ImageApartmentService imageService;
 	
@@ -69,9 +68,8 @@ public class ApartmentView extends VerticalLayout implements View
 	private Apartment apartment;
 
 	@Autowired
-	public ApartmentView(ApartmentService service, ApartmentEditor editor,ImageApartmentService imageService) {
+	public ApartmentView(ApartmentService service,ImageApartmentService imageService) {
 		this.service = service;
-		this.editor = editor;
 		this.imageService=imageService;
 		panel = new Panel[10];
 	    
@@ -84,21 +82,23 @@ public class ApartmentView extends VerticalLayout implements View
 		// Hook logic to components
 	
 		// Listen changes made by the editor, refresh data from backend
-		editor.setChangeHandler(() -> {
-			editor.setVisible(false);
-		});
-
 		// Initialize listing
-		listApartments(null);
+		mostrarApartamento();
 		
 	}
+	
+	public void setApartamento(Apartment ap)
+	{
+		this.apartment=ap;
+	}
 
-	private void listApartments(String filterText) {
+	public void mostrarApartamento() {
 		
-		if (StringUtils.isEmpty(filterText)) {
+
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			apartment = (Apartment) MainScreen.getUltimoPinchado();
+			if(apartment==null)
+				apartment = (Apartment) MainScreen.getUltimoPinchado();
 			
 			//PONER IMAGEN AQUI
 			lista.addComponent(new Label(apartment.getName()));
@@ -114,7 +114,7 @@ public class ApartmentView extends VerticalLayout implements View
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 			//
 			//
-		} 
+		
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
@@ -234,10 +234,6 @@ public class ApartmentView extends VerticalLayout implements View
         
 	}
 	
-	
-	public void ultimo(Apartment pinchado) {
-		MainScreen.setUltimoPinchado(pinchado);
-	}
 	
 	@Override
 	public void enter(ViewChangeEvent event) {

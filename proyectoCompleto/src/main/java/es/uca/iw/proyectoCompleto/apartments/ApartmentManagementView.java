@@ -2,7 +2,10 @@ package es.uca.iw.proyectoCompleto.apartments;
 
 import javax.annotation.PostConstruct;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.shared.ui.ValueChangeMode;
@@ -13,10 +16,12 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+import java.util.List;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentManagementView.VIEW_NAME)
 public class ApartmentManagementView extends VerticalLayout implements View{
@@ -52,6 +57,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		addComponents(actions, grid, editor);
 		
@@ -65,7 +71,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 
 		// Replace listing with filtered content when user changes filter
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listApartments(e.getValue()));
+		filter.addValueChangeListener(e -> listApartments(e.getValue(), user_.getApartments()));
 
 		// Connect selected Apartment to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
@@ -73,21 +79,26 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		});
 
 		// Instantiate and edit new Apartment the new button is clicked
+
+		addNewBtn.addClickListener(e -> editor.editApartment(new Apartment("", "",0.0,false,"",user_)));
+
 		addNewBtn.addClickListener(e -> editor.editApartment(null));
+
 
 		// Listen changes made by the editor, refresh data from backend
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
-			listApartments(filter.getValue());
+			listApartments(filter.getValue(), user_.getApartments());
 		});
 
 		// Initialize listing
-		listApartments(null);
+		
+		listApartments(null, user_.getApartments());
 		
 	}
 
-	private void listApartments(String filterText) {
-		grid.setItems(service.findAll());
+	private void listApartments(String filterText, List<Apartment> aps) {
+		grid.setItems(aps);
 	}
 	
 	

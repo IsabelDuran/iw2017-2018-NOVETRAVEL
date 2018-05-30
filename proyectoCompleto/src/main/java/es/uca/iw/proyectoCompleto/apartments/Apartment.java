@@ -2,6 +2,7 @@ package es.uca.iw.proyectoCompleto.apartments;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Min;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.location.Location;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @Entity
 public class Apartment{
@@ -43,8 +45,11 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment")
 	private List<Booking> bookings;
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})	
 	private Location location;
+	
+	@ManyToOne
+	private User user;
 	
 	protected Apartment() {
 	}
@@ -57,6 +62,17 @@ public class Apartment{
 		this.book = true;
 		this.apartment_type = type;
 		this.offered_services = new Apartment_OfferedServices();
+	}	
+	
+	public Apartment(String name, String description, Double price_per_day, boolean book, String type, User user) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.price_per_day = price_per_day;
+		this.book = true;
+		this.apartment_type = type;
+		this.offered_services = new Apartment_OfferedServices();
+		this.user = user;
 	}	
 
 	public Long getId() {
@@ -140,6 +156,14 @@ public class Apartment{
 		this.apartment_type = apartment_type;
 	}
 	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public List<Booking> getBookings() {
 		return bookings;
 	}

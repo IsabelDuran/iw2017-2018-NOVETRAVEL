@@ -6,7 +6,7 @@ import com.vaadin.spring.access.ViewAccessControl;
 import com.vaadin.ui.UI;
 
 /**
- * This demonstrates how you can control access to views.
+ * This demonstrates how you can control access to views. 
  */
 @Component
 public class SampleViewAccessControl implements ViewAccessControl {
@@ -21,18 +21,18 @@ public class SampleViewAccessControl implements ViewAccessControl {
     	} else if (beanName.equals("welcomeView")) {
             return true;
         } else if (beanName.equals("userView")) {
-            return SecurityUtils.hasRole("ROLE_USER") || SecurityUtils.hasRole("ROLE_MANAGER");
+            return SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_MANAGER");
         } else if (beanName.equals("userManagementView")) {
             return SecurityUtils.hasRole("ROLE_MANAGER");
         }
         else if (beanName.equals("apartmentManagementView")) {
-            return SecurityUtils.hasRole("ROLE_MANAGER");
+            return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER");
         }
         else if (beanName.equals("apartmentListView")) {
-            return SecurityUtils.hasRole("ROLE_MANAGER");
+            return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER");
         }
         else if (beanName.equals("apartmentView")) {
-            return SecurityUtils.hasRole("ROLE_MANAGER");
+            return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER");
         }
         else if (beanName.equals("reportManagementView")) {
             return SecurityUtils.hasRole("ROLE_MANAGER");

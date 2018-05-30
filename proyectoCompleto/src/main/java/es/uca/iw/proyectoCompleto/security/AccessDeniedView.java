@@ -1,6 +1,9 @@
 package es.uca.iw.proyectoCompleto.security;
 
 import org.springframework.stereotype.Component;
+/* 
+ * *
+ */
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
