@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,56 +10,46 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.server.VaadinRequest;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinService;
-import com.vaadin.spring.annotation.SpringUI;
-import com.vaadin.spring.navigator.SpringViewProvider;
-import com.vaadin.ui.UI;
+import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.security.AccessDeniedView;
-import es.uca.iw.proyectoCompleto.security.ErrorView;
 import es.uca.iw.proyectoCompleto.security.LoginScreen;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-import es.uca.iw.proyectoCompleto.users.UserService;
 
 
-@SpringUI(path = "/LoginUI")
 @Theme("vaadinlayouts")
-public class LoginUI extends UI {
+@SpringView(name = LoginView.VIEW_NAME)
+public class LoginView extends VerticalLayout implements View {
 			
-	@Autowired
-	SpringViewProvider viewProvider;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Autowired	
 	AuthenticationManager authenticationManager;
 	
-	@Autowired
-    MainScreen mainScreen;
-	
-	@Autowired
-	UserService se;
+	public static final String VIEW_NAME = "login";
 
-	@Override
-	protected void init(VaadinRequest request) {
-	
-	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
-		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-
+	@PostConstruct
+	public void init() {
 		if (!SecurityUtils.isLoggedIn()) 
 			showLoginScreen();
-		else
-			showMainScreen();
 	}
 	
 	private void showLoginScreen() {
-		setContent(new LoginScreen(this::login));
+		addComponent(new LoginScreen(this::login));
 	}
 	
 	private void showMainScreen() {
-		setContent(mainScreen);
+		getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 	}
 	
+
 	
 	private boolean login(String username, String password) {
 		try {

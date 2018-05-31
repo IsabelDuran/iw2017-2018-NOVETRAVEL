@@ -24,76 +24,32 @@ import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 
-@SpringUI
+@SpringUI(path="/")
 @Theme("vaadinlayouts")
 public class VaadinUI extends UI {
 			
 	@Autowired
-	SpringViewProvider viewProvider;
+	 SpringViewProvider viewProvider;
 
 	@Autowired	
-	AuthenticationManager authenticationManager;
-
-	@Autowired
-    MainScreen mainScreen;
+	 AuthenticationManager authenticationManager;
 	
 	@Autowired
-	ApartmentService servicio;
-	
-	@Autowired
-	ImageApartmentService im;
-	
-	@Autowired
-	UserService se;
-	
-	@Autowired 
-	BookingEditor be;
+	private FrontPage frontPage;
 	
 	@Override
 	protected void init(VaadinRequest request) {
 		
 	   	this.getUI().getNavigator().setErrorView(ErrorView.class);
 		viewProvider.setAccessDeniedViewClass(AccessDeniedView.class);
-			
-		
-		if (SecurityUtils.isLoggedIn()) {
-			showMainScreen();
-		} else {
-			showFrontPage();
-		}
+		showFrontPage();
+
 
 	}
 	
 	private void showFrontPage() {
-		setContent(new FrontPage(servicio,se,im,be));
+		setContent(frontPage);
 		
 	}
-
-//	private void showLoginScreen() {
-//		setContent(new LoginScreen(this::login));
-//	}
-
-	private void showMainScreen() {
-		setContent(mainScreen);
-	}
-	
-//	
-//	private boolean login(String username, String password) {
-//		try {
-//			Authentication token = authenticationManager
-//					.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-//			// Reinitialize the session to protect against session fixation
-//			// attacks. This does not work with websocket communication.
-//			VaadinService.reinitializeSession(VaadinService.getCurrentRequest());
-//			SecurityContextHolder.getContext().setAuthentication(token);
-//			
-//			// Show the main UI
-//			showMainScreen();
-//			return true;
-//		} catch (AuthenticationException ex) {
-//			return false;
-//		}
-//	}
-
 	
 }

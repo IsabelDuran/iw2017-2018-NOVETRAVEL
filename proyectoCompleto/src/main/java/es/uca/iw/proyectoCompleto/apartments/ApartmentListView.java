@@ -20,6 +20,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.StreamResource;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -38,7 +39,7 @@ import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
 
-@Controller
+@UIScope
 @SpringView(name = ApartmentListView.VIEW_NAME)
 public class ApartmentListView extends VerticalLayout implements View {
 
@@ -50,21 +51,17 @@ public class ApartmentListView extends VerticalLayout implements View {
 	public static final String VIEW_NAME = "apartmentListView";
 
 
-
+	@Autowired
 	private BookingEditor editor;
 
 	Panel p;
-
-	private final ApartmentService service;
-	private final ImageApartmentService image;
-
+	
 	@Autowired
-	public ApartmentListView(ApartmentService service, BookingEditor editor,ImageApartmentService imap) {
-		this.editor = editor;
-		this.service = service;
-		this.image=imap;
-	}
-
+	private  ApartmentService service;
+	
+	@Autowired
+	private  ImageApartmentService image;
+	
 	@PostConstruct
 	void init() {
 		// Hook logic to components
@@ -80,7 +77,6 @@ public class ApartmentListView extends VerticalLayout implements View {
 		this.p=p;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
 	public void listApartments(List<Apartment> aps) {
 		this.removeAllComponents();
 		if (!aps.isEmpty()) {
@@ -118,17 +114,17 @@ public class ApartmentListView extends VerticalLayout implements View {
 	}
 
 	public void ultimo(Apartment pinchado) {
-		if(getUI()==null)
-		{
-			MainScreen.setUltimoPinchado(pinchado);
-			getUI().getNavigator().navigateTo("apartmentView");
-		}
-		else {
-			ApartmentView ap=new ApartmentView(service,image);
-			this.p.setContent((Component)ap);
-			ap.setApartamento(pinchado);
-			ap.mostrarApartamento();
-		}
+//		if(getUI()==null)
+//		{
+//			MainScreen.setUltimoPinchado(pinchado);
+//			getUI().getNavigator().navigateTo("apartmentView");
+//		}
+//		else {
+//		
+//			this.p.setContent((Component)ap);
+//			ap.setApartamento(pinchado);
+//			ap.mostrarApartamento();
+//		}
 
 	}
 

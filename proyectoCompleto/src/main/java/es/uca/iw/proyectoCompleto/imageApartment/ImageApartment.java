@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import com.mysql.jdbc.Blob;
-
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 
 @Entity

@@ -6,31 +6,18 @@ package es.uca.iw.proyectoCompleto.apartments;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.vaadin.data.converter.StringToBooleanConverter;
-import com.vaadin.data.converter.StringToLongConverter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.server.StreamVariable.StreamingEndEvent;
-import com.vaadin.server.StreamVariable.StreamingErrorEvent;
-import com.vaadin.server.StreamVariable.StreamingProgressEvent;
-import com.vaadin.server.StreamVariable.StreamingStartEvent;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Embedded;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -38,18 +25,15 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.ProgressBar;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
-import es.uca.iw.proyectoCompleto.ProyectoCompletoApplication;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
-import es.uca.iw.proyectoCompleto.reports.Report;
+import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserService;
 
 
 @SpringView(name = ApartmentView.VIEW_NAME)
@@ -57,23 +41,21 @@ public class ApartmentView extends VerticalLayout implements View
 {
 	public static final String VIEW_NAME = "apartmentView";
 
+	@Autowired
+	private ImageApartmentService imageService;
 	
-	private Panel panel[];
-
-	private final ImageApartmentService imageService;
+	@Autowired
+	private ApartmentService service;
 	
-	private final ApartmentService service;
+	@Autowired
 	private ApartmentRepository repo;
 	
-	private Apartment apartment;
-
 	@Autowired
-	public ApartmentView(ApartmentService service,ImageApartmentService imageService) {
-		this.service = service;
-		this.imageService=imageService;
-		panel = new Panel[10];
-	    
-	}
+	private Apartment apartment;
+	
+	@Autowired
+	private UserService userService;
+	
 
 	
 	@PostConstruct
@@ -97,23 +79,24 @@ public class ApartmentView extends VerticalLayout implements View
 
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			if(apartment==null)
-				apartment = (Apartment) MainScreen.getUltimoPinchado();
+//			if(apartment==null)
+//				apartment = (Apartment) MainScreen.getUltimoPinchado();
 			
-			//PONER IMAGEN AQUI
 			lista.addComponent(new Label(apartment.getName()));
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
-			//abajo.addComponent(new Label(Long.toString(apartment.getImages().get(0).getId())));
 			HorizontalLayout imagenes=new HorizontalLayout();
 			desplegarImagenes(imagenes);  	
 			abajo.addComponent(imagenes);
 			
-			ponerContenedorImagenes(abajo,imagenes);
+			User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+			if(usuarioLogeado.getId() == apartment.getUser().getId())
+			{
+				ponerContenedorImagenes(abajo,imagenes);
+			}
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
-			//
-			//
 		
 	}
 	
@@ -212,10 +195,7 @@ public class ApartmentView extends VerticalLayout implements View
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {
-		
-		final String name="";
-		//final ByteArrayOutputStream bas=new ByteArrayOutputStream(A.getFile());
-	
+
 		final StreamResource.StreamSource streamSource = () -> {
 			
             if (A.getFile() != null) {
@@ -225,7 +205,7 @@ public class ApartmentView extends VerticalLayout implements View
             }
             return null;
         };
-        final StreamResource resource = new StreamResource(streamSource, name);
+        final StreamResource resource = new StreamResource(streamSource, "");
         Image im=new Image("name",resource);
         im.setWidth(100,Unit.PIXELS);
         im.setHeight(100,Unit.PIXELS);

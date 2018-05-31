@@ -33,7 +33,7 @@ public class Booking{
 	//@JoinColumn(nullable = false)
 	private User user;
 	
-	protected Booking() {
+	public Booking() {
 		super();
 	}
 			

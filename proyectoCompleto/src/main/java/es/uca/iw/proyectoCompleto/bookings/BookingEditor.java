@@ -31,9 +31,11 @@ public class BookingEditor extends VerticalLayout  {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private final BookingService service;
+	@Autowired
+	private BookingService service;
 	
-	private final ApartmentService serviceAp;
+	@Autowired
+	private ApartmentService serviceAp;
 
 	private Booking booking_;
 	
@@ -60,10 +62,9 @@ public class BookingEditor extends VerticalLayout  {
 	CssLayout actions = new CssLayout(save, cancel, delete);
 
 
-	@Autowired
-	public BookingEditor(BookingService service, ApartmentService serviceAp) {
-		this.service = service;
-		this.serviceAp = serviceAp;
+	
+	public BookingEditor() {
+
         
 		editDate();
 		addComponents(entryDate,departureDate,totalPrice,actions);
@@ -106,33 +107,19 @@ public class BookingEditor extends VerticalLayout  {
 		void onChange();
 	}
 
-	public final void editBooking(Booking c) {
-		if (c == null) {
-			setVisible(false);
-			return;
+	public final void editBooking(Booking booking) {
+		if (booking == null) {
+			this.booking_ = new Booking();
+			binder.setBean(booking_);
+		}
+		else
+		{
+			this.booking_ = booking;
+			binder.setBean(booking_);
 		}
 		
-		final boolean persisted = c.getId() != null;
-		if (persisted) {
-			// Find fresh entity for editing
-			booking_ = service.findOne(c.getId());
-		}
-		else {
-			booking_ = c;
-		}
-		cancel.setVisible(persisted);
-
-		// Bind booking properties to similarly named fields
-		// Could also use annotation or "manual binding" or programmatically
-		// moving values from fields to entities before saving
-		binder.setBean(booking_);
-
 		setVisible(true);
-
-		// A hack to ensure the whole form is visible
 		save.focus();
-		// Select all text in firstName field automatically
-	//	entryDate.selectAll();
 	}
 
 	public void setChangeHandler(ChangeHandler h) {

@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,17 +27,17 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
 import es.uca.iw.proyectoCompleto.location.Location;
-import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.reports.Report;
 import es.uca.iw.proyectoCompleto.reports.ReportService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
 import es.uca.iw.proyectoCompleto.users.Administrator;
-import es.uca.iw.proyectoCompleto.users.Manager;
 import es.uca.iw.proyectoCompleto.users.Host;
+import es.uca.iw.proyectoCompleto.users.Manager;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@ComponentScan(basePackages="es.uca.*")
 public class ProyectoCompletoApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(ProyectoCompletoApplication.class);

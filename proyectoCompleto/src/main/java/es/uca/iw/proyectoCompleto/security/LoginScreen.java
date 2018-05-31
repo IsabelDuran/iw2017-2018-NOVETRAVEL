@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
 import com.vaadin.event.ShortcutAction;
@@ -28,6 +30,7 @@ public class LoginScreen extends VerticalLayout {
 	private Grid<User> grid;
 	
 	private User user;
+
 	
 	TextField firstName = new TextField("First name");
 	TextField lastName = new TextField("Last name");
@@ -51,8 +54,7 @@ public class LoginScreen extends VerticalLayout {
         setMargin(false);
         setSpacing(true);
         
-        Navbar navbar_ = new Navbar(0);
-        addComponent(navbar_);
+
         this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         Label title_ = new Label("Iniciar sesión: ");
         title_.setStyleName("title-text");
@@ -78,9 +80,7 @@ public class LoginScreen extends VerticalLayout {
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         //register.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         addComponent(login);
-        UserService us = new UserService();
-        UserEditor ue = new UserEditor(us);
-        HorizontalLayout actions = new HorizontalLayout();
+       
     }
 
     @FunctionalInterface

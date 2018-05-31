@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Embedded;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
-import es.uca.iw.proyectoCompleto.creditCard.CreditCard;
 
 @Entity
 public class User implements UserDetails{
@@ -37,10 +35,12 @@ public class User implements UserDetails{
 
 	private String lastName;
 	
+	@Column(unique=true)
 	private String username;
 
 	private String password;
 	
+	@Column(unique=true)
 	private String email;
 	
 	private String address;
@@ -56,7 +56,7 @@ public class User implements UserDetails{
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Apartment> apartments;
 	
-	protected User() {
+	public User() {
 	}
 
 	public User(String firstName, String lastName, String username, String address, int zipcode, String email) {

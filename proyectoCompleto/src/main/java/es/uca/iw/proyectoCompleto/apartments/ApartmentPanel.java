@@ -59,8 +59,7 @@ public class ApartmentPanel extends CustomComponent {
 	private Button crearBotonVermas(Apartment ap) {
 		Button btnVermas = new Button("Ver mas...");
 		btnVermas.addClickListener(e -> {
-			ultimo(ap);
-		});
+});
 		
 		return btnVermas;
 	}
@@ -105,10 +104,10 @@ public class ApartmentPanel extends CustomComponent {
 
 	}
 	
-	public void ultimo(Apartment pinchado) {
-		MainScreen.setUltimoPinchado(pinchado);
-		getUI().getNavigator().navigateTo("apartmentView");
-
-	}
+//	public void ultimo(Apartment pinchado) {
+//		MainScreen.setUltimoPinchado(pinchado);
+//		getUI().getNavigator().navigateTo("apartmentView");
+//
+//	}
 
 }	
