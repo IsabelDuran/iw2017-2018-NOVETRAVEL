@@ -26,7 +26,7 @@ public class Booking{
 	private Double totalPrice_ = 0.0;
 	
 	private boolean confirmation = false;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	//@JoinColumn(nullable = false)
 	private Apartment apartment;
@@ -96,6 +96,14 @@ public class Booking{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public boolean isConfirmation() {
+		return confirmation;
+	}
+
+	public void setConfirmation(boolean confirmation) {
+		this.confirmation = confirmation;
 	}
 	
 }
