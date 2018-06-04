@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -34,6 +35,8 @@ public class Apartment{
 	private boolean book;
 	
 	private String apartment_type;
+	
+	private float temporada_alta;
 	
 	@Embedded
 	private Apartment_OfferedServices offered_services;
@@ -133,6 +136,7 @@ public class Apartment{
 	}
 
 	public Double getPrice_per_day() {
+		
 		return price_per_day;
 	}
 
