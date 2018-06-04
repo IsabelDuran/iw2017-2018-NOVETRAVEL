@@ -31,6 +31,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
@@ -143,7 +144,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	}
 	
 	private Button crearBotonVermas(Apartment ap) {
-		Button btnVermas = new Button("Ver mas...");
+		Button btnVermas = new Button("Ver mas...",event -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME));
 		btnVermas.addClickListener(e -> {
 			ultimo(ap);
 		});

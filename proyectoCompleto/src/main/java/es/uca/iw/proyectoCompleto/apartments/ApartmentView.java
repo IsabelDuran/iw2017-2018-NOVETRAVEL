@@ -14,10 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -25,6 +28,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.ProgressBar;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
@@ -33,6 +37,7 @@ import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 
@@ -41,23 +46,31 @@ public class ApartmentView extends VerticalLayout implements View
 {
 	public static final String VIEW_NAME = "apartmentView";
 
-	@Autowired
+	
 	private ImageApartmentService imageService;
 	
-	@Autowired
 	private ApartmentService service;
 	
-	@Autowired
 	private ApartmentRepository repo;
 	
-	@Autowired
 	private Apartment apartment;
 	
-	@Autowired
+	
 	private UserService userService;
 	
 
-	
+	@Autowired
+	public ApartmentView(ImageApartmentService imageService, ApartmentService service, ApartmentRepository repo,
+			Apartment apartment, UserService userService) {
+		super();
+		this.imageService = imageService;
+		this.service = service;
+		this.repo = repo;
+		this.apartment = apartment;
+		this.userService = userService;
+	}
+
+
 	@PostConstruct
 	void init() {
 		
@@ -65,23 +78,17 @@ public class ApartmentView extends VerticalLayout implements View
 	
 		// Listen changes made by the editor, refresh data from backend
 		// Initialize listing
-		mostrarApartamento();
+		//mostrarApartamento();
 		
 	}
 	
-	public void setApartamento(Apartment ap)
-	{
-		this.apartment=ap;
-	}
 
 	public void mostrarApartamento() {
 		
 
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-//			if(apartment==null)
-//				apartment = (Apartment) MainScreen.getUltimoPinchado();
-			
+			/*
 			lista.addComponent(new Label(apartment.getName()));
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
@@ -97,23 +104,24 @@ public class ApartmentView extends VerticalLayout implements View
 				ponerContenedorImagenes(abajo,imagenes);
 			}
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
+			*/
 		
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
-		
+		/*
 			contenedor.removeAllComponents();
 			
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
 				desplegarImagen(contenedor, apartment.getImages().get(i));
 			}
-		
+		*/
 		
 	}
 	
 	public void ponerContenedorImagenes(Layout l,Layout contenedorImagenes){
-		
+		/*
 		final Label infoLabel = new Label("Para añadir imagenes arrastre los ficheros");
         infoLabel.setWidth(240.0f, Unit.PIXELS);
 		final VerticalLayout dropPane = new VerticalLayout(infoLabel);
@@ -191,7 +199,7 @@ public class ApartmentView extends VerticalLayout implements View
         });
         
         l.addComponent(dropPane);
-		
+		*/
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {
@@ -217,7 +225,13 @@ public class ApartmentView extends VerticalLayout implements View
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		if(event.getParameters() != null){
+	           // split at "/", add each part as a label
+	           String[] msgs = event.getParameters().split("/");
+	           for (String msg : msgs) {
+	        	   System.out.println(msg.toString());
+	           }
+	    }
 		
 	}
 
