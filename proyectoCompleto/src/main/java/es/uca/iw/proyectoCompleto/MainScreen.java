@@ -60,7 +60,7 @@ public class MainScreen extends VerticalLayout implements View {
 		navigationBar.addComponent(createNavigationButton("Apartamentos", ApartmentListView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Reservas", UserProfileView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Editar perfil", UserProfileView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
 		// Creamos el panel
