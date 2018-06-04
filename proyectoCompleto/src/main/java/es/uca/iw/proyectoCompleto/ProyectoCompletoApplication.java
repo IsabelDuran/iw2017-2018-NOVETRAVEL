@@ -50,11 +50,6 @@ public class ProyectoCompletoApplication {
 	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
 		return (args) -> {
 			try {
-			 LocalDate fe = LocalDate.of(2018, 8, 03);
-			 LocalDate fs = LocalDate.of(2018, 8, 13);
-			 
-			 LocalDate t1 = LocalDate.of(2018, 12, 13);
-			 LocalDate t2 = LocalDate.of(2018, 12, 23);
 			 
 			 Apartment a1=null, a2 = null;
 			 User u1=null, u2 = null;
@@ -92,7 +87,7 @@ public class ProyectoCompletoApplication {
 				root.setPassword("root");
 				service.save(root);
 				
-				System.out.println("USUARIOS 1 CREADOS!!!!!!! ");
+				System.out.println("USUARIOS CREADOS!!!!!!! ");
 			}
 			
 			if(ap.findAll().size()==0)
@@ -109,13 +104,7 @@ public class ProyectoCompletoApplication {
 				
 			}
 			
-			if(bs.findAll().size()==0 && ap.findAll().size() != 0 && service.findAll().size() != 0)
-			{
-				bs.save(new Booking(fe, fs, (double)300, a1, u1));
-				bs.save(new Booking(t1,t2, (double) 500, a2, u2));
-				System.out.println(" RESERVAS CREADAS!!!!!");
-			}}
-			catch(Exception e)
+         } catch(Exception e)
 			{
 				System.out.println("Excepcion no controlada" + e.getMessage());
 			}

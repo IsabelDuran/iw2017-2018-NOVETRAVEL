@@ -51,7 +51,7 @@ public class ApartmentPanel extends CustomComponent {
 			LocalDate f1 = LocalDate.now();
 			LocalDate f2 = LocalDate.now();
 
-			editor.editBooking(new Booking(f1, f2, 0.0, ap, currentUser));
+			editor.editBooking(new Booking(f1, f2, 0.0, false, ap, currentUser));
 		});
 		return reservarBtn;
 	}
