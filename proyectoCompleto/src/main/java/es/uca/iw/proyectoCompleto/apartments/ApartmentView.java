@@ -47,28 +47,17 @@ public class ApartmentView extends VerticalLayout implements View
 	public static final String VIEW_NAME = "apartmentView";
 
 	
+	@Autowired
 	private ImageApartmentService imageService;
 	
+	@Autowired
 	private ApartmentService service;
 	
-	private ApartmentRepository repo;
 	
 	private Apartment apartment;
 	
-	
-	private UserService userService;
-	
-
 	@Autowired
-	public ApartmentView(ImageApartmentService imageService, ApartmentService service, ApartmentRepository repo,
-			Apartment apartment, UserService userService) {
-		super();
-		this.imageService = imageService;
-		this.service = service;
-		this.repo = repo;
-		this.apartment = apartment;
-		this.userService = userService;
-	}
+	private UserService userService;
 
 
 	@PostConstruct
@@ -78,50 +67,53 @@ public class ApartmentView extends VerticalLayout implements View
 	
 		// Listen changes made by the editor, refresh data from backend
 		// Initialize listing
-		//mostrarApartamento();
+
 		
 	}
 	
 
 	public void mostrarApartamento() {
 		
-
+			
 			HorizontalLayout lista = new HorizontalLayout();
 			addComponents(lista);
-			/*
+		
 			lista.addComponent(new Label(apartment.getName()));
+			
 			VerticalLayout abajo = new VerticalLayout();
 			addComponents(abajo);
 			abajo.addComponent(new Label(apartment.getDescription()));
 			HorizontalLayout imagenes=new HorizontalLayout();
+			
 			desplegarImagenes(imagenes);  	
 			abajo.addComponent(imagenes);
-			
+		
 			User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 			
 			if(usuarioLogeado.getId() == apartment.getUser().getId())
 			{
 				ponerContenedorImagenes(abajo,imagenes);
 			}
+			
 			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
-			*/
+			 
 		
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
-		/*
+	
 			contenedor.removeAllComponents();
 			
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
 				desplegarImagen(contenedor, apartment.getImages().get(i));
 			}
-		*/
+
 		
 	}
 	
 	public void ponerContenedorImagenes(Layout l,Layout contenedorImagenes){
-		/*
+
 		final Label infoLabel = new Label("Para añadir imagenes arrastre los ficheros");
         infoLabel.setWidth(240.0f, Unit.PIXELS);
 		final VerticalLayout dropPane = new VerticalLayout(infoLabel);
@@ -199,7 +191,7 @@ public class ApartmentView extends VerticalLayout implements View
         });
         
         l.addComponent(dropPane);
-		*/
+		
 	}
 	
 	public void desplegarImagen(Layout l,ImageApartment A) {
@@ -228,9 +220,11 @@ public class ApartmentView extends VerticalLayout implements View
 		if(event.getParameters() != null){
 	           // split at "/", add each part as a label
 	           String[] msgs = event.getParameters().split("/");
-	           for (String msg : msgs) {
-	        	   System.out.println(msg.toString());
-	           }
+	           long id=Long.valueOf(msgs[0]);
+	           
+	           apartment=service.loadApartmentById(id);
+	           mostrarApartamento();
+	           
 	    }
 		
 	}

@@ -144,7 +144,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	}
 	
 	private Button crearBotonVermas(Apartment ap) {
-		Button btnVermas = new Button("Ver mas...",event -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME));
+		Button btnVermas = new Button("Ver mas...",event -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME+"/"+ap.getId()));
 		btnVermas.addClickListener(e -> {
 			ultimo(ap);
 		});
