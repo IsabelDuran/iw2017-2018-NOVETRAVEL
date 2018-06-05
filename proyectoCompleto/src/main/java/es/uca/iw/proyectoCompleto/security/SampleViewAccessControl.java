@@ -56,7 +56,10 @@ public class SampleViewAccessControl implements ViewAccessControl {
 		} 
 		  else if(beanName.equals("userProfileView")) {
 			return SecurityUtils.hasRole("ROLE_USER");
-		  }
+		} else if (beanName.equals("bookingView")) {
+			return SecurityUtils.hasRole("ROLE_USER");
+		}
+		
 		else {
 			return false;
 		}

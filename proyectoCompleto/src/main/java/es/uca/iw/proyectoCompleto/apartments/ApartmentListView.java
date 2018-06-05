@@ -35,6 +35,7 @@ import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
+import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
@@ -129,7 +130,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 
 	}
 
-	private Button crearBotonReservar(Apartment ap) {
+	/*private Button crearBotonReservar(Apartment ap) {
 
 		Button reservarBtn = new Button("Reservar");
 		reservarBtn.setVisible(SecurityUtils.hasRole("ROLE_USER"));
@@ -141,13 +142,19 @@ public class ApartmentListView extends VerticalLayout implements View {
 			editor.editBooking(new Booking(f1, f2, ap.getPrice_per_day(), false, ap, currentUser));
 		});
 		return reservarBtn;
+	} */
+	
+	private Button crearBotonReservar(Apartment ap) {
+
+		Button reservarBtn = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + ap.getId())) ;
+		reservarBtn.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+
+		return reservarBtn;
 	}
 	
 	private Button crearBotonVermas(Apartment ap) {
+		
 		Button btnVermas = new Button("Ver mas...",event -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME+"/"+ap.getId()));
-		btnVermas.addClickListener(e -> {
-			ultimo(ap);
-		});
 		
 		return btnVermas;
 	}
