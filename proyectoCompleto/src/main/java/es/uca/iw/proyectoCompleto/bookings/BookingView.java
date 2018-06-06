@@ -64,7 +64,7 @@ public class BookingView extends VerticalLayout implements View{
 		HorizontalLayout imagenes = new HorizontalLayout();
 		VerticalLayout v = new VerticalLayout();
 		
-		addComponents(h, v);
+		addComponents(h);
 		
 		h.addComponent(v);
 		h.addComponent(editor);

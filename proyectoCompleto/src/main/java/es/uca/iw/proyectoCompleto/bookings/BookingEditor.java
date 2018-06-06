@@ -31,6 +31,7 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 //import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentView;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
@@ -47,6 +48,8 @@ public class BookingEditor extends VerticalLayout  {
 	
 	@Autowired
 	private ApartmentService serviceAp;
+	
+	private Apartment apartment;
 
 	private Booking booking_;
 	
@@ -97,8 +100,6 @@ public class BookingEditor extends VerticalLayout  {
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
 		// wire action buttons to save, delete and reset
-	//	save.addClickListener(e -> service.save(booking_));
-		
 	
 		save.addClickListener(e -> {
 			try {
@@ -118,11 +119,13 @@ public class BookingEditor extends VerticalLayout  {
 		
 		
 		delete.addClickListener(e -> service.delete(booking_));
-		cancel.addClickListener(e -> editBooking(booking_));
+		cancel.addClickListener(e -> {
+			getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
+		});
 		setVisible(false);
 		
 		// Solo borra el admin
-		delete.setEnabled(SecurityUtils.hasRole("ROLE_ADMIN"));
+		delete.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
 	}
 	
 	// Set the date to present
@@ -161,7 +164,7 @@ public class BookingEditor extends VerticalLayout  {
 		// is clicked
 		save.addClickListener(e -> h.onChange());
 		delete.addClickListener(e -> h.onChange());
-		cancel.addClickListener(e-> h.onChange());
 	}
+	
 
 }

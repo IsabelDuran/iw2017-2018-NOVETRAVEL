@@ -14,36 +14,41 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
+
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.ProgressBar;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
 
-import es.uca.iw.proyectoCompleto.MainScreen;
+
+
+import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 
 @SpringView(name = ApartmentView.VIEW_NAME)
 public class ApartmentView extends VerticalLayout implements View
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public static final String VIEW_NAME = "apartmentView";
 
 	
@@ -74,29 +79,34 @@ public class ApartmentView extends VerticalLayout implements View
 
 	public void mostrarApartamento() {
 		
-			
-			HorizontalLayout lista = new HorizontalLayout();
-			addComponents(lista);
+		VerticalLayout v = new VerticalLayout();
+		HorizontalLayout imagenes = new HorizontalLayout();
+
+		Label nombreAp = new Label(apartment.getName());
+		Label description = new Label(apartment.getDescription());
+		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€"));
 		
-			lista.addComponent(new Label(apartment.getName()));
-			
-			VerticalLayout abajo = new VerticalLayout();
-			addComponents(abajo);
-			abajo.addComponent(new Label(apartment.getDescription()));
-			HorizontalLayout imagenes=new HorizontalLayout();
-			
-			desplegarImagenes(imagenes);  	
-			abajo.addComponent(imagenes);
+		Button reservar = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + apartment.getId())) ;
+		reservar.setVisible(SecurityUtils.hasRole("ROLE_USER"));
 		
-			User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			if(usuarioLogeado.getId() == apartment.getUser().getId())
-			{
-				ponerContenedorImagenes(abajo,imagenes);
-			}
-			
-			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
-			 
+		description.setWidth("1000px");
+		
+		desplegarImagenes(imagenes); 
+		
+		addComponent(v);
+		
+		v.addComponents(nombreAp, description, imagenes);
+
+		User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(usuarioLogeado.getId() == apartment.getUser().getId())
+		{
+			ponerContenedorImagenes(v,imagenes);
+		} 
+		
+		v.addComponents(precio, reservar);
+
+		
 		
 	}
 	

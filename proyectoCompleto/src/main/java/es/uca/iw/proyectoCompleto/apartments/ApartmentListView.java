@@ -4,17 +4,11 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
 import java.io.ByteArrayInputStream;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -23,7 +17,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -31,15 +24,10 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.DefaultView;
-import es.uca.iw.proyectoCompleto.MainScreen;
-import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
-import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-import es.uca.iw.proyectoCompleto.users.User;
 
 @UIScope
 @SpringView(name = ApartmentListView.VIEW_NAME)
@@ -60,9 +48,6 @@ public class ApartmentListView extends VerticalLayout implements View {
 	
 	@Autowired
 	private  ApartmentService service;
-	
-	@Autowired
-	private  ImageApartmentService image;
 	
 	@PostConstruct
 	void init() {
@@ -115,34 +100,6 @@ public class ApartmentListView extends VerticalLayout implements View {
 
 	}
 
-	public void ultimo(Apartment pinchado) {
-//		if(getUI()==null)
-//		{
-//			MainScreen.setUltimoPinchado(pinchado);
-//			getUI().getNavigator().navigateTo("apartmentView");
-//		}
-//		else {
-//		
-//			this.p.setContent((Component)ap);
-//			ap.setApartamento(pinchado);
-//			ap.mostrarApartamento();
-//		}
-
-	}
-
-	/*private Button crearBotonReservar(Apartment ap) {
-
-		Button reservarBtn = new Button("Reservar");
-		reservarBtn.setVisible(SecurityUtils.hasRole("ROLE_USER"));
-		reservarBtn.addClickListener(e -> {
-			User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			LocalDate f1 = LocalDate.now();
-			LocalDate f2 = LocalDate.now();
-
-			editor.editBooking(new Booking(f1, f2, ap.getPrice_per_day(), false, ap, currentUser));
-		});
-		return reservarBtn;
-	} */
 	
 	private Button crearBotonReservar(Apartment ap) {
 
@@ -161,8 +118,8 @@ public class ApartmentListView extends VerticalLayout implements View {
 	
 	private Panel crearPanelPiso(Apartment ap) {
 		Panel panel = new Panel(ap.getName());
-		panel.setHeight(300, Unit.PIXELS);
-		panel.setWidth(300, Unit.PIXELS);
+		panel.setHeight(320, Unit.PIXELS);
+		panel.setWidth(310, Unit.PIXELS);
 		
 		VerticalLayout content = new VerticalLayout();
 		if (ap.getImages().size() > 0) {
@@ -170,7 +127,9 @@ public class ApartmentListView extends VerticalLayout implements View {
 		}
 		content.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
 
-		content.addComponent(new Label(ap.getDescription()));
+		Label des = new Label(ap.getDescription());
+		des.setWidth("250px");
+		content.addComponent(des);
 		content.addComponent(crearBotonVermas(ap));
 		content.addComponent(crearBotonReservar(ap));
 		panel.setContent(content);
