@@ -76,6 +76,7 @@ public class BookingView extends VerticalLayout implements View{
 		v.addComponent(description);
 		desplegarImagenes(imagenes); 
 		v.addComponent(imagenes);
+		
 		v.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
 		
 	

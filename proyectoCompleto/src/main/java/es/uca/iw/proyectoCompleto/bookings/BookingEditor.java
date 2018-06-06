@@ -15,14 +15,20 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PopupView;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
+
+import aj.org.objectweb.asm.Label;
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 //import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
@@ -70,7 +76,6 @@ public class BookingEditor extends VerticalLayout  {
 	
 	public BookingEditor() {
 
-        
 		editDate();
 		addComponents(entryDate,departureDate,actions);
  
@@ -94,11 +99,15 @@ public class BookingEditor extends VerticalLayout  {
 		// wire action buttons to save, delete and reset
 	//	save.addClickListener(e -> service.save(booking_));
 		
+	
 		save.addClickListener(e -> {
 			try {
 				
 				binder.writeBean(booking_);
 				service.save(booking_);
+				
+				Notification.show("Reserva realizada con éxito.\n Se ha enviado un correo para \nconfirmar la reserva.");
+				getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
 				
 			} catch(ValidationException ex) {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
@@ -106,6 +115,7 @@ public class BookingEditor extends VerticalLayout  {
 		    } 
 			 
 		});
+		
 		
 		delete.addClickListener(e -> service.delete(booking_));
 		cancel.addClickListener(e -> editBooking(booking_));
