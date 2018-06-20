@@ -20,9 +20,9 @@ public class Location {
 	
 	private String street_;
 	
-	private int number_;
+	private Integer number_;
 	
-	private int floor_;
+	private Integer floor_;
 	
 	private String letter_;
 	
@@ -76,19 +76,19 @@ public class Location {
 		this.street_ = street_;
 	}
 
-	public int getNumber_() {
+	public Integer getNumber_() {
 		return number_;
 	}
 
-	public void setNumber_(int number_) {
+	public void setNumber_(Integer number_) {
 		this.number_ = number_;
 	}
 
-	public int getFloor_() {
+	public Integer getFloor_() {
 		return floor_;
 	}
 
-	public void setFloor_(int floor_) {
+	public void setFloor_(Integer floor_) {
 		this.floor_ = floor_;
 	}
 

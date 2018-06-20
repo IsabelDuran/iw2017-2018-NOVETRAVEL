@@ -18,7 +18,7 @@ public class AccessDeniedView extends VerticalLayout implements View {
 
     public AccessDeniedView() {
         setMargin(true);
-        Label lbl = new Label("You don't have access to this view.");
+        Label lbl = new Label("Lo siento, no tienes permiso para ver esto");
         lbl.addStyleName(ValoTheme.LABEL_FAILURE);
         lbl.setSizeUndefined();
         addComponent(lbl);

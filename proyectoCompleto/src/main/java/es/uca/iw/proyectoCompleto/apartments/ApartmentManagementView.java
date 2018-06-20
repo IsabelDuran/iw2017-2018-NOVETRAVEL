@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -17,6 +18,8 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 import java.util.List;
+
+import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
@@ -33,12 +36,10 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 	public static final String VIEW_NAME = "apartmentManagementView";
 
 	private Grid<Apartment> grid;
-	private TextField filter;
 	private Button addNewBtn;
 
 	private ApartmentEditor editor;
 
-	
 	private final ApartmentService service;
 
 	@Autowired
@@ -46,7 +47,6 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>(Apartment.class);
-		this.filter = new TextField();
 		this.addNewBtn = new Button("Nuevo apartamento");
 	    
 	}
@@ -56,41 +56,27 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 	void init() {
 		
 		// build layout
-		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+		HorizontalLayout actions = new HorizontalLayout(addNewBtn);
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
-		addComponents(actions, grid, editor);
+		addComponents(actions, grid);
 		
-		grid.setHeight(300, Unit.PIXELS);
-		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("id", "apartment_type", "book","description", "name","price_per_day");
-
-		filter.setPlaceholder("Filter by last name");
-		
-		// Hook logic to components
-
-		// Replace listing with filtered content when user changes filter
-		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listApartments(e.getValue(), user_.getApartments()));
+		grid.setHeight(100, Unit.PERCENTAGE);
+		grid.setWidth(100, Unit.PERCENTAGE);
+		grid.setColumns("apartmentType","description", "name","pricePerDay");
 
 		// Connect selected Apartment to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			editor.editApartment(e.getValue());
+			VaadinSession.getCurrent().setAttribute("apartamentoEditado", e.getValue().getId());
+			getUI().getNavigator().navigateTo(ApartmentEditor.VIEW_NAME);
 		});
 
-		// Instantiate and edit new Apartment the new button is clicked
 
-
-		addNewBtn.addClickListener(e -> editor.editApartment(null));
-
-
-		// Listen changes made by the editor, refresh data from backend
-		editor.setChangeHandler(() -> {
-			editor.setVisible(false);
-			listApartments(filter.getValue(), user_.getApartments());
+		addNewBtn.addClickListener(e -> 
+		{
+			VaadinSession.getCurrent().setAttribute("apartamentoEditado", null);
+			getUI().getNavigator().navigateTo(ApartmentEditor.VIEW_NAME);
 		});
-
-		// Initialize listing
 		
 		listApartments(null, user_.getApartments());
 		

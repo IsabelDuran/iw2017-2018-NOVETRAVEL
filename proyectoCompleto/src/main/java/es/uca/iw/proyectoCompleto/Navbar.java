@@ -69,10 +69,18 @@ public class Navbar extends HorizontalLayout
 		 this.setComponentAlignment(frontPage, Alignment.MIDDLE_RIGHT);
 		 if (SecurityUtils.isLoggedIn())
 	        {
-	        	Button logoutButton = new Button("Logout", e -> getSession().close());
+	        	Button logoutButton = new Button("Logout", e ->  {
+	        		getSession().close();
+	        		getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
+	        	});
 	    		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 	    		addComponent(logoutButton);
 	    		this.setComponentAlignment(logoutButton, Alignment.MIDDLE_RIGHT);
+	    		
+	    		Button profileButton = new Button("Tu perfil", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
+	    		profileButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+	    		addComponent(profileButton);
+	    		this.setComponentAlignment(profileButton, Alignment.MIDDLE_RIGHT);
 	        }
 	        else
 	        {

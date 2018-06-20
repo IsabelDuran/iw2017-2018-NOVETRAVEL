@@ -30,16 +30,26 @@ public class Apartment{
 	private String description;
 	
 	@Min(value = 1L, message = "The value must be positive")
-	private Double price_per_day;
-
-	private boolean book;
+	private Double pricePerDay;
 	
-	private String apartment_type;
+	private String apartmentType;
 	
+	private Boolean wifi;
+	private Boolean petsAllowed;
+	private Boolean ownBathroom;
+	private Boolean kidsAllowed;
+	private Boolean smokingAllowed;
+	private Boolean crib;
+	private Boolean parking;
+	private Boolean kitchen;
+	private Integer rooms;
+	private Integer numberBathrooms;
+	private Integer maxHosts;
+	private Integer numberBeds;
+	private Integer squaredMeters;
 	private float temporada_alta;
 	
-	@Embedded
-	private Apartment_OfferedServices offered_services;
+
 	
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
@@ -48,35 +58,32 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment")
 	private List<Booking> bookings;
 	
-	@OneToOne
+	@OneToOne(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private Location location;
 	
 	@ManyToOne
 	private User user;
 	
-	protected Apartment() {
+	public Apartment() {
 	}
 	
-	public Apartment(String name, String description, Double price_per_day, boolean book, String type) {
+	public Apartment(String name, String description, Double pricePerDay, String type) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.price_per_day = price_per_day;
-		this.book = true;
-		this.apartment_type = type;
-		this.offered_services = new Apartment_OfferedServices();
+		this.pricePerDay = pricePerDay;
+		this.apartmentType = type;
+
 	}	
 	
-	public Apartment(String name, String description, Double price_per_day, boolean book, String type, User user) {
+	public Apartment(String name, String description, Double pricePerDay, String type, User user) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.price_per_day = price_per_day;
-		this.book = true;
-		this.apartment_type = type;
-		this.offered_services = new Apartment_OfferedServices();
+		this.pricePerDay = pricePerDay;
+		this.apartmentType = type;
 		this.user = user;
-	}	
+	}
 
 	public Long getId() {
 		return id;
@@ -84,39 +91,6 @@ public class Apartment{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Apartment_OfferedServices getOffered_services() {
-		return offered_services;
-	}
-
-	public void setOffered_services(Apartment_OfferedServices offered_services) {
-		this.offered_services = offered_services;
-	}
-
-	public Location getLocation() {
-		return this.location;
-	}
-	
-	public void setLocation(Location location)
-	{
-		this.location = location;
-	}
-	
-	public List<ImageApartment> getImages() {
-		return images;
-	}
-
-	public void setImages(List<ImageApartment> images) {
-		this.images = images;
-	}
-	
-	public void addImage(ImageApartment image)
-    {
-		this.images.add(image);
-        if (image.getApartment() != this) {
-            image.setApartment(this);
-        }
 	}
 
 	public String getName() {
@@ -135,130 +109,165 @@ public class Apartment{
 		this.description = description;
 	}
 
-	public Double getPrice_per_day() {
-		
-		return price_per_day;
+	public Double getPricePerDay() {
+		return pricePerDay;
 	}
 
-	public void setPrice_per_day(Double price_per_day) {
-		this.price_per_day = price_per_day;
-	}
-
-	public boolean isBook() {
-		return book;
-	}
-
-	public void setBook(boolean book) {
-		this.book = book;
-	}
-
-	public String getApartment_type() {
-		return apartment_type;
-	}
-
-	public void setApartment_type(String apartment_type) {
-		this.apartment_type = apartment_type;
+	public void setPricePerDay(Double pricePerDay) {
+		this.pricePerDay = pricePerDay;
 	}
 	
-	public User getUser() {
-		return user;
+	public String getApartmentType() {
+		return apartmentType;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setApartmentType(String apartmentType) {
+		this.apartmentType = apartmentType;
+	}
+
+	public Boolean getWifi() {
+		return wifi;
+	}
+
+	public void setWifi(Boolean wifi) {
+		this.wifi = wifi;
+	}
+
+	public Boolean getPetsAllowed() {
+		return petsAllowed;
+	}
+
+	public void setPetsAllowed(Boolean petsAllowed) {
+		this.petsAllowed = petsAllowed;
+	}
+
+	public Boolean getOwnBathroom() {
+		return ownBathroom;
+	}
+
+	public void setOwnBathroom(Boolean ownBathroom) {
+		this.ownBathroom = ownBathroom;
+	}
+
+	public Boolean getKidsAllowed() {
+		return kidsAllowed;
+	}
+
+	public void setKidsAllowed(Boolean kidsAllowed) {
+		this.kidsAllowed = kidsAllowed;
+	}
+
+	public Boolean getSmokingAllowed() {
+		return smokingAllowed;
+	}
+
+	public void setSmokingAllowed(Boolean smokingAllowed) {
+		this.smokingAllowed = smokingAllowed;
+	}
+
+	public Boolean getCrib() {
+		return crib;
+	}
+
+	public void setCrib(Boolean crib) {
+		this.crib = crib;
+	}
+
+	public Boolean getParking() {
+		return parking;
+	}
+
+	public void setParking(Boolean parking) {
+		this.parking = parking;
+	}
+
+	public Boolean getKitchen() {
+		return kitchen;
+	}
+
+	public void setKitchen(Boolean kitchen) {
+		this.kitchen = kitchen;
+	}
+
+	public Integer getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(Integer rooms) {
+		this.rooms = rooms;
+	}
+
+	public Integer getNumberBathrooms() {
+		return numberBathrooms;
+	}
+
+	public void setNumberBathrooms(Integer numberBathrooms) {
+		this.numberBathrooms = numberBathrooms;
+	}
+
+	public Integer getMaxHosts() {
+		return maxHosts;
+	}
+
+	public void setMaxHosts(Integer maxHosts) {
+		this.maxHosts = maxHosts;
+	}
+
+	public Integer getNumberBeds() {
+		return numberBeds;
+	}
+
+	public void setNumberBeds(Integer numberBeds) {
+		this.numberBeds = numberBeds;
+	}
+
+	public Integer getSquaredMeters() {
+		return squaredMeters;
+	}
+
+	public void setSquaredMeters(Integer squaredMeters) {
+		this.squaredMeters = squaredMeters;
+	}
+
+	public List<ImageApartment> getImages() {
+		return images;
+	}
+
+	public void setImages(List<ImageApartment> images) {
+		this.images = images;
 	}
 
 	public List<Booking> getBookings() {
 		return bookings;
 	}
 
-	public void setBooking(Booking booking) {
-		if(booking != null)
-			this.bookings.add(booking);
+	public void setBookings(List<Booking> bookings) {
+		this.bookings = bookings;
+	}
+
+	public Location getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}	
+
+	public void addImage(ImageApartment image)
+    {
+		this.images.add(image);
+        if (image.getApartment() != this) {
+            image.setApartment(this);
+        }
 	}
 	
-	public Apartment_OfferedServices getServices()
-	{
-		return this.offered_services;
-	}
-	
-	public boolean isWifi() {
-		return offered_services.wifi;
-	}
-	public void setWifi(boolean wifi) {
-		this.offered_services.wifi = wifi;
-	}
-	public boolean isPets_allowed() {
-		return offered_services.pets_allowed;
-	}
-	public void setPets_allowed(boolean pets_allowed) {
-		this.offered_services.pets_allowed = pets_allowed;
-	}
-	public boolean isOwn_bathroom() {
-		return offered_services.own_bathroom;
-	}
-	public void setOwn_bathroom(boolean own_bathroom) {
-		this.offered_services.own_bathroom = own_bathroom;
-	}
-	public boolean isKids_allowed() {
-		return offered_services.kids_allowed;
-	}
-	public void setKids_allowed(boolean kids_allowed) {
-		this.offered_services.kids_allowed = kids_allowed;
-	}
-	public boolean isSmoking_allowed() {
-		return offered_services.smoking_allowed;
-	}
-	public void setSmoking_allowed(boolean smoking_allowed) {
-		this.offered_services.smoking_allowed = smoking_allowed;
-	}
-	public boolean isCrib() {
-		return offered_services.crib;
-	}
-	public void setCrib(boolean crib) {
-		this.offered_services.crib = crib;
-	}
-	public boolean isParking() {
-		return offered_services.parking;
-	}
-	public void setParking(boolean parking) {
-		this.offered_services.parking = parking;
-	}
-	public boolean isKitchen() {
-		return offered_services.kitchen;
-	}
-	public void setKitchen(boolean kitchen) {
-		this.offered_services.kitchen = kitchen;
-	}
-	public int getRooms() {
-		return offered_services.rooms;
-	}
-	public void setRooms(int rooms) {
-		this.offered_services.rooms = rooms;
-	}
-	public int getNumber_bathrooms() {
-		return offered_services.number_bathrooms;
-	}
-	public void setNumber_bathrooms(int number_bathrooms) {
-		this.offered_services.number_bathrooms = number_bathrooms;
-	}
-	public int getMax_hosts() {
-		return offered_services.max_hosts;
-	}
-	public void setMax_hosts(int max_hosts) {
-		this.offered_services.max_hosts = max_hosts;
-	}
-	public int getNumber_beds() {
-		return offered_services.number_beds;
-	}
-	public void setNumber_beds(int number_beds) {
-		this.offered_services.number_beds = number_beds;
-	}
-	public int getSquared_meters() {
-		return offered_services.squared_meters;
-	}
-	public void setSquared_meters(int squared_meters) {
-		this.offered_services.squared_meters = squared_meters;
-	}
 
 }

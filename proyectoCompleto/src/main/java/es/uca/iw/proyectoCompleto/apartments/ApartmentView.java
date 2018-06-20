@@ -84,7 +84,7 @@ public class ApartmentView extends VerticalLayout implements View
 
 		Label nombreAp = new Label(apartment.getName());
 		Label description = new Label(apartment.getDescription());
-		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€"));
+		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
 		
 		Button reservar = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + apartment.getId())) ;
 		reservar.setVisible(SecurityUtils.hasRole("ROLE_USER"));

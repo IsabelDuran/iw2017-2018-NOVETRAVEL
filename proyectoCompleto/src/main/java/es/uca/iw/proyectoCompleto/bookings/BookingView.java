@@ -65,7 +65,7 @@ public class BookingView extends VerticalLayout implements View{
 		
 		h.addComponent(v);
 		h.addComponent(editor);
-		editor.editBooking(new Booking(f1, f2, apartment.getPrice_per_day(), false, apartment, currentUser));
+		editor.editBooking(new Booking(f1, f2, apartment.getPricePerDay(), false, apartment, currentUser));
 		
 		v.addComponent(new Label(apartment.getName()));
 		Label description = new Label(apartment.getDescription());
@@ -74,7 +74,7 @@ public class BookingView extends VerticalLayout implements View{
 		desplegarImagenes(imagenes); 
 		v.addComponent(imagenes);
 		
-		v.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPrice_per_day() + "€")));
+		v.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€")));
 		
 	
 		 	
