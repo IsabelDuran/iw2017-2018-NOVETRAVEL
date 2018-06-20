@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
@@ -25,6 +24,8 @@ public class Booking{
 	
 	private Double totalPrice_ = 0.0;
 	
+	private boolean confirmation = false;
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	//@JoinColumn(nullable = false)
 	private Apartment apartment;
@@ -37,13 +38,14 @@ public class Booking{
 		super();
 	}
 			
-	public Booking(LocalDate entryDate_, LocalDate departureDate_, Double totalPrice, Apartment apartment, User user) {
+	public Booking(LocalDate entryDate_, LocalDate departureDate_, Double totalPrice, boolean confirmation, Apartment apartment, User user) {
 		super();
 		this.entryDate_ = entryDate_;
 		this.departureDate_ = departureDate_;
 		this.totalPrice_ = totalPrice;
 		this.apartment = apartment;
 		this.user = user;
+		this.confirmation = confirmation;
 	}
 
 	public Long getId() {
@@ -93,6 +95,14 @@ public class Booking{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public boolean isConfirmation() {
+		return confirmation;
+	}
+
+	public void setConfirmation(boolean confirmation) {
+		this.confirmation = confirmation;
 	}
 	
 }

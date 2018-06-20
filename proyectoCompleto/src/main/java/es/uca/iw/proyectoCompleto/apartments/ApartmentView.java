@@ -18,20 +18,24 @@ import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
 
-import es.uca.iw.proyectoCompleto.MainScreen;
+
+
+import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -39,25 +43,28 @@ import es.uca.iw.proyectoCompleto.users.UserService;
 @SpringView(name = ApartmentView.VIEW_NAME)
 public class ApartmentView extends VerticalLayout implements View
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public static final String VIEW_NAME = "apartmentView";
 
+	
 	@Autowired
 	private ImageApartmentService imageService;
 	
 	@Autowired
 	private ApartmentService service;
 	
-	@Autowired
-	private ApartmentRepository repo;
 	
-	@Autowired
 	private Apartment apartment;
 	
 	@Autowired
 	private UserService userService;
-	
 
-	
+
 	@PostConstruct
 	void init() {
 		
@@ -65,55 +72,58 @@ public class ApartmentView extends VerticalLayout implements View
 	
 		// Listen changes made by the editor, refresh data from backend
 		// Initialize listing
-		mostrarApartamento();
+
 		
 	}
 	
-	public void setApartamento(Apartment ap)
-	{
-		this.apartment=ap;
-	}
 
 	public void mostrarApartamento() {
 		
+		VerticalLayout v = new VerticalLayout();
+		HorizontalLayout imagenes = new HorizontalLayout();
 
-			HorizontalLayout lista = new HorizontalLayout();
-			addComponents(lista);
-//			if(apartment==null)
-//				apartment = (Apartment) MainScreen.getUltimoPinchado();
-			
-			lista.addComponent(new Label(apartment.getName()));
-			VerticalLayout abajo = new VerticalLayout();
-			addComponents(abajo);
-			abajo.addComponent(new Label(apartment.getDescription()));
-			HorizontalLayout imagenes=new HorizontalLayout();
-			desplegarImagenes(imagenes);  	
-			abajo.addComponent(imagenes);
-			
-			User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-			
-			if(usuarioLogeado.getId() == apartment.getUser().getId())
-			{
-				ponerContenedorImagenes(abajo,imagenes);
-			}
-			abajo.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€")));
+		Label nombreAp = new Label(apartment.getName());
+		Label description = new Label(apartment.getDescription());
+		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
+		
+		Button reservar = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + apartment.getId())) ;
+		reservar.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		description.setWidth("1000px");
+		
+		desplegarImagenes(imagenes); 
+		
+		addComponent(v);
+		
+		v.addComponents(nombreAp, description, imagenes);
+
+		User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		if(usuarioLogeado.getId() == apartment.getUser().getId())
+		{
+			ponerContenedorImagenes(v,imagenes);
+		} 
+		
+		v.addComponents(precio, reservar);
+
+		
 		
 	}
 	
 	public void desplegarImagenes(Layout contenedor) {
-		
+	
 			contenedor.removeAllComponents();
 			
 			for(int i=0;i<apartment.getImages().size();i++)
 			{
 				desplegarImagen(contenedor, apartment.getImages().get(i));
 			}
-		
+
 		
 	}
 	
 	public void ponerContenedorImagenes(Layout l,Layout contenedorImagenes){
-		
+
 		final Label infoLabel = new Label("Para añadir imagenes arrastre los ficheros");
         infoLabel.setWidth(240.0f, Unit.PIXELS);
 		final VerticalLayout dropPane = new VerticalLayout(infoLabel);
@@ -217,7 +227,15 @@ public class ApartmentView extends VerticalLayout implements View
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		if(event.getParameters() != null){
+	           // split at "/", add each part as a label
+	           String[] msgs = event.getParameters().split("/");
+	           long id=Long.valueOf(msgs[0]);
+	           
+	           apartment=service.loadApartmentById(id);
+	           mostrarApartamento();
+	           
+	    }
 		
 	}
 

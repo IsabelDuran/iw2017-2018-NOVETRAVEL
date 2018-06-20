@@ -142,7 +142,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				.bind(Location::getNumber_, Location::setNumber_);
 		loc_binder.forField(postalcode_).asRequired("Introduce el códido postal").bind(Location::getPostalCode_,
 				Location::setPostalCode_);
-		loc_binder.forField(floor_).withNullRepresentation("").withConverter(new StringToIntegerConverter("Introducir un número"))
+		loc_binder.forField(floor_).withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Location::getFloor_, Location::setFloor_);
 		loc_binder.forField(letter_).bind(Location::getLetter_, Location::setLetter_);
 
@@ -191,8 +191,9 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		} else {
 			this.apartment = editedApartement;
 			this.location = editedApartement.getLocation();
-			binder.readBean(this.apartment);
-			loc_binder.readBean(this.location);
+			binder.setBean(this.apartment);
+			loc_binder.setBean(this.location);
+			
 		}
 
 	}

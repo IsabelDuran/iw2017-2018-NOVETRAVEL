@@ -9,6 +9,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,7 +35,7 @@ public class UserEditor extends VerticalLayout {
 	TextField firstName = new TextField("First name");
 	TextField lastName = new TextField("Last name");
 	TextField username = new TextField("Username");
-	TextField password = new TextField("Password");
+	PasswordField password = new PasswordField("Password");
 	TextField direccion = new TextField("Direccion");
 	TextField zipcodee = new TextField("Zip code");
 

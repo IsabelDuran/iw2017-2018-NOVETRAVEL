@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,19 +36,22 @@ public class Apartment{
 	
 	private String apartmentType;
 	
-	Boolean wifi;
-	Boolean petsAllowed;
-	Boolean ownBathroom;
-	Boolean kidsAllowed;
-	Boolean smokingAllowed;
-	Boolean crib;
-	Boolean parking;
-	Boolean kitchen;
-	Integer rooms;
-	Integer numberBathrooms;
-	Integer maxHosts;
-	Integer numberBeds;
-	Integer squaredMeters;
+	private Boolean wifi;
+	private Boolean petsAllowed;
+	private Boolean ownBathroom;
+	private Boolean kidsAllowed;
+	private Boolean smokingAllowed;
+	private Boolean crib;
+	private Boolean parking;
+	private Boolean kitchen;
+	private Integer rooms;
+	private Integer numberBathrooms;
+	private Integer maxHosts;
+	private Integer numberBeds;
+	private Integer squaredMeters;
+	private float temporada_alta;
+	
+
 	
 	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)

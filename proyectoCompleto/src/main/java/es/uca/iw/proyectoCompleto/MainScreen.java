@@ -19,8 +19,10 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
+import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
 import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
+import es.uca.iw.proyectoCompleto.users.UserProfileView;
 import es.uca.iw.proyectoCompleto.users.UserView;
 
 
@@ -56,7 +58,8 @@ public class MainScreen extends VerticalLayout implements View {
 		navigationBar.addComponent(createNavigationButton("Gestión de Usuarios", UserManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Gestión Apartamentos", ApartmentManagementView.VIEW_NAME));
 		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
-//		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
+		navigationBar.addComponent(createNavigationButton("Editar perfil", UserProfileView.VIEW_NAME));
 		root.addComponent(navigationBar);
 
 		// Creamos el panel

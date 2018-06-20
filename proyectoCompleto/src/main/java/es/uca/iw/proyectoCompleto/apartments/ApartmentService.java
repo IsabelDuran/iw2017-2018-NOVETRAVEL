@@ -26,7 +26,9 @@ public class ApartmentService {
 	public Apartment loadApartmentById(Long id) {
 
 		Apartment apartamento = repo.findById(id);
+		
 		if (apartamento == null) {
+			System.out.println("ENTRA EN NULL");
 			//throw new ApartmentnameNotFoundException(apartamento);
 		}
 		return apartamento;
