@@ -93,10 +93,10 @@ public class ProyectoCompletoApplication {
 			if(ap.findAll().size()==0)
 			{
 			
-				a1=new Apartment("apartamento", "es un apartamento",3.0,true,"unifamiliar");
+				a1=new Apartment("apartamento", "es un apartamento",3.0,"unifamiliar");
 				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , "c");
 				a1.setLocation(l1);
-				a2 = new Apartment("apartamento2", "aaa", 20.0, true, "piso");
+				a2 = new Apartment("apartamento2", "aaa", 20.0, "piso");
 				ap.save(a1);
 				ap.save(a2);
 				

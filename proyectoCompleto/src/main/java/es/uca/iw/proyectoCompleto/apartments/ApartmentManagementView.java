@@ -61,13 +61,13 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		
 		addComponents(actions, grid);
 		
-		grid.setHeight(300, Unit.PIXELS);
-		grid.setWidth(900, Unit.PIXELS);
-		grid.setColumns("id", "apartmentType", "book","description", "name","pricePerDay");
+		grid.setHeight(100, Unit.PERCENTAGE);
+		grid.setWidth(100, Unit.PERCENTAGE);
+		grid.setColumns("apartmentType","description", "name","pricePerDay");
 
 		// Connect selected Apartment to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			VaadinSession.getCurrent().setAttribute("apartamentoEditado", e.getValue());
+			VaadinSession.getCurrent().setAttribute("apartamentoEditado", e.getValue().getId());
 			getUI().getNavigator().navigateTo(ApartmentEditor.VIEW_NAME);
 		});
 

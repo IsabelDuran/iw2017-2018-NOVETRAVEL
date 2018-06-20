@@ -13,7 +13,6 @@ import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -22,8 +21,6 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.LoginView;
-import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -80,8 +77,6 @@ public class RegisterScreen extends VerticalLayout implements View {
 			try {
 				binder.writeBean(user);
 				userService.save(user);
-				Notification.show("Registro realizado con éxito");
-				getUI().getNavigator().navigateTo(LoginView.VIEW_NAME);
 			} catch (ValidationException e) {
 				ValidationResult validationResult = e.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());

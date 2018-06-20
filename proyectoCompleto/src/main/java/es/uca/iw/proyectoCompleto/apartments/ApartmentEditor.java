@@ -1,5 +1,8 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +17,10 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -55,9 +57,8 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	/* Fields to edit properties in Apartment entity */
 	TextField name = new TextField("Nombre del apartamento:");
-	TextArea description = new TextArea("Descripcción");
+	TextArea description = new TextArea("Descripción");
 	TextField price_per_day = new TextField("Precio por día");
-	TextField apartment_type = new TextField("Tipo de alojamiento");
 	TextField max_hosts = new TextField("Número máximo de huespedes: ");
 	TextField number_beds = new TextField("Número de camas: ");
 	TextField number_rooms = new TextField("Número de habitaciones: ");
@@ -93,37 +94,54 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	@PostConstruct
 	public void init() {
+		
+		
+		List<String> apartmentType = new ArrayList<>();
+		apartmentType.add("Villa");
+		apartmentType.add("Casa unifamiliar");
+		apartmentType.add("Habitación privada");
+		apartmentType.add("Piso");
+		apartmentType.add("Albergue");
+		apartmentType.add("Suit");
+		apartmentType.add("Mansión");
+		apartmentType.add("Casa rural");
+		apartmentType.add("Balcón Ibizeño");
+		
+		ComboBox<String> selectApartmentType =
+			    new ComboBox<>("Selecciona el tipo de alojamiento");
+		selectApartmentType.setItems(apartmentType);
+		
 		this.binder = new Binder<>();
 		this.loc_binder = new Binder<>();
 		description_label.setStyleName(ValoTheme.LABEL_H2);
 		service_label.setStyleName(ValoTheme.LABEL_H2);
 		location_label.setStyleName(ValoTheme.LABEL_H2);
-		addComponents(description_label, name, description, price_per_day, apartment_type, max_hosts, number_beds,
+		addComponents(description_label, name, description, price_per_day, selectApartmentType, max_hosts, number_beds,
 				number_rooms, number_bathrooms, squared_meters, service_label, crib, parking, wifi, own_bathroom,
 				own_kitchen, pets_allowed, kids_allowed, smoking_allowed, location_label, city_, street_, number_,
 				postalcode_, floor_, letter_, actions);
 
 		// bind using naming convention
-		binder.forField(name).asRequired("Introduce el nombre del apartamento").bind(Apartment::getName,
+		binder.forField(name).withNullRepresentation("").asRequired("Introduce el nombre del apartamento").bind(Apartment::getName,
 				Apartment::setName);
-		binder.forField(description).asRequired("Introduce una descripción").bind(Apartment::getDescription,
+		binder.forField(description).withNullRepresentation("").asRequired("Introduce una descripción").bind(Apartment::getDescription,
 				Apartment::setDescription);
-		binder.forField(price_per_day).asRequired("Introduce un precio")
+		binder.forField(price_per_day).withNullRepresentation("").asRequired("Introduce un precio")
 				.withConverter(new StringToDoubleConverter("Introducir un número"))
 				.bind(Apartment::getPricePerDay, Apartment::setPricePerDay);
-		binder.forField(apartment_type).withNullRepresentation("").bind(Apartment::getApartmentType, Apartment::setApartmentType);
-		binder.forField(max_hosts).asRequired("Introduce un máximo de huespedes")
+		binder.forField(selectApartmentType).withNullRepresentation("").bind(Apartment::getApartmentType, Apartment::setApartmentType);
+		binder.forField(max_hosts).withNullRepresentation("").asRequired("Introduce un máximo de huespedes")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getMaxHosts, Apartment::setMaxHosts);
-		binder.forField(number_beds).asRequired("Introduce el número de camas")
+		binder.forField(number_beds).withNullRepresentation("").asRequired("Introduce el número de camas")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getNumberBeds, Apartment::setNumberBeds);
-		binder.forField(number_rooms).withConverter(new StringToIntegerConverter(0, "Introducir un número"))
+		binder.forField(number_rooms).withNullRepresentation("").withConverter(new StringToIntegerConverter(0, "Introducir un número"))
 				.bind(Apartment::getRooms, Apartment::setRooms);
-		binder.forField(number_bathrooms).withConverter(new StringToIntegerConverter("Introducir un número"))
+		binder.forField(number_bathrooms).withNullRepresentation("").withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getNumberBathrooms, Apartment::setNumberBathrooms);
 
-		binder.forField(squared_meters).asRequired("Introduce los metros cuadrados")
+		binder.forField(squared_meters).withNullRepresentation("").asRequired("Introduce los metros cuadrados")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getSquaredMeters, Apartment::setSquaredMeters);
 		binder.forField(crib).bind(Apartment::getCrib, Apartment::setCrib);
@@ -135,16 +153,16 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		binder.forField(kids_allowed).bind(Apartment::getKidsAllowed, Apartment::setKidsAllowed);
 		binder.forField(smoking_allowed).bind(Apartment::getSmokingAllowed, Apartment::setSmokingAllowed);
 
-		loc_binder.forField(city_).asRequired("Introduce la ciudad").bind(Location::getCity_, Location::setCity_);
-		loc_binder.forField(street_).asRequired("Introduce la calle").bind(Location::getStreet_, Location::setStreet_);
-		loc_binder.forField(number_).asRequired("Introduce el número")
+		loc_binder.forField(city_).withNullRepresentation("").asRequired("Introduce la ciudad").bind(Location::getCity_, Location::setCity_);
+		loc_binder.forField(street_).withNullRepresentation("").asRequired("Introduce la calle").bind(Location::getStreet_, Location::setStreet_);
+		loc_binder.forField(number_).withNullRepresentation("").asRequired("Introduce el número")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Location::getNumber_, Location::setNumber_);
-		loc_binder.forField(postalcode_).asRequired("Introduce el códido postal").bind(Location::getPostalCode_,
+		loc_binder.forField(postalcode_).withNullRepresentation("").asRequired("Introduce el códido postal").bind(Location::getPostalCode_,
 				Location::setPostalCode_);
-		loc_binder.forField(floor_).withConverter(new StringToIntegerConverter("Introducir un número"))
+		loc_binder.forField(floor_).withNullRepresentation("").withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Location::getFloor_, Location::setFloor_);
-		loc_binder.forField(letter_).bind(Location::getLetter_, Location::setLetter_);
+		loc_binder.forField(letter_).withNullRepresentation("").bind(Location::getLetter_, Location::setLetter_);
 
 		// Configure and style components
 		setSpacing(true);
@@ -154,19 +172,21 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> {
-			if (loc_binder == null || binder == null || this.location == null || this.apartment == null)
-				System.out.println("ALGO ES NULO");
+
 
 			try {
 				loc_binder.writeBean(this.location);
 				binder.writeBean(this.apartment);
-
-				ls.save(this.location);
+				
+				this.location.setApartment(apartment);
 				User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 				user_.addApartments(apartment);
 				apartment.setUser(user_);
 				apartment.setLocation(this.location);
 				service.save(this.apartment);
+				
+				Notification.show("Apartamento guardado con éxito");
+				getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME);
 
 			} catch (ValidationException e1) {
 				ValidationResult validationResult = e1.getValidationErrors().iterator().next();
@@ -177,24 +197,26 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		});
 
 		delete.addClickListener(e -> service.delete(apartment));
-		// cancel.addClickListener(e -> editApartment(apartment));
+		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME));
 		delete.setEnabled(SecurityUtils.hasRole("ROLE_ADMIN"));
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		Apartment editedApartement = (Apartment) VaadinSession.getCurrent().getAttribute("apartamentoEditado");
+		Long editedApartement = (Long) VaadinSession.getCurrent().getAttribute("apartamentoEditado");
 		if (editedApartement == null) {
 			this.apartment = new Apartment();
 			this.location = new Location();
 
 		} else {
-			this.apartment = editedApartement;
-			this.location = editedApartement.getLocation();
+			
+			this.apartment = service.loadApartmentById(editedApartement);
+			this.location = this.apartment.getLocation();
 			binder.setBean(this.apartment);
 			loc_binder.setBean(this.location);
 			
 		}
+		System.out.println(location);
 
 	}
 

@@ -31,8 +31,6 @@ public class Apartment{
 	
 	@Min(value = 1L, message = "The value must be positive")
 	private Double pricePerDay;
-
-	private Boolean book;
 	
 	private String apartmentType;
 	
@@ -60,31 +58,29 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment")
 	private List<Booking> bookings;
 	
-	@OneToOne
+	@OneToOne(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private Location location;
 	
 	@ManyToOne
 	private User user;
 	
-	protected Apartment() {
+	public Apartment() {
 	}
 	
-	public Apartment(String name, String description, Double pricePerDay, Boolean book, String type) {
+	public Apartment(String name, String description, Double pricePerDay, String type) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.pricePerDay = pricePerDay;
-		this.book = true;
 		this.apartmentType = type;
 
 	}	
 	
-	public Apartment(String name, String description, Double pricePerDay, Boolean book, String type, User user) {
+	public Apartment(String name, String description, Double pricePerDay, String type, User user) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.pricePerDay = pricePerDay;
-		this.book = true;
 		this.apartmentType = type;
 		this.user = user;
 	}
@@ -120,15 +116,7 @@ public class Apartment{
 	public void setPricePerDay(Double pricePerDay) {
 		this.pricePerDay = pricePerDay;
 	}
-
-	public Boolean getBook() {
-		return book;
-	}
-
-	public void setBook(Boolean book) {
-		this.book = book;
-	}
-
+	
 	public String getApartmentType() {
 		return apartmentType;
 	}
@@ -258,7 +246,7 @@ public class Apartment{
 	}
 
 	public Location getLocation() {
-		return location;
+		return this.location;
 	}
 
 	public void setLocation(Location location) {
