@@ -204,10 +204,10 @@ public class ImageApartmentView extends VerticalLayout implements View
 	        UI.getCurrent().addWindow(w);
 	    }
 	
-	public void ultimo(ImageApartment pinchado) {
-		MainScreen.setUltimoPinchado(pinchado);
-	}
-	
+//	public void ultimo(ImageApartment pinchado) {
+//		MainScreen.setUltimoPinchado(pinchado);
+//	}
+//	
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub

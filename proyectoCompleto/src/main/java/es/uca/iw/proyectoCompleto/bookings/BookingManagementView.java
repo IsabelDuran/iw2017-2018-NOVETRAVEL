@@ -110,7 +110,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 					entryDate = book.getEntryDate();
 					departureDate = book.getDepartureDate();
 					
-					price = ((double)DAYS.between(entryDate, departureDate)+1) * apart.getPrice_per_day();
+					price = ((double)DAYS.between(entryDate, departureDate)+1) * apart.getPricePerDay();
 					book.setTotalPrice(price);
 					
 					a.add(apart);

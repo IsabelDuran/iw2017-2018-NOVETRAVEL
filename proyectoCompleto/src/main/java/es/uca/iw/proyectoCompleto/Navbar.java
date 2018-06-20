@@ -73,6 +73,11 @@ public class Navbar extends HorizontalLayout
 	    		logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 	    		addComponent(logoutButton);
 	    		this.setComponentAlignment(logoutButton, Alignment.MIDDLE_RIGHT);
+	    		
+	    		Button profileButton = new Button("Tu perfil", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
+	    		profileButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+	    		addComponent(profileButton);
+	    		this.setComponentAlignment(profileButton, Alignment.MIDDLE_RIGHT);
 	        }
 	        else
 	        {

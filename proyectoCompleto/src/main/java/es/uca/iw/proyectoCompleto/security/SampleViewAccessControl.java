@@ -41,6 +41,9 @@ public class SampleViewAccessControl implements ViewAccessControl {
 		} else if (beanName.equals("apartmentManagementView")) {
 			return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN")
 					|| SecurityUtils.hasRole("ROLE_USER");
+		} else if (beanName.equals("apartmentEditor")) {
+			return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN")
+					|| SecurityUtils.hasRole("ROLE_USER");
 		} else if (beanName.equals("apartmentListView")) {
 			return SecurityUtils.hasRole("ROLE_MANAGER") || SecurityUtils.hasRole("ROLE_ADMIN")
 					|| SecurityUtils.hasRole("ROLE_USER") || SecurityUtils.roles() == null;
