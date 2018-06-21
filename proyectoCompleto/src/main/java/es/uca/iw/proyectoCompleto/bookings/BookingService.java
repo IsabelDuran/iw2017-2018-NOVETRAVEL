@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ public class BookingService {
 	private BookingRepository repository_;
 
 	//throws ApartmentnameNotFoundException 
-	public Booking loadBookingByBookingId(String bookingId) {
+	public Booking loadBookingByBookingId(Long bookingId) {
 
 		Booking booking_ = repository_.findById(bookingId);
 		if (booking_ == null) {
@@ -20,6 +21,19 @@ public class BookingService {
 		}
 		return booking_;
 	}
+	
+	public List<Booking> loadBookingByApartmentId(Long apartmentId)
+	{
+		List<Booking> reservas = repository_.findByApartmentId(apartmentId);
+		if (reservas == null)
+		{
+			reservas = new ArrayList<>();
+			System.out.println("DEBERIA ENTRAR EN ESTE IF");
+		}
+			
+		return reservas;
+	}
+	
 
 	public Booking save(Booking booking) {
 

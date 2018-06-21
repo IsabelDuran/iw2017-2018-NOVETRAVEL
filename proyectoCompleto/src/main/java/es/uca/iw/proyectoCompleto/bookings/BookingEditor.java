@@ -1,6 +1,8 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,11 +19,10 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
-//import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+
+import org.joda.time.*;
 
 @SpringComponent
 @UIScope
@@ -37,6 +38,7 @@ public class BookingEditor extends VerticalLayout  {
 	
 	private Booking booking_;
 	
+	
 	/**
 	 * The currently edited booking
 	 */
@@ -50,6 +52,9 @@ public class BookingEditor extends VerticalLayout  {
 	DateField entryDate = new DateField();
 	DateField departureDate = new DateField();
 	
+	List<Booking> reservasPorApartamento;
+	
+	boolean fechaValida;
 	
 	/* Action buttons */
 	Button save = new Button("Guardar");
@@ -77,6 +82,7 @@ public class BookingEditor extends VerticalLayout  {
 		Binder.BindingBuilder<Booking, LocalDate> returnBindingBuilder = binder.forField(departureDate).withValidator(departureDate_ -> !departureDate_.isBefore(entryDate.getValue()),	 "Cannot return before departing").withValidator(departureDate_ -> !departureDate_.isBefore(LocalDate.now()), "Departure date should be after local date");		
 		Binder.Binding<Booking, LocalDate> returnBinder = returnBindingBuilder.bind(Booking::getDepartureDate, Booking::setDepartureDate);
 		departureDate.addValueChangeListener(event -> returnBinder.validate());
+		
 		// Configure and style components
 		setSpacing(true);
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
@@ -87,8 +93,14 @@ public class BookingEditor extends VerticalLayout  {
 	
 		save.addClickListener(e -> {
 			try {
+
+				fechaValida = comprobarFecha();
+				
+				if(!fechaValida)
+					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
 				
 				binder.writeBean(booking_);
+				
 				service.save(booking_);
 				
 				Notification.show("Reserva realizada con éxito.\n Se ha enviado un correo para \nconfirmar la reserva.");
@@ -97,7 +109,9 @@ public class BookingEditor extends VerticalLayout  {
 			} catch(ValidationException ex) {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
-		    } 
+		    } catch (Exception exc) {
+		    	Notification.show(exc.getMessage());
+		    }
 			 
 		});
 		
@@ -110,6 +124,45 @@ public class BookingEditor extends VerticalLayout  {
 		
 		// Solo borra el admin
 		delete.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+	}
+	
+	private boolean comprobarFecha()
+	{
+		boolean valido = true;
+		Long apId = booking_.getApartment().getId();
+		
+		Booking aux;
+		
+		DateTime f1,f2,f3,f4;
+		
+		f1 = new DateTime(entryDate.getValue().toString());
+		f2 = new DateTime(departureDate.getValue().toString());
+		
+		Interval intervalo2,intervalo1 = new Interval(f1,f2);
+		
+		reservasPorApartamento = service.loadBookingByApartmentId(apId);
+		
+		if(reservasPorApartamento.size() != 0)
+		{
+			Iterator<Booking> it = reservasPorApartamento.iterator();
+			
+			while(it.hasNext() && valido)
+			{	
+				aux = it.next();
+				
+				f3 = new DateTime(aux.getEntryDate().toString());
+				f4 = new DateTime(aux.getDepartureDate().toString());
+				
+				intervalo2 = new Interval(f3,f4);
+				
+				if(intervalo1.overlaps(intervalo2))
+					valido = false;
+			}
+		}
+		
+
+		
+		return valido;
 	}
 	
 	// Set the date to present
