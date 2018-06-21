@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -14,18 +13,19 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.MainScreen;
 
 @SpringComponent
 @UIScope
 public class UserEditor extends VerticalLayout {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private final UserService service;
 
-	
-	/**
-	 * The currently edited user
-	 */
 	private User user;
 
 	private Binder<User> binder = new Binder<>(User.class);
@@ -40,9 +40,9 @@ public class UserEditor extends VerticalLayout {
 	TextField zipcodee = new TextField("Zip code");
 
 	/* Action buttons */
-	Button save = new Button("Save", FontAwesome.SAVE);
-	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete", FontAwesome.TRASH_O);
+	Button save = new Button("Guardar cambios");
+	Button cancel = new Button("Cancelar");
+	Button delete = new Button("Eliminar mi cuenta");
 
 	/* Layout for buttons */
 	CssLayout actions = new CssLayout(save, cancel, delete);
@@ -67,11 +67,8 @@ public class UserEditor extends VerticalLayout {
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> service.save(user));
 		delete.addClickListener(e -> service.delete(user));
-		cancel.addClickListener(e -> editUser(user));
+		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
 		setVisible(false);
-		
-		// Solo borra el admin
-		delete.setEnabled(SecurityUtils.hasRole("ADMIN"));
 	}
 
 	public interface ChangeHandler {
@@ -93,17 +90,9 @@ public class UserEditor extends VerticalLayout {
 			user = c;
 		}
 		cancel.setVisible(persisted);
-
-		// Bind user properties to similarly named fields
-		// Could also use annotation or "manual binding" or programmatically
-		// moving values from fields to entities before saving
 		binder.setBean(user);
-
 		setVisible(true);
-
-		// A hack to ensure the whole form is visible
 		save.focus();
-		// Select all text in firstName field automatically
 		firstName.selectAll();
 	}
 

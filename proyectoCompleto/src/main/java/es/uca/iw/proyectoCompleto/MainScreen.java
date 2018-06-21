@@ -13,6 +13,7 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -21,6 +22,7 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
 import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
 import es.uca.iw.proyectoCompleto.reports.ReportManagementView;
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
 import es.uca.iw.proyectoCompleto.users.UserProfileView;
 import es.uca.iw.proyectoCompleto.users.UserView;
@@ -42,7 +44,7 @@ public class MainScreen extends VerticalLayout implements View {
 	
 	public MainScreen()
 	{
-		setMargin(false);
+		setMargin(true);
         setSpacing(true);
 	}
 
@@ -51,32 +53,47 @@ public class MainScreen extends VerticalLayout implements View {
 		final VerticalLayout root = new VerticalLayout();
 		root.setSizeFull();
 		
-		// Creamos la barra de navegación
-		final CssLayout navigationBar = new CssLayout();
-		navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-		navigationBar.addComponent(createNavigationButton("Usuarios Registrados", UserView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Gestión de Usuarios", UserManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Gestión Apartamentos", ApartmentManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Quejas", ReportManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Reservas", BookingManagementView.VIEW_NAME));
-		navigationBar.addComponent(createNavigationButton("Editar perfil", UserProfileView.VIEW_NAME));
-		root.addComponent(navigationBar);
-
-		// Creamos el panel
-		springViewDisplay = new Panel();
-		springViewDisplay.setSizeFull();
-		root.addComponent(springViewDisplay);
-		root.setExpandRatio(springViewDisplay, 1.0f);
-
-		addComponent(root);
+		createUserMainMenu();
+	
 		
+		Label userManagementLabel = new Label("Gestión de usuarios: ");
+		userManagementLabel.setStyleName("title-text");
+		userManagementLabel.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		
+
+		Button userManagementButton = new Button("Gestion de usuarios", e -> getUI().getNavigator().navigateTo(UserManagementView.VIEW_NAME));
+		userManagementButton.setStyleName("title-text");
+		userManagementButton.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		addComponents(userManagementLabel, userManagementLabel);
+	
 	}
 
-	private Button createNavigationButton(String caption, final String viewName) {
-		Button button = new Button(caption);
-		button.addStyleName(ValoTheme.BUTTON_SMALL);
-		button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
-		return button;
+	private void createUserMainMenu() {
+		Label apartmentLabel = new Label("Tus alojamientos: ");
+		apartmentLabel.setStyleName("title-text");
+		apartmentLabel.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		Button apartmentNavigationButton = new Button("¡Gestionar mis apartamentos!",  e -> getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME));
+		apartmentNavigationButton.setStyleName("box-padding");
+		apartmentNavigationButton.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		Label myBookingsLabel = new Label("Tus Reservas: ");
+		myBookingsLabel.setStyleName("title-text");
+		myBookingsLabel.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		Button myBookingsNavigationButton = new Button("¡Gestionar mis reservas!",  e -> getUI().getNavigator().navigateTo(BookingManagementView.VIEW_NAME));
+		myBookingsNavigationButton.setStyleName("box-padding");
+		myBookingsNavigationButton.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		Label profileLabel = new Label("Tu Perfil: ");
+		profileLabel.setStyleName("title-text");
+		profileLabel.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		Button profileNavigationButton = new Button("¡Editar mi perfil!",  e -> getUI().getNavigator().navigateTo(UserProfileView.VIEW_NAME));
+		profileNavigationButton.setStyleName("box-padding");
+		profileNavigationButton.setVisible(SecurityUtils.hasRole("ROLE_USER"));
+		
+		addComponents(apartmentLabel, apartmentNavigationButton, myBookingsLabel, myBookingsNavigationButton, profileLabel, profileNavigationButton);
 	}
 
 }

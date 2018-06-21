@@ -67,8 +67,10 @@ public class ApartmentListView extends VerticalLayout implements View {
 	public void listApartments(List<Apartment> aps) {
 		this.removeAllComponents();
 		if (!aps.isEmpty()) {
+			
 			GridLayout lista = new GridLayout(3, 3);
 			addComponents(lista);
+			
 	
 			for (Apartment i : aps) {
 				VerticalLayout contenedor = new VerticalLayout();

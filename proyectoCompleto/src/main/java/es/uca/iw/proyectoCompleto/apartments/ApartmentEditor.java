@@ -198,7 +198,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 		delete.addClickListener(e -> service.delete(apartment));
 		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME));
-		delete.setEnabled(SecurityUtils.hasRole("ROLE_ADMIN"));
+	
 	}
 
 	@Override
