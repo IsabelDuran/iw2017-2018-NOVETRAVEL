@@ -21,6 +21,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.LoginView;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -77,6 +78,8 @@ public class RegisterScreen extends VerticalLayout implements View {
 			try {
 				binder.writeBean(user);
 				userService.save(user);
+				Notification.show("¡Registro exitoso!");
+				getUI().getNavigator().navigateTo(LoginView.VIEW_NAME);
 			} catch (ValidationException e) {
 				ValidationResult validationResult = e.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
