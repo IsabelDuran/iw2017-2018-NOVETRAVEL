@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -22,6 +21,11 @@ import com.vaadin.ui.VerticalLayout;
 
 @SpringView(name = UserManagementView.VIEW_NAME)
 public class UserManagementView extends VerticalLayout implements View {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String VIEW_NAME = "userManagementView";
 
 	private Grid<User> grid;
@@ -39,7 +43,7 @@ public class UserManagementView extends VerticalLayout implements View {
 		this.editor = editor;
 		this.grid = new Grid<>(User.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("New user", FontAwesome.PLUS);  
+		this.addNewBtn = new Button("Nuevo usuario");  
 	}
 
 	

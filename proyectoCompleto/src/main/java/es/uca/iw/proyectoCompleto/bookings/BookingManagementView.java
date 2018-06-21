@@ -1,25 +1,22 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 
-import java.time.LocalDate;
-import static java.time.temporal.ChronoUnit.DAYS;
-import java.util.ArrayList;
-import java.util.List;
-import es.uca.iw.proyectoCompleto.bookings.Booking;
-import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
-import es.uca.iw.proyectoCompleto.bookings.BookingService;
-
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 @SpringView(name = BookingManagementView.VIEW_NAME)
 public class BookingManagementView extends HorizontalLayout implements View {

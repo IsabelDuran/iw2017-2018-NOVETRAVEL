@@ -13,7 +13,11 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 public class ErrorView extends VerticalLayout implements View {
 
-    private Label errorLabel;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Label errorLabel;
 
     public ErrorView() {
         setMargin(true);

@@ -3,7 +3,6 @@ package es.uca.iw.proyectoCompleto.imageApartment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -23,9 +22,6 @@ public class ImageApartmentEditor extends VerticalLayout {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final ImageApartmentService service;
-	//private ImageApartment image;
-	
 	/**
 	 * The currently edited image
 	 */
@@ -52,8 +48,6 @@ public class ImageApartmentEditor extends VerticalLayout {
 
 	@Autowired
 	public ImageApartmentEditor(ImageApartmentService service) {
-		this.service = service;
-
 		addComponents(title, date, reasons, image_description ,actions);
 		
 

@@ -1,11 +1,7 @@
 package es.uca.iw.proyectoCompleto.location;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import es.uca.iw.proyectoCompleto.disputes.Dispute;
 
 @Service
 public class LocationService {

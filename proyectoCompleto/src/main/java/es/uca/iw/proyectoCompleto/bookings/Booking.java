@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import  java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,8 +10,6 @@ import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.users.User;
-
-import  java.time.LocalDate;
 
 @Entity
 public class Booking{

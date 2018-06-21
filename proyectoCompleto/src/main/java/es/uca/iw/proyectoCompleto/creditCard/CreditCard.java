@@ -2,14 +2,9 @@ package es.uca.iw.proyectoCompleto.creditCard;
 
 import java.time.LocalDate;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import es.uca.iw.proyectoCompleto.users.User;
 
 @Entity
 public class CreditCard {

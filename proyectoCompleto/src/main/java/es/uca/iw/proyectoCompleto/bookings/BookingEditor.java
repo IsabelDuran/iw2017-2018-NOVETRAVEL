@@ -1,13 +1,12 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
-import com.vaadin.data.converter.LocalDateTimeToDateConverter;
-import com.vaadin.data.converter.StringToDoubleConverter;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
@@ -15,23 +14,13 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.PopupView;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
-
-import aj.org.objectweb.asm.Label;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 //import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentView;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 
 @SpringComponent
@@ -46,11 +35,6 @@ public class BookingEditor extends VerticalLayout  {
 	@Autowired
 	private BookingService service;
 	
-	@Autowired
-	private ApartmentService serviceAp;
-	
-	private Apartment apartment;
-
 	private Booking booking_;
 	
 	/**

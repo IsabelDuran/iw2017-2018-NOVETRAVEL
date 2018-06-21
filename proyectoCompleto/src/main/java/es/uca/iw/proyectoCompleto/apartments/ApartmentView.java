@@ -19,7 +19,6 @@ import com.vaadin.server.StreamVariable;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
@@ -29,8 +28,6 @@ import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
-
-
 
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
@@ -137,11 +134,11 @@ public class ApartmentView extends VerticalLayout implements View
         dropPane.addComponent(progress);
         dropPane.addComponent(infoLabel);
  
-        FileDropTarget f=new FileDropTarget<>(dropPane, fileDropEvent -> {
+        new FileDropTarget<>(dropPane, fileDropEvent -> {
             final int fileSizeLimit = 2 * 1024 * 1024; // 2MB
  
             fileDropEvent.getFiles().forEach(html5File -> {
-                final String fileName = html5File.getFileName();
+                html5File.getFileName();
  
                 if (html5File.getFileSize() > fileSizeLimit) {
                     Notification.show(
@@ -151,7 +148,12 @@ public class ApartmentView extends VerticalLayout implements View
                     final ByteArrayOutputStream bas = new ByteArrayOutputStream();
                     final StreamVariable streamVariable = new StreamVariable() {
  
-                        @Override
+                        /**
+						 * 
+						 */
+						private static final long serialVersionUID = 1L;
+
+						@Override
                         public boolean listenProgress() {
                             return false;
                         }

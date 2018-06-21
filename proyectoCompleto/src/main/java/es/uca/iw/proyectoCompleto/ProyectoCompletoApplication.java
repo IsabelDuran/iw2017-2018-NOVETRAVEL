@@ -1,7 +1,5 @@
 package es.uca.iw.proyectoCompleto;
 
-import java.time.LocalDate;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.reports.Report;

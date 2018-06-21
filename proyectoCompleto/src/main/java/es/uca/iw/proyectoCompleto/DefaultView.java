@@ -6,17 +6,12 @@ package es.uca.iw.proyectoCompleto;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
@@ -31,6 +26,11 @@ import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
  */
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String VIEW_NAME = "";
 
 	@Autowired
@@ -66,19 +66,18 @@ public class DefaultView extends VerticalLayout implements View {
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
 		addComponent(springViewDisplay);
-		setExpandRatio(springViewDisplay, 1.0f);
+		//setExpandRatio(springViewDisplay, 1.0f);
 
 		// navbar_.setDisplay(springViewDisplay);
 		addComponent(springViewDisplay);
 		apartmentListView.setPanel(springViewDisplay);
 		springViewDisplay.setContent(apartmentListView);
-		apartmentListView.listApartments(apartmentService.findAll());
 
 	}
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
+		apartmentListView.listApartments(apartmentService.findAll());
 
 	}
 

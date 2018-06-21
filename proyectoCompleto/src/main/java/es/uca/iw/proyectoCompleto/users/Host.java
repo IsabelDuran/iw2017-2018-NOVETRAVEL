@@ -12,6 +12,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Entity
 public class Host extends User{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Host() {
 		super();
 		// TODO Auto-generated constructor stub

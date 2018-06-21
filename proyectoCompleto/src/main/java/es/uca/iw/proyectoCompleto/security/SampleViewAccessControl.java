@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import com.vaadin.spring.access.ViewAccessControl;
 import com.vaadin.ui.UI;
 
-import es.uca.iw.proyectoCompleto.LoginView;
-
 /**
  * This demonstrates how you can control access to views.
  */

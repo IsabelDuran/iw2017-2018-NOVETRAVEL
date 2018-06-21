@@ -1,10 +1,8 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -47,11 +45,6 @@ public class Apartment{
 	private Integer maxHosts;
 	private Integer numberBeds;
 	private Integer squaredMeters;
-	private float temporada_alta;
-	
-
-	
-	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
 	

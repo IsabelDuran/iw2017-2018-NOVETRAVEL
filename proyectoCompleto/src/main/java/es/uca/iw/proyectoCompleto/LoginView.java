@@ -13,7 +13,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinService;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.security.LoginScreen;

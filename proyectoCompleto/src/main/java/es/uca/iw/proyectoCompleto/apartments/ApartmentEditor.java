@@ -31,7 +31,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.location.LocationService;
-import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentEditor.VIEW_NAME)
@@ -46,9 +45,6 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	@Autowired
 	private ApartmentService service;
-	@Autowired
-	private LocationService ls;
-
 	private Apartment apartment;
 	private Location location;
 

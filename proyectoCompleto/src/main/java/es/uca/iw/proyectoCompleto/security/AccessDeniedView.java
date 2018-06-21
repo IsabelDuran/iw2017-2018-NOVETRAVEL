@@ -16,7 +16,12 @@ import com.vaadin.ui.themes.ValoTheme;
 @UIScope
 public class AccessDeniedView extends VerticalLayout implements View {
 
-    public AccessDeniedView() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AccessDeniedView() {
         setMargin(true);
         Label lbl = new Label("Lo siento, no tienes permiso para ver esto");
         lbl.addStyleName(ValoTheme.LABEL_FAILURE);

@@ -1,7 +1,8 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
-import javax.annotation.PostConstruct;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,21 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import java.util.List;
-
-import es.uca.iw.proyectoCompleto.DefaultView;
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentManagementView.VIEW_NAME)
@@ -38,14 +30,8 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 	private Grid<Apartment> grid;
 	private Button addNewBtn;
 
-	private ApartmentEditor editor;
-
-	private final ApartmentService service;
-
 	@Autowired
 	public ApartmentManagementView(ApartmentService service, ApartmentEditor editor) {
-		this.service = service;
-		this.editor = editor;
 		this.grid = new Grid<>(Apartment.class);
 		this.addNewBtn = new Button("Nuevo apartamento");
 	    
