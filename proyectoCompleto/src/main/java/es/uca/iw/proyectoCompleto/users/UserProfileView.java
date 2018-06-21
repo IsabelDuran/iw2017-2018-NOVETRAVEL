@@ -36,14 +36,13 @@ public class UserProfileView extends VerticalLayout implements View{
 	void init() {
 		addComponent(editor);
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		editor.editUser(user_);
-		
-		
-		editor.setChangeHandler(() -> {
-			Correo correo_ = new Correo();
-		    correo_.enviarCorreo("Cambio contraseña", "Su contraseña ha sido cambiada");
-			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
-		});
+//		editor.editUser(user_);
+//		
+//		editor.setChangeHandler(() -> {
+//			Correo correo_ = new Correo();
+//		    correo_.enviarCorreo("Cambio contraseña", "Su contraseña ha sido cambiada");
+//			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
+//		});
 	}
 	
 	@Override

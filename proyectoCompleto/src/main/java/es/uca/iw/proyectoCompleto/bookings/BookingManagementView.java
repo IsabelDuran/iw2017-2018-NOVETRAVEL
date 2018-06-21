@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 @SpringView(name = BookingManagementView.VIEW_NAME)
@@ -29,7 +31,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 
 	private Grid<Booking> grid;
 	
-	private Grid<Apartment> grid2;
+	private Grid<Apartment> apartmentNameGrid;
 	
 	//private TextField filter;
 
@@ -44,7 +46,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		this.service = service;
 		this.editor = editor;
 		this.grid = new Grid<>();
-		this.grid2 = new Grid<>();
+		this.apartmentNameGrid = new Grid<>();
 		this.service2 = service2;
 		    
 	}
@@ -54,15 +56,18 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	void init() {
 		
 		/// build layout
-		addComponents(grid2,grid,editor);
 		
-		grid2.setHeight(300, Unit.PIXELS);
-		grid2.setWidth(200, Unit.PIXELS);
+		Button goBack = new Button("Volver", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
+		addComponent(goBack);
+		addComponents(apartmentNameGrid, grid, editor);
+		
+		apartmentNameGrid.setHeight(300, Unit.PIXELS);
+		apartmentNameGrid.setWidth(200, Unit.PIXELS);
 		
 		grid.setHeight(300, Unit.PIXELS);
-		grid.setWidth(1000, Unit.PIXELS);
+		grid.setWidth(100, Unit.PERCENTAGE);
 			
-		grid2.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		apartmentNameGrid.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
 		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada" ).setResizable(false);
 		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
 		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
@@ -79,7 +84,8 @@ public class BookingManagementView extends HorizontalLayout implements View {
 			editor.setVisible(false);
 			//Bookings(editor.getValue());
 		
-		}); 
+		});
+	
 			
 		
 		// Initialize listing
@@ -118,7 +124,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		}
 		
 		grid.setItems(b);
-		grid2.setItems(a);
+		apartmentNameGrid.setItems(a);
 	}
 	
 	

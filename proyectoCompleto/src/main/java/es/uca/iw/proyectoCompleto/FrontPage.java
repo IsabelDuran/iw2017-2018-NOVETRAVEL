@@ -2,7 +2,6 @@ package es.uca.iw.proyectoCompleto;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
@@ -11,8 +10,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 
 @SpringViewDisplay
 public class FrontPage extends VerticalLayout implements ViewDisplay {

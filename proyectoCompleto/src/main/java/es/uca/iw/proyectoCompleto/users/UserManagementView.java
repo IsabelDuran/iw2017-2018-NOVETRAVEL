@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
@@ -18,6 +19,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
 
 @SpringView(name = UserManagementView.VIEW_NAME)
 public class UserManagementView extends VerticalLayout implements View {
@@ -34,7 +36,6 @@ public class UserManagementView extends VerticalLayout implements View {
 
 	private UserEditor editor;
 
-	
 	private final UserService service;
 
 	@Autowired
@@ -43,22 +44,21 @@ public class UserManagementView extends VerticalLayout implements View {
 		this.editor = editor;
 		this.grid = new Grid<>(User.class);
 		this.filter = new TextField();
-		this.addNewBtn = new Button("Nuevo usuario");  
+		this.addNewBtn = new Button("Nuevo usuario");
 	}
 
-	
 	@PostConstruct
 	void init() {
-		
+
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
-		
+
 		addComponents(actions, grid, editor);
 
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setColumns("id", "firstName", "lastName");
 
-		filter.setPlaceholder("Filter by last name");
+		filter.setPlaceholder("Filtrar por apellido");
 
 		// Hook logic to components
 
@@ -68,20 +68,25 @@ public class UserManagementView extends VerticalLayout implements View {
 
 		// Connect selected User to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			editor.editUser(e.getValue());
+			VaadinSession.getCurrent().setAttribute("usuarioEditado", e.getValue().getId());
+			getUI().getNavigator().navigateTo(UserEditor.VIEW_NAME);
+
 		});
 
 		// Instantiate and edit new User the new button is clicked
-		addNewBtn.addClickListener(e -> editor.editUser(new User("", "", "", 1231, "")));
-
-		// Listen changes made by the editor, refresh data from backend
-		editor.setChangeHandler(() -> {
-			editor.setVisible(false);
-			listUsers(filter.getValue());
+		addNewBtn.addClickListener(e -> {
+			VaadinSession.getCurrent().setAttribute("usuarioEditado", null);
+			getUI().getNavigator().navigateTo(UserEditor.VIEW_NAME);
 		});
 
-		// Initialize listing
-		listUsers(null);
+//		// Listen changes made by the editor, refresh data from backend
+//		editor.setChangeHandler(() -> {
+//			editor.setVisible(false);
+//			listUsers(filter.getValue());
+//		});
+//
+//		// Initialize listing
+//		listUsers(null);
 
 	}
 
@@ -92,12 +97,11 @@ public class UserManagementView extends VerticalLayout implements View {
 			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
 		}
 	}
-	
-	
+
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
