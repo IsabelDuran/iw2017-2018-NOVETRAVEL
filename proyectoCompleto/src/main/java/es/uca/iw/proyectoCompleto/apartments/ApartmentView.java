@@ -30,6 +30,7 @@ import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
+import es.uca.iw.proyectoCompleto.disputes.DisputeView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
@@ -82,6 +83,7 @@ public class ApartmentView extends VerticalLayout implements View
 		Label nombreAp = new Label(apartment.getName());
 		Label description = new Label(apartment.getDescription());
 		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
+		Button denunciar=new Button("Denuncia este anuncio", e -> getUI().getNavigator().navigateTo(DisputeView.VIEW_NAME + "/" + apartment.getId()));
 		
 		Button reservar = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + apartment.getId())) ;
 		reservar.setVisible(SecurityUtils.hasRole("ROLE_USER"));
@@ -92,7 +94,7 @@ public class ApartmentView extends VerticalLayout implements View
 		
 		addComponent(v);
 		
-		v.addComponents(nombreAp, description, imagenes);
+		v.addComponents(nombreAp, description, imagenes,reservar);
 
 		User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		
@@ -101,7 +103,7 @@ public class ApartmentView extends VerticalLayout implements View
 			ponerContenedorImagenes(v,imagenes);
 		} 
 		
-		v.addComponents(precio, reservar);
+		v.addComponents(precio, reservar,denunciar);
 
 		
 		
