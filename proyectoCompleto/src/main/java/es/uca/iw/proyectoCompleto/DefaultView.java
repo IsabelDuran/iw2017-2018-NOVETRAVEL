@@ -55,7 +55,11 @@ public class DefaultView extends VerticalLayout implements View {
 
 		Button searchbutton = new Button("¡Busca mi apartamento!");
 		searchbutton.setStyleName("box-padding");
-		addComponents(searchbar, searchbutton);
+		
+		Button filterButton = new Button("¡Filtar!");
+		filterButton.setStyleName("box-padding");
+		
+		addComponents(searchbar, searchbutton, filterButton);
 
 		Label title_ = new Label("Pisos destacados: ");
 		title_.setStyleName("title-text");

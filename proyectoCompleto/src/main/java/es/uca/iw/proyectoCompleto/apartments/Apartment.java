@@ -46,6 +46,7 @@ public class Apartment{
 	private Integer maxHosts;
 	private Integer numberBeds;
 	private Integer squaredMeters;
+	
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
 	
