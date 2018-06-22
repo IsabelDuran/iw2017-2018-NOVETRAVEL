@@ -51,46 +51,47 @@ public class ApartmentEditor extends VerticalLayout implements View {
 	private Binder<Apartment> binder;
 	private Binder<Location> loc_binder;
 
-	/* Fields to edit properties in Apartment entity */
-	TextField name = new TextField("Nombre del apartamento:");
-	TextArea description = new TextArea("Descripción");
-	TextField price_per_day = new TextField("Precio por día");
-	TextField max_hosts = new TextField("Número máximo de huespedes: ");
-	TextField number_beds = new TextField("Número de camas: ");
-	TextField number_rooms = new TextField("Número de habitaciones: ");
-	TextField number_bathrooms = new TextField("Número de baños: ");
-	TextField squared_meters = new TextField("Metros cuadrados: ");
-	CheckBox crib = new CheckBox("Cuna");
-	CheckBox parking = new CheckBox("Aparcamiento");
-	CheckBox wifi = new CheckBox("Wifi disponible");
-	CheckBox own_bathroom = new CheckBox("Baño propio");
-	CheckBox own_kitchen = new CheckBox("Cocina propia");
-	CheckBox pets_allowed = new CheckBox("Se permiten mascotas");
-	CheckBox kids_allowed = new CheckBox("Se permiten niños");
-	CheckBox smoking_allowed = new CheckBox("Se permite fumar");
-
-	TextField city_ = new TextField("Ciudad:");
-	TextField street_ = new TextField("Calle:");
-	TextField number_ = new TextField("Numero:");
-	TextField postalcode_ = new TextField("Código postal:");
-	TextField floor_ = new TextField("Piso:");
-	TextField letter_ = new TextField("Letra:");
-
-	Label description_label = new Label("Descripción del apartamento:");
-	Label service_label = new Label("Selecciona los servicios que posee tu apartamento:");
-	Label location_label = new Label("¿Dónde está tu apartamento?");
-
-	/* Action buttons */
-	Button save = new Button("Save");
-	Button cancel = new Button("Cancel");
-	Button delete = new Button("Delete");
-
-	/* Layout for buttons */
-	CssLayout actions = new CssLayout(save, cancel, delete);
-
+	
 	@PostConstruct
 	public void init() {
 		
+		/* Fields to edit properties in Apartment entity */
+		TextField name = new TextField("Nombre del apartamento:");
+		TextArea description = new TextArea("Descripción");
+		TextField price_per_day = new TextField("Precio por día");
+		TextField max_hosts = new TextField("Número máximo de huespedes: ");
+		TextField number_beds = new TextField("Número de camas: ");
+		TextField number_rooms = new TextField("Número de habitaciones: ");
+		TextField number_bathrooms = new TextField("Número de baños: ");
+		TextField squared_meters = new TextField("Metros cuadrados: ");
+		CheckBox crib = new CheckBox("Cuna");
+		CheckBox parking = new CheckBox("Aparcamiento");
+		CheckBox wifi = new CheckBox("Wifi disponible");
+		CheckBox own_bathroom = new CheckBox("Baño propio");
+		CheckBox own_kitchen = new CheckBox("Cocina propia");
+		CheckBox pets_allowed = new CheckBox("Se permiten mascotas");
+		CheckBox kids_allowed = new CheckBox("Se permiten niños");
+		CheckBox smoking_allowed = new CheckBox("Se permite fumar");
+
+		TextField city_ = new TextField("Ciudad:");
+		TextField street_ = new TextField("Calle:");
+		TextField number_ = new TextField("Numero:");
+		TextField postalcode_ = new TextField("Código postal:");
+		TextField floor_ = new TextField("Piso:");
+		TextField letter_ = new TextField("Letra:");
+
+		Label description_label = new Label("Descripción del apartamento:");
+		Label service_label = new Label("Selecciona los servicios que posee tu apartamento:");
+		Label location_label = new Label("¿Dónde está tu apartamento?");
+
+		/* Action buttons */
+		Button save = new Button("Guardar");
+		Button cancel = new Button("Cancelar");
+		Button delete = new Button("Borrar");
+
+		/* Layout for buttons */
+		CssLayout actions = new CssLayout(save, cancel, delete);
+
 		
 		List<String> apartmentType = new ArrayList<>();
 		apartmentType.add("Villa");
@@ -118,18 +119,18 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				postalcode_, floor_, letter_, actions);
 
 		// bind using naming convention
-		binder.forField(name).withNullRepresentation("").asRequired("Introduce el nombre del apartamento").bind(Apartment::getName,
+		binder.forField(name).asRequired("Introduce el nombre del apartamento").bind(Apartment::getName,
 				Apartment::setName);
-		binder.forField(description).withNullRepresentation("").asRequired("Introduce una descripción").bind(Apartment::getDescription,
+		binder.forField(description).asRequired("Introduce una descripción").bind(Apartment::getDescription,
 				Apartment::setDescription);
-		binder.forField(price_per_day).withNullRepresentation("").asRequired("Introduce un precio")
+		binder.forField(price_per_day).asRequired("Introduce un precio")
 				.withConverter(new StringToDoubleConverter("Introducir un número"))
 				.bind(Apartment::getPricePerDay, Apartment::setPricePerDay);
-		binder.forField(selectApartmentType).withNullRepresentation("").bind(Apartment::getApartmentType, Apartment::setApartmentType);
-		binder.forField(max_hosts).withNullRepresentation("").asRequired("Introduce un máximo de huespedes")
+		binder.forField(selectApartmentType).asRequired("Introduce el tipo de apartamento").bind(Apartment::getApartmentType, Apartment::setApartmentType);
+		binder.forField(max_hosts).asRequired("Introduce un máximo de huespedes")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getMaxHosts, Apartment::setMaxHosts);
-		binder.forField(number_beds).withNullRepresentation("").asRequired("Introduce el número de camas")
+		binder.forField(number_beds).asRequired("Introduce el número de camas")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getNumberBeds, Apartment::setNumberBeds);
 		binder.forField(number_rooms).withNullRepresentation("").withConverter(new StringToIntegerConverter(0, "Introducir un número"))
@@ -137,7 +138,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		binder.forField(number_bathrooms).withNullRepresentation("").withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getNumberBathrooms, Apartment::setNumberBathrooms);
 
-		binder.forField(squared_meters).withNullRepresentation("").asRequired("Introduce los metros cuadrados")
+		binder.forField(squared_meters).asRequired("Introduce los metros cuadrados")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Apartment::getSquaredMeters, Apartment::setSquaredMeters);
 		binder.forField(crib).bind(Apartment::getCrib, Apartment::setCrib);
@@ -149,12 +150,12 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		binder.forField(kids_allowed).bind(Apartment::getKidsAllowed, Apartment::setKidsAllowed);
 		binder.forField(smoking_allowed).bind(Apartment::getSmokingAllowed, Apartment::setSmokingAllowed);
 
-		loc_binder.forField(city_).withNullRepresentation("").asRequired("Introduce la ciudad").bind(Location::getCity_, Location::setCity_);
-		loc_binder.forField(street_).withNullRepresentation("").asRequired("Introduce la calle").bind(Location::getStreet_, Location::setStreet_);
-		loc_binder.forField(number_).withNullRepresentation("").asRequired("Introduce el número")
+		loc_binder.forField(city_).asRequired("Introduce la ciudad").bind(Location::getCity_, Location::setCity_);
+		loc_binder.forField(street_).asRequired("Introduce la calle").bind(Location::getStreet_, Location::setStreet_);
+		loc_binder.forField(number_).asRequired("Introduce el número")
 				.withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Location::getNumber_, Location::setNumber_);
-		loc_binder.forField(postalcode_).withNullRepresentation("").asRequired("Introduce el códido postal").bind(Location::getPostalCode_,
+		loc_binder.forField(postalcode_).asRequired("Introduce el códido postal").bind(Location::getPostalCode_,
 				Location::setPostalCode_);
 		loc_binder.forField(floor_).withNullRepresentation("").withConverter(new StringToIntegerConverter("Introducir un número"))
 				.bind(Location::getFloor_, Location::setFloor_);
@@ -192,7 +193,10 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 		});
 
-		delete.addClickListener(e -> service.delete(apartment));
+		delete.addClickListener(e -> {
+			service.delete(apartment);
+			getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME);
+		});
 		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME));
 	
 	}
@@ -212,7 +216,6 @@ public class ApartmentEditor extends VerticalLayout implements View {
 			loc_binder.setBean(this.location);
 			
 		}
-		System.out.println(location);
 
 	}
 

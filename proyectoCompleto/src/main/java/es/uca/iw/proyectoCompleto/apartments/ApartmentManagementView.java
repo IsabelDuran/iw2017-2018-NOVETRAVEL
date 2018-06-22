@@ -16,6 +16,7 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentManagementView.VIEW_NAME)
@@ -42,7 +43,11 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 	void init() {
 		
 		// build layout
-		HorizontalLayout actions = new HorizontalLayout(addNewBtn);
+		Button goBack = new Button("Volver", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
+		
+		HorizontalLayout actions = new HorizontalLayout(addNewBtn, goBack);
+		
+	
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		addComponents(actions, grid);

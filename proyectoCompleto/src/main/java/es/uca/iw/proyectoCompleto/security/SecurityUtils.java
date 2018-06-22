@@ -7,6 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserService;
+
 public final class SecurityUtils {
 
     private SecurityUtils() {
@@ -30,6 +33,14 @@ public final class SecurityUtils {
         } else{
         	return null;
         }
+    }
+    
+    public static Long getCurrentUserId()
+    {
+    	
+    	User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    	return user.getId();
+    
     }
 
 }
