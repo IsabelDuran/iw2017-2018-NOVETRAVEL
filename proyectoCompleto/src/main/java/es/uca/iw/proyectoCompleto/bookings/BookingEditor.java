@@ -22,6 +22,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
@@ -162,7 +163,7 @@ public class BookingEditor extends VerticalLayout  {
 		
 		delete.addClickListener(e -> service.delete(booking_));
 		cancel.addClickListener(e -> {
-			getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
+			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 		}); 
 		
 		confirm.addClickListener(e -> {
