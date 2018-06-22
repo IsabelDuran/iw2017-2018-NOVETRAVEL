@@ -14,13 +14,15 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-
+import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.users.User;
 @SpringView(name = BookingManagementView.VIEW_NAME)
-public class BookingManagementView extends HorizontalLayout implements View {
+public class BookingManagementView extends VerticalLayout implements View {
 	/**
 	 * 
 	 */	
@@ -28,11 +30,9 @@ public class BookingManagementView extends HorizontalLayout implements View {
 
 	public static final String VIEW_NAME = "bookingManagementView";
 
-	private Grid<Booking> grid;
+	private Grid<Booking> grid,grid2;
 	
-	private Grid<Apartment> apartmentNameGrid;
-	
-	//private TextField filter;
+	private Grid<Apartment> apartmentNameGrid, apartmentNameGrid2;
 
 	private BookingEditor editor;
 	
@@ -42,7 +42,9 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	public BookingManagementView(BookingEditor editor, ApartmentService serviceApartment ) {
 		this.editor = editor;
 		this.grid = new Grid<>();
+		this.grid2 = new Grid<>();
 		this.apartmentNameGrid = new Grid<>();
+		this.apartmentNameGrid2 = new Grid<>();
 		this.serviceApartment = serviceApartment;
 		    
 	}
@@ -51,13 +53,19 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	@PostConstruct
 	void init() {
 		/// build layout
-		
+		HorizontalLayout h = new HorizontalLayout();
 		Button goBack = new Button("Volver", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
-		addComponent(goBack);
-		addComponents(apartmentNameGrid, grid, editor);
+		Label titulo = new Label("MIS RESERVAS");
+		addComponents(goBack, titulo);
+		
+		h.addComponents(apartmentNameGrid, grid, editor);
+		
+		addComponent(h);
 		
 		apartmentNameGrid.setHeight(300, Unit.PIXELS);
-		apartmentNameGrid.setWidth(200, Unit.PIXELS);
+		apartmentNameGrid.setWidth(300, Unit.PIXELS);
+		
+
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(100, Unit.PERCENTAGE);
@@ -82,6 +90,38 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		
 		// Initialize listing
 		listBookings(null);
+		
+		//PARA LAS RESERVAS DE TU APARTAMENTO
+		HorizontalLayout h2 = new HorizontalLayout();
+		Label titulo2 = new Label("RESERVAS EN MIS APARTAMENTOS");
+		h2.addComponents(apartmentNameGrid2, grid2, editor);
+		addComponents(titulo2,h2);
+		
+		apartmentNameGrid2.setHeight(300, Unit.PIXELS);
+		apartmentNameGrid2.setWidth(300, Unit.PIXELS);
+		
+
+		
+		grid2.setHeight(300, Unit.PIXELS);
+		grid2.setWidth(100, Unit.PERCENTAGE);
+			
+		apartmentNameGrid2.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		grid2.addColumn(Booking::isConfirmation).setCaption("Confirmación").setResizable(false);
+		grid2.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada" ).setResizable(false);
+		grid2.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
+		grid2.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
+		
+		
+		// Hook logic to components
+		// Connect selected Booking to editor or hide if none is selected
+		grid2.asSingleSelect().addValueChangeListener( e -> {
+			editor.editBooking(e.getValue());
+		});
+		
+		editor.setChangeHandler(() -> {
+			editor.setVisible(false);
+		}); 
+		
 
 	}
 
@@ -110,6 +150,11 @@ public class BookingManagementView extends HorizontalLayout implements View {
 		grid.setItems(b);
 		apartmentNameGrid.setItems(a);
 
+	}
+	
+	private void listBookingsAp(String filterText)
+	{
+		
 	}
 	
 	@Override
