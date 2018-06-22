@@ -62,7 +62,7 @@ public class ProyectoCompletoApplication {
 				u1=new User("Juan", "Bauer");
 				u2 = new User("Michelle", "Dessler");
 				// save a couple of users with default password: default
-				service.save(new User("Chloe", "O'Brian"));
+				service.save(new Administrator("Chloe", "O'Brian"));
 				service.save(new User("Kim", "Bauer"));
 				service.save(new User("David", "Palmer"));
 				service.save(u1);
