@@ -24,7 +24,6 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.bookings.BookingEditor;
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
@@ -36,13 +35,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	
 	private static final long serialVersionUID = 1L;
 
-
-
 	public static final String VIEW_NAME = "apartmentListView";
-
-
-	@Autowired
-	private BookingEditor editor;
 
 	Panel p;
 	

@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserService;
 
 public final class SecurityUtils {
 

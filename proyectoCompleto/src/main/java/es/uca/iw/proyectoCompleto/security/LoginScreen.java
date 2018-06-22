@@ -1,20 +1,14 @@
 package es.uca.iw.proyectoCompleto.security;
 
-import com.vaadin.data.Binder;
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-
-import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserService;
 
 public class LoginScreen extends VerticalLayout {
 	
@@ -25,9 +19,7 @@ public class LoginScreen extends VerticalLayout {
 	TextField direccion = new TextField("Direccion");
 	TextField zipcodee = new TextField("Zip code");
 	
-	private Binder<User> binder = new Binder<>(User.class);
-	
-	Button save = new Button("Save", FontAwesome.SAVE);
+	Button save = new Button("Save");
 	Button cancel = new Button("Cancel");
 
 	CssLayout actions = new CssLayout(save, cancel);

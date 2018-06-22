@@ -1,7 +1,5 @@
 package es.uca.iw.proyectoCompleto;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -37,7 +35,6 @@ import es.uca.iw.proyectoCompleto.users.UserService;
 @ComponentScan(basePackages="es.uca.*")
 public class ProyectoCompletoApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(ProyectoCompletoApplication.class);
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProyectoCompletoApplication.class, args);

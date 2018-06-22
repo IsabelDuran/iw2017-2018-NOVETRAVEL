@@ -30,7 +30,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.location.Location;
-import es.uca.iw.proyectoCompleto.location.LocationService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentEditor.VIEW_NAME)
