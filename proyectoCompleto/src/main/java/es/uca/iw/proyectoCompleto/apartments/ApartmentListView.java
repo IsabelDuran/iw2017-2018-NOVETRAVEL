@@ -75,8 +75,6 @@ public class ApartmentListView extends VerticalLayout implements View {
 			for (Apartment i : aps) {
 				VerticalLayout contenedor = new VerticalLayout();
 				Panel panelPiso = crearPanelPiso(i);
-				
-				contenedor.addComponent(editor);
 				contenedor.addComponent(panelPiso);
 //				contenedor.setSizeUndefined(); // Shrink to fit
 				lista.addComponents(contenedor);

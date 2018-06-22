@@ -126,7 +126,6 @@ public class BookingManagementView extends VerticalLayout implements View {
 		
 		listBookingsAp(null);
 		
-
 	}
 
 	private void listBookings(String filterText) {
