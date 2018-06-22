@@ -106,8 +106,20 @@ public class BookingEditor extends VerticalLayout  {
 	
 		save.addClickListener(e -> {
 			try {
-
-				fechaValida = comprobarFecha();
+				
+				if(booking_ != null)
+				{
+					Booking auxiliar;
+					if(booking_.getUser().getId() == user_.getId())
+					{
+						auxiliar = booking_;
+						service.delete(booking_);
+						fechaValida = comprobarFecha();
+						if(!fechaValida)
+							service.save(auxiliar);
+					}
+				} else
+					fechaValida = comprobarFecha();
 				
 				if(!fechaValida)
 					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
