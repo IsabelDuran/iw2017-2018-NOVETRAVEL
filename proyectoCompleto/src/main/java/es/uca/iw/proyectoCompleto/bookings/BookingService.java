@@ -26,10 +26,9 @@ public class BookingService {
 	{
 		List<Booking> reservas = repository_.findByApartmentId(apartmentId);
 		if (reservas == null)
-		{
 			reservas = new ArrayList<>();
-			System.out.println("DEBERIA ENTRAR EN ESTE IF");
-		}
+		
+		
 			
 		return reservas;
 	}

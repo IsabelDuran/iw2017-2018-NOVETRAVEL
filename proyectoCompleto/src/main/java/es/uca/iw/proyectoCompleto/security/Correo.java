@@ -10,40 +10,35 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import es.uca.iw.proyectoCompleto.users.User;
-
-
-
 public class Correo {
 	
 	String origen;
 	String destino;
 	Properties props;
 	Session session;
-	
+
 	public Correo()
 	{
 		props = System.getProperties();
+
 	}
 	
-	public void enviarCorreo(String asunto, String cuerpo) 
+	public void enviarCorreo(String asunto, String cuerpo, String email) 
 	{
-		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		 props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
-		 props.put("mail.smtp.user", "pruebassdperi@gmail.com");
-		 props.put("mail.smtp.clave", "quevivaSD");    //La clave de la cuenta
-		 props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
-		 props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
-		 props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		 props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
+		
+		props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
+		props.put("mail.smtp.user", "pruebassdperi@gmail.com");
+		props.put("mail.smtp.clave", "quevivaSD");    //La clave de la cuenta
+		props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
+		props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
 		
 		session = Session.getDefaultInstance(props);
-		 
+
 		MimeMessage message = new MimeMessage(session);
 		try {
-			Address to = new InternetAddress(user_.getEmail());
+			Address to = new InternetAddress(email);
 	        message.setFrom(new InternetAddress("pruebasdperi@gmail.com"));
 	        message.addRecipient(Message.RecipientType.TO, to);   //Se podrían añadir varios de la misma manera
 	        message.setSubject(asunto);
@@ -56,4 +51,5 @@ public class Correo {
 	        me.printStackTrace();   //Si se produce un error
 	    }
 	}
+
 }

@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.uca.iw.proyectoCompleto.bookings.Booking;
+
 /**
  * @author ruizrube
  *
@@ -57,5 +59,6 @@ public class UserService implements UserDetailsService {
 	public List<User> findAll() {
 		return repo.findAll();
 	}
+	
 
 }

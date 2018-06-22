@@ -11,12 +11,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.disputes.Dispute;
+import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 
 @Entity
 public class User implements UserDetails{
@@ -49,12 +53,17 @@ public class User implements UserDetails{
 //	@OneToMany(fetch=FetchType.EAGER)
 //	private List<CreditCard> creditCard; 
 	
-	@OneToMany(mappedBy="user")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user")
 	private List<Booking> booking;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Apartment> apartments;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user")
+	private List<Dispute> disputes;
+
 	public User() {
 	}
 
@@ -155,10 +164,20 @@ public class User implements UserDetails{
 	
 	public void addBooking(Booking book)
 	{
-		this.booking.add(book);
+		if(book != null)
+			this.booking.add(book);
+		
         if (book.getUser() != this) {
             book.setUser(this);
         }
+	}
+	
+	public List<Dispute> getDisputes() {
+		return disputes;
+	}
+
+	public void setDisputes(List<Dispute> disputes) {
+		this.disputes = disputes;
 	}
 		
 	@Override
