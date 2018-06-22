@@ -5,8 +5,6 @@ package es.uca.iw.proyectoCompleto;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
@@ -18,7 +16,6 @@ import com.vaadin.ui.VerticalLayout;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
 import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
-import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
 

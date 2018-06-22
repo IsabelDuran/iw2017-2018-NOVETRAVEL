@@ -19,8 +19,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.apartments.ApartmentEditor;
-
 @SpringView(name = UserManagementView.VIEW_NAME)
 public class UserManagementView extends VerticalLayout implements View {
 	/**

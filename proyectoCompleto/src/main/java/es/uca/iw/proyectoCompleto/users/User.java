@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 import es.uca.iw.proyectoCompleto.disputes.Dispute;
-import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 
 @Entity
 public class User implements UserDetails{

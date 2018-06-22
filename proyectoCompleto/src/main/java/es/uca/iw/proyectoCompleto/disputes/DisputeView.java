@@ -30,8 +30,6 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.disputes.DisputeService;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserService;
-
 
 @SpringView(name = DisputeView.VIEW_NAME)
 public class DisputeView extends VerticalLayout implements View
@@ -45,9 +43,6 @@ public class DisputeView extends VerticalLayout implements View
 	
 	
 	private Apartment apartment;
-	
-	@Autowired
-	private UserService userService;
 	
 	@Autowired
 	private ApartmentService service;
