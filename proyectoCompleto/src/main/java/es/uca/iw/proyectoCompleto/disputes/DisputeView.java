@@ -23,9 +23,11 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.DefaultView;
+
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.disputes.DisputeService;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
@@ -89,6 +91,7 @@ public class DisputeView extends VerticalLayout implements View
 			    new ComboBox<>("Selecciona una causa");
 		selectDisputeType.setItems(disputeType);
 		selectDisputeType.setValue("Es por otro motivo");
+		selectDisputeType.setEmptySelectionAllowed(false);
 		
 		TextArea description = new TextArea("Descripción");
 		Button confirmar = new Button("Confirmar", e -> ponerQueja(selectDisputeType.getValue()+" "+description.getValue())) ;
@@ -108,6 +111,7 @@ public class DisputeView extends VerticalLayout implements View
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		disputas.save(new Dispute(ahora,ahora,queja,apartment,user_));
+		getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
 	}
 	
 
