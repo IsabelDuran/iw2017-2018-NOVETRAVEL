@@ -2,7 +2,6 @@ package es.uca.iw.proyectoCompleto;
 
 import javax.annotation.PostConstruct;
 
-
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.spring.annotation.SpringViewDisplay;

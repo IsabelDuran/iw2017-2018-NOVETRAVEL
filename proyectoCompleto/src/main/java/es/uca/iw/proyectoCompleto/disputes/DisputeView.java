@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -24,11 +23,8 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.DefaultView;
-
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
-
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.disputes.DisputeService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = DisputeView.VIEW_NAME)

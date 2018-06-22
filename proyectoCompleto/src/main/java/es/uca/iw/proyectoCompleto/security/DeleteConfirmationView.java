@@ -12,8 +12,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserProfileView;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringView(name = DeleteConfirmationView.VIEW_NAME)
@@ -39,7 +39,7 @@ public class DeleteConfirmationView extends VerticalLayout implements View
 		Button confirmationNegative = new Button("Cancelar y volver", e -> 
 		{
 			VaadinSession.getCurrent().setAttribute("usuarioEditado", SecurityUtils.getCurrentUserId());
-			getUI().getNavigator().navigateTo(UserProfileView.VIEW_NAME);
+			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 		});
 		
 		addComponents(notificationLabel, confirmationAfirmative, confirmationNegative);

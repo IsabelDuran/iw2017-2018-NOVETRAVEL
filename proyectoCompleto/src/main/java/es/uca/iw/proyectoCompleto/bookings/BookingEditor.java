@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -27,7 +29,6 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.Correo;
 import es.uca.iw.proyectoCompleto.users.User;
-import org.joda.time.*;
 
 @SpringComponent
 @UIScope
