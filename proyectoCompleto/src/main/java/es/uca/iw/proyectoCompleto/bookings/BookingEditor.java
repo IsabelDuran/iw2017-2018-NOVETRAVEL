@@ -1,10 +1,13 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
@@ -19,8 +22,12 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
-import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.security.Correo;
+import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserService;
 
 import org.joda.time.*;
 
@@ -37,6 +44,12 @@ public class BookingEditor extends VerticalLayout  {
 	private BookingService service;
 	
 	private Booking booking_;
+	
+	@Autowired
+	private ApartmentService service2;
+	
+	@Autowired
+	private UserService service3;
 	
 	
 	/**
@@ -60,16 +73,18 @@ public class BookingEditor extends VerticalLayout  {
 	Button save = new Button("Guardar");
 	Button cancel = new Button("Cancelar");
 	Button delete = new Button("Eliminar");
+	Button confirm = new Button("Confirmar");
 
 	/* Layout for buttons */
-	CssLayout actions = new CssLayout(save, cancel, delete);
+	CssLayout actions = new CssLayout(save, cancel);
+	CssLayout actions2 = new CssLayout(delete, confirm);
 
 
 	
 	public BookingEditor() {
 
 		editDate();
-		addComponents(entryDate,departureDate,actions);
+		addComponents(entryDate,departureDate,actions,actions2);
  
 		/// bind using naming convention 
 		//binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
@@ -99,11 +114,36 @@ public class BookingEditor extends VerticalLayout  {
 				if(!fechaValida)
 					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
 				
+				User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				
+				user_.addBooking(booking_);
+				
+				Long apId = booking_.getApartment().getId();
+				Apartment aux = service2.loadApartmentById(apId);
+				double price =  ((double)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * aux.getPricePerDay();
+				booking_.setTotalPrice(price);
+				
 				binder.writeBean(booking_);
 				
 				service.save(booking_);
 				
-				Notification.show("Reserva realizada con éxito.\n Se ha enviado un correo para \nconfirmar la reserva.");
+				Correo correo = new Correo();
+				
+				User userAnfitrion = aux.getUser();
+				
+				String mensaje = "Estimado/a "+ userAnfitrion.getFirstName() + " " + userAnfitrion.getLastName() + ",\n\n "
+						+ "El usuario " + user_.getUsername() + "ha realizado la siguiente reserva del apartamento que se detalla a continuación:" + "\n\n"
+						+ " Nombre del apartamento: " +aux.getName() + "\n "
+						+ "Descripción del apartamento: " +aux.getDescription() + "\n "
+						+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
+						+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
+						+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n"
+						+ "Si está de acuerdo con la reserva, acceda a la gestión de sus reservas para confirmarla." + "\n\n"
+						+ "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
+				
+				correo.enviarCorreo("Reserva pendiente de confirmación",mensaje, userAnfitrion.getEmail());
+				
+				Notification.show("Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
 				getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
 				
 			} catch(ValidationException ex) {
@@ -120,10 +160,36 @@ public class BookingEditor extends VerticalLayout  {
 		cancel.addClickListener(e -> {
 			getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
 		});
+		
+		confirm.addClickListener(e -> {
+			User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			
+			Long apId = booking_.getApartment().getId();
+			Apartment aux = service2.loadApartmentById(apId);
+			
+			Correo correo = new Correo();
+			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
+					+ "La reserva que se detalla a continuación se ha realizado con éxito:\n\n"
+					+ " Nombre del apartamento: " +aux.getName() + "\n "
+					+ "Descripción del apartamento: " +aux.getDescription() + "\n "
+					+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
+					+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
+					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n"
+					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
+							
+			correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
+			booking_.setConfirmation(true);
+			service.delete(booking_);
+			service.save(booking_);
+			
+			Notification.show("Reserva confirmada");
+			
+		});
 		setVisible(false);
 		
 		// Solo borra el admin
-		delete.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+	//	delete.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		
 	}
 	
 	private boolean comprobarFecha()
@@ -201,6 +267,7 @@ public class BookingEditor extends VerticalLayout  {
 		// is clicked
 		save.addClickListener(e -> h.onChange());
 		delete.addClickListener(e -> h.onChange());
+		confirm.addClickListener(e -> h.onChange());
 	}
 	
 

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +53,8 @@ public class User implements UserDetails{
 //	@OneToMany(fetch=FetchType.EAGER)
 //	private List<CreditCard> creditCard; 
 	
-	@OneToMany(mappedBy="user")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user")
 	private List<Booking> booking;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
@@ -161,7 +164,9 @@ public class User implements UserDetails{
 	
 	public void addBooking(Booking book)
 	{
-		this.booking.add(book);
+		if(book != null)
+			this.booking.add(book);
+		
         if (book.getUser() != this) {
             book.setUser(this);
         }
