@@ -18,8 +18,7 @@ public class Dispute{
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne(fetch=FetchType.EAGER)
-	private User usuario;
+	
 	
 	private LocalDate opening_date;
 	
@@ -30,15 +29,19 @@ public class Dispute{
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Apartment apartment;
 	
+	@ManyToOne
+	private User user;
+	
 	protected Dispute() {
 	}
 
-	public Dispute(LocalDate date_opening, LocalDate date_closing, String description,Apartment apartamento) {
+	public Dispute(LocalDate date_opening, LocalDate date_closing, String description,Apartment apartamento,User user) {
 		super();
 		this.opening_date = date_opening;
 		this.closing_date = date_closing;
 		this.description = description;
 		this.apartment=apartamento;
+		this.user=user;
 	}
 	
 	public Long getId() {

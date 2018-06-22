@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -26,6 +27,7 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.disputes.DisputeService;
+import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 
@@ -103,7 +105,9 @@ public class DisputeView extends VerticalLayout implements View
 	
 	public void ponerQueja(String queja) {
 		LocalDate ahora=LocalDate.now();
-		disputas.save(new Dispute(ahora,ahora,queja,apartment));
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		disputas.save(new Dispute(ahora,ahora,queja,apartment,user_));
 	}
 	
 

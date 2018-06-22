@@ -60,10 +60,10 @@ public class User implements UserDetails{
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private List<Apartment> apartments;
 	
-	/*
-	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-	private List<Dispute> disputas;
-	*/
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "user")
+	private List<Dispute> disputes;
+
 	public User() {
 	}
 
@@ -170,6 +170,14 @@ public class User implements UserDetails{
         if (book.getUser() != this) {
             book.setUser(this);
         }
+	}
+	
+	public List<Dispute> getDisputes() {
+		return disputes;
+	}
+
+	public void setDisputes(List<Dispute> disputes) {
+		this.disputes = disputes;
 	}
 		
 	@Override
