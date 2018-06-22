@@ -84,7 +84,6 @@ public class ProyectoCompletoApplication {
 				root.setPassword("root");
 				service.save(root);
 				
-				System.out.println("USUARIOS CREADOS!!!!!!! ");
 			}
 			
 			if(ap.findAll().size()==0)
@@ -96,8 +95,6 @@ public class ProyectoCompletoApplication {
 				a2 = new Apartment("apartamento2", "aaa", 20.0, "piso");
 				ap.save(a1);
 				ap.save(a2);
-				
-				System.out.println("APARTAMENTOS CREADOS!!!!");
 				
 			}
 			

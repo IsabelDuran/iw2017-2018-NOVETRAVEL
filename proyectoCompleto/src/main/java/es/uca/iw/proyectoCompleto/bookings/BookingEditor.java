@@ -26,9 +26,8 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.security.Correo;
+import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserService;
-
 import org.joda.time.*;
 
 @SpringComponent
@@ -48,9 +47,9 @@ public class BookingEditor extends VerticalLayout  {
 	@Autowired
 	private ApartmentService service2;
 	
-	@Autowired
-	private UserService service3;
-	
+	private User user_,userAnfitrion;
+	private Long apId;
+	private Apartment apartment;
 	
 	/**
 	 * The currently edited booking
@@ -60,7 +59,6 @@ public class BookingEditor extends VerticalLayout  {
 	private Binder<Booking> binder = new Binder<>(Booking.class);
 		
 	/* Fields to edit properties in Booking entity */
-	//TextField totalPrice = new TextField("Precio total");
 	// Create a DateField with the default style	
 	DateField entryDate = new DateField();
 	DateField departureDate = new DateField();
@@ -85,10 +83,10 @@ public class BookingEditor extends VerticalLayout  {
 
 		editDate();
 		addComponents(entryDate,departureDate,actions,actions2);
- 
+		
+		confirm.setVisible(false);
+		delete.setVisible(false);
 		/// bind using naming convention 
-		//binder.forField(totalPrice).withConverter(new StringToDoubleConverter("")).bind(Booking::getTotalPrice, Booking::setTotalPrice);
-		//binder.setReadOnly(true);
 		
 		Binder.BindingBuilder<Booking, LocalDate> returnBB = binder.forField(entryDate).withValidator(departureDate_ -> !departureDate_.isBefore(LocalDate.now()), "Departure date should be after local date");	
 		Binder.Binding<Booking, LocalDate> returnB = returnBB.bind(Booking::getEntryDate, Booking::setEntryDate);
@@ -103,24 +101,32 @@ public class BookingEditor extends VerticalLayout  {
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-
+	
 		// wire action buttons to save, delete and reset
 	
 		save.addClickListener(e -> {
 			try {
-
-				fechaValida = comprobarFecha();
+				
+				if(booking_ != null)
+				{
+					Booking auxiliar;
+					if(booking_.getUser().getId() == user_.getId())
+					{
+						auxiliar = booking_;
+						service.delete(booking_);
+						fechaValida = comprobarFecha();
+						if(!fechaValida)
+							service.save(auxiliar);
+					}
+				} else
+					fechaValida = comprobarFecha();
 				
 				if(!fechaValida)
 					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
 				
-				User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				
 				user_.addBooking(booking_);
-				
-				Long apId = booking_.getApartment().getId();
-				Apartment aux = service2.loadApartmentById(apId);
-				double price =  ((double)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * aux.getPricePerDay();
+		
+				double price =  ((double)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * apartment.getPricePerDay();
 				booking_.setTotalPrice(price);
 				
 				binder.writeBean(booking_);
@@ -129,12 +135,10 @@ public class BookingEditor extends VerticalLayout  {
 				
 				Correo correo = new Correo();
 				
-				User userAnfitrion = aux.getUser();
-				
 				String mensaje = "Estimado/a "+ userAnfitrion.getFirstName() + " " + userAnfitrion.getLastName() + ",\n\n "
 						+ "El usuario " + user_.getUsername() + "ha realizado la siguiente reserva del apartamento que se detalla a continuación:" + "\n\n"
-						+ " Nombre del apartamento: " +aux.getName() + "\n "
-						+ "Descripción del apartamento: " +aux.getDescription() + "\n "
+						+ " Nombre del apartamento: " +apartment.getName() + "\n "
+						+ "Descripción del apartamento: " +apartment.getDescription() + "\n "
 						+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
 						+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
 						+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n"
@@ -159,19 +163,15 @@ public class BookingEditor extends VerticalLayout  {
 		delete.addClickListener(e -> service.delete(booking_));
 		cancel.addClickListener(e -> {
 			getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
-		});
+		}); 
 		
 		confirm.addClickListener(e -> {
-			User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			
-			Long apId = booking_.getApartment().getId();
-			Apartment aux = service2.loadApartmentById(apId);
 			
 			Correo correo = new Correo();
 			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
 					+ "La reserva que se detalla a continuación se ha realizado con éxito:\n\n"
-					+ " Nombre del apartamento: " +aux.getName() + "\n "
-					+ "Descripción del apartamento: " +aux.getDescription() + "\n "
+					+ " Nombre del apartamento: " +apartment.getName() + "\n "
+					+ "Descripción del apartamento: " +apartment.getDescription() + "\n "
 					+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
 					+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
 					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n"
@@ -185,10 +185,8 @@ public class BookingEditor extends VerticalLayout  {
 			Notification.show("Reserva confirmada");
 			
 		});
-		setVisible(false);
 		
-		// Solo borra el admin
-	//	delete.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		//setVisible(false);
 		
 	}
 	
@@ -197,7 +195,7 @@ public class BookingEditor extends VerticalLayout  {
 		boolean valido = true;
 		Long apId = booking_.getApartment().getId();
 		
-		Booking aux;
+		Booking apartment;
 		
 		DateTime f1,f2,f3,f4;
 		
@@ -214,10 +212,10 @@ public class BookingEditor extends VerticalLayout  {
 			
 			while(it.hasNext() && valido)
 			{	
-				aux = it.next();
+				apartment = it.next();
 				
-				f3 = new DateTime(aux.getEntryDate().toString());
-				f4 = new DateTime(aux.getDepartureDate().toString());
+				f3 = new DateTime(apartment.getEntryDate().toString());
+				f4 = new DateTime(apartment.getDepartureDate().toString());
 				
 				intervalo2 = new Interval(f3,f4);
 				
@@ -225,8 +223,6 @@ public class BookingEditor extends VerticalLayout  {
 					valido = false;
 			}
 		}
-		
-
 		
 		return valido;
 	}
@@ -248,6 +244,7 @@ public class BookingEditor extends VerticalLayout  {
 	}
 
 	public final void editBooking(Booking booking) {
+		
 		if (booking == null) {
 			this.booking_ = new Booking();
 			binder.setBean(booking_);
@@ -256,6 +253,23 @@ public class BookingEditor extends VerticalLayout  {
 		{
 			this.booking_ = booking;
 			binder.setBean(booking_);
+			
+			user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			apId = booking_.getApartment().getId();
+			apartment = service2.loadApartmentById(apId);
+			userAnfitrion = apartment.getUser();
+	
+			System.out.print("HOLAA");
+			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId() && !booking_.isConfirmation()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos	
+				confirm.setVisible(true);	
+			 else
+				confirm.setVisible(false);
+				
+			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos
+				delete.setVisible(true);	
+			else
+				delete.setVisible(false);
+			
 		}
 		
 		setVisible(true);
@@ -268,6 +282,7 @@ public class BookingEditor extends VerticalLayout  {
 		save.addClickListener(e -> h.onChange());
 		delete.addClickListener(e -> h.onChange());
 		confirm.addClickListener(e -> h.onChange());
+		cancel.addClickListener(e -> h.onChange());
 	}
 	
 
