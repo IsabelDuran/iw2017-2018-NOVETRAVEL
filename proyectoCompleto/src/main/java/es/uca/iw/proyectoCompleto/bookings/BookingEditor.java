@@ -22,6 +22,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
@@ -148,7 +149,7 @@ public class BookingEditor extends VerticalLayout  {
 				correo.enviarCorreo("Reserva pendiente de confirmación",mensaje, userAnfitrion.getEmail());
 				
 				Notification.show("Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
-				getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
+				getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 				
 			} catch(ValidationException ex) {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
@@ -162,7 +163,7 @@ public class BookingEditor extends VerticalLayout  {
 		
 		delete.addClickListener(e -> service.delete(booking_));
 		cancel.addClickListener(e -> {
-			getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
+			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 		}); 
 		
 		confirm.addClickListener(e -> {
