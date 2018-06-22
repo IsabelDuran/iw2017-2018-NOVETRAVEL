@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,5 +61,24 @@ public class ApartmentService {
 			apartamentos = new ArrayList<>();
 		return apartamentos;
 		
+	}
+	
+	public List<Apartment> loadByPrice(String city, Double price)
+	{
+		List<Apartment> apartamentos = repo.findByPrice(city, price);
+		if (apartamentos == null)
+			apartamentos = new ArrayList<>();
+		return apartamentos;
+	}
+	
+	public List<Apartment> loadApartmentByLocationDateAndPrice(String city, 
+							LocalDate entryDate, 
+							LocalDate departureDate, 
+							Double maxPrice)
+	{
+		List<Apartment> apartamentos = repo.filterByPriceAndDate(city, entryDate, departureDate, maxPrice);
+		if (apartamentos == null)
+				apartamentos = new ArrayList<>();
+		return apartamentos;
 	}
 }

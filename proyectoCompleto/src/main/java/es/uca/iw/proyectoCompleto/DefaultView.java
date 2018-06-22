@@ -3,6 +3,8 @@
  */
 package es.uca.iw.proyectoCompleto;
 
+import java.time.LocalDate;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,14 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Slider;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
@@ -59,7 +65,29 @@ public class DefaultView extends VerticalLayout implements View {
 		Button filterButton = new Button("¡Filtar!");
 		filterButton.setStyleName("box-padding");
 		
-		addComponents(searchbar, searchbutton, filterButton);
+		HorizontalLayout panelButtons = new HorizontalLayout();
+		VerticalLayout filters = new VerticalLayout();
+		
+		Button closeButton = new Button("Cerrar");
+		closeButton.setStyleName(ValoTheme.BUTTON_PRIMARY);
+		
+		Button searchWithFilter = new Button("¡Buscar!");
+		searchWithFilter.setStyleName("box-padding");
+		
+		panelButtons.addComponents(searchWithFilter, closeButton);
+		Slider priceSlider = new Slider(0, 1000);
+		DateField entryDateField = new DateField();
+		DateField departureDateField = new DateField();
+		
+		filters.addComponents(priceSlider, entryDateField, departureDateField, panelButtons);
+		
+		Panel filterPanel = new Panel("Filtrar por precio y disponibilidad");
+		filterPanel.setContent(filters);
+		filterPanel.setWidth(300, Unit.PIXELS);
+		filterPanel.setVisible(false);
+		
+		
+		addComponents(searchbar,searchbutton,filterButton, filterPanel);
 
 		Label title_ = new Label("Pisos destacados: ");
 		title_.setStyleName("title-text");
@@ -67,17 +95,34 @@ public class DefaultView extends VerticalLayout implements View {
 		
 		searchbutton.addClickListener(
 				e -> apartmentListView.listApartments(apartmentService.loadApartmentByLocation(searchbar.getValue())));
+		
+		filterButton.addClickListener(e -> {
+			filterPanel.setVisible(true);
+		}); 
+		
+		closeButton.addClickListener(e -> {
+			filterPanel.setVisible(false);
+		}); 
+			
+		searchWithFilter.addClickListener(e -> {
+			String location = searchbar.getValue();
+			LocalDate entryDate = entryDateField.getValue();
+			LocalDate departureDate = departureDateField.getValue();
+			Double price = priceSlider.getValue();
+			apartmentListView.listApartments(apartmentService.loadApartmentByLocationDateAndPrice(location, entryDate, departureDate, price));
+		});
+		
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
 		addComponent(springViewDisplay);
-		//setExpandRatio(springViewDisplay, 1.0f);
-
-		// navbar_.setDisplay(springViewDisplay);
+	
 		addComponent(springViewDisplay);
 		apartmentListView.setPanel(springViewDisplay);
 		springViewDisplay.setContent(apartmentListView);
+		this.setComponentAlignment(filterPanel, Alignment.MIDDLE_CENTER);
 
 	}
+
 
 	@Override
 	public void enter(ViewChangeEvent event) {
