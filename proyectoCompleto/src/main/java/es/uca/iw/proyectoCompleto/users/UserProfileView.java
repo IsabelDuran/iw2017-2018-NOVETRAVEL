@@ -7,10 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
@@ -41,7 +39,8 @@ public class UserProfileView extends VerticalLayout implements View{
 		
 		editor.setChangeHandler(() -> {
 			Correo correo_ = new Correo();
-		    correo_.enviarCorreo("Cambio contraseña", "Su contraseña ha sido cambiada");
+		    correo_.enviarCorreo("Cambio contraseña", "Su contraseña ha sido cambiada", user_.getEmail());
+		    Notification.show("Se ha enviado un correo con los cambios");
 			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 		});
 	}

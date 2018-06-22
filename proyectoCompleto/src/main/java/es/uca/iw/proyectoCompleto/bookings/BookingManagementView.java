@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -18,6 +19,7 @@ import com.vaadin.ui.HorizontalLayout;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.users.User;
 @SpringView(name = BookingManagementView.VIEW_NAME)
 public class BookingManagementView extends HorizontalLayout implements View {
 	/**
@@ -52,7 +54,7 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	
 	@PostConstruct
 	void init() {
-		
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		/// build layout
 		addComponents(grid2,grid,editor);
 		
@@ -80,7 +82,6 @@ public class BookingManagementView extends HorizontalLayout implements View {
 			//Bookings(editor.getValue());
 		
 		}); 
-			
 		
 		// Initialize listing
 		listBookings(null);
@@ -88,39 +89,35 @@ public class BookingManagementView extends HorizontalLayout implements View {
 	}
 
 	private void listBookings(String filterText) {
-		grid.setItems(service.findAll());
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		List<Apartment> a = new ArrayList<Apartment>();
 		List<Booking> b = new ArrayList<Booking>();
+		
+		b = user_.getBooking();
 		
 		LocalDate entryDate;
 		LocalDate departureDate;
 		
 		Double price;
 		
-		for(Booking book: service.findAll())
+		if(b.size() != 0)
 		{
-			for(Apartment apart: service2.findAll())
+			for(Booking book: b)
 			{
-				if(book.getApartment().getId() == apart.getId())
+				for(Apartment apart: service2.findAll())
 				{
-					entryDate = book.getEntryDate();
-					departureDate = book.getDepartureDate();
-					
-					price = ((double)DAYS.between(entryDate, departureDate)+1) * apart.getPricePerDay();
-					book.setTotalPrice(price);
-					
-					a.add(apart);
-					b.add(book);
+					if(book.getApartment().getId() == apart.getId())
+						a.add(apart);
+				
 				}
-			}
 			
-		}
+			}
 		
-		grid.setItems(b);
-		grid2.setItems(a);
+			grid.setItems(b);
+			grid2.setItems(a); 
+		}
 	}
-	
 	
 	@Override
 	public void enter(ViewChangeEvent event) {

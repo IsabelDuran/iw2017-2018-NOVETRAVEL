@@ -27,11 +27,9 @@ public class Booking{
 	private boolean confirmation = false;
 
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(nullable = false)
 	private Apartment apartment;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	//@JoinColumn(nullable = false)
 	private User user;
 	
 	public Booking() {
