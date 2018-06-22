@@ -4,7 +4,6 @@ package es.uca.iw.proyectoCompleto.users;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.provisioning.UserDetailsManager;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
@@ -38,9 +37,6 @@ public class UserEditor extends VerticalLayout implements View {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private UserDetailsManager userDetailsManager;
-	
 	private User user;
 
 	private Binder<User> binder = new Binder<>();
@@ -86,8 +82,9 @@ public class UserEditor extends VerticalLayout implements View {
 		save.addClickListener(e -> {
 			if(!password.isEmpty())
 					user.setPassword(password.getValue());
-			
-			userDetailsManager.updateUser(user);
+			else
+				
+				userService.save(user);
 		});
 		delete.addClickListener(e -> getUI().getNavigator().navigateTo(DeleteConfirmationView.VIEW_NAME));
 		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));

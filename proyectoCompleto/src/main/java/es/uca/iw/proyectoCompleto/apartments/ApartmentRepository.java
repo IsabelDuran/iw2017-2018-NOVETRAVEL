@@ -14,6 +14,8 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long>{
 	
 	@Query("SELECT ap FROM Apartment ap WHERE ap.location.city_ LIKE %:textoBuscado% OR ap.location.street_ LIKE %:textoBuscado%")
 	public List<Apartment> findByLocation(@Param(value = "textoBuscado") String textoBuscado);
+	
+	
 	public Apartment findById(Long id);
 	
 }
