@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
+import es.uca.iw.proyectoCompleto.disputes.Dispute;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.users.User;
@@ -54,6 +55,9 @@ public class Apartment{
 	@OneToOne(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private Location location;
 	
+	@OneToMany(mappedBy="apartment")
+	private List<Dispute> disputas;
+
 	@ManyToOne
 	private User user;
 	
@@ -260,6 +264,14 @@ public class Apartment{
         if (image.getApartment() != this) {
             image.setApartment(this);
         }
+	}
+	
+	public List<Dispute> getDisputas() {
+		return disputas;
+	}
+
+	public void setDisputas(List<Dispute> disputas) {
+		this.disputas = disputas;
 	}
 	
 

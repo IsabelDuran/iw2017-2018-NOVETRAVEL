@@ -4,10 +4,12 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -63,9 +65,9 @@ public class DisputeView extends VerticalLayout implements View
 
 	public void mostrarQueja() {
 		
-	
-		VerticalLayout v = new VerticalLayout();
 		
+		VerticalLayout v = new VerticalLayout();
+		this.addComponent(v);
 
 		Label titulo = new Label("Disputa");
 		Label por = new Label("¿Por qué vas a denunciar este anuncio?");
@@ -84,9 +86,10 @@ public class DisputeView extends VerticalLayout implements View
 		ComboBox<String> selectDisputeType =
 			    new ComboBox<>("Selecciona una causa");
 		selectDisputeType.setItems(disputeType);
+		selectDisputeType.setValue("Es por otro motivo");
 		
 		TextArea description = new TextArea("Descripción");
-		Button confirmar = new Button("Confirmar", e -> ponerQueja()) ;
+		Button confirmar = new Button("Confirmar", e -> ponerQueja(selectDisputeType.getValue()+" "+description.getValue())) ;
 		
 		
 		v.addComponents(selectDisputeType,description,confirmar);
@@ -98,15 +101,16 @@ public class DisputeView extends VerticalLayout implements View
 	}
 	
 	
-	public void ponerQueja() {
-		System.out.println("boa");
+	public void ponerQueja(String queja) {
+		LocalDate ahora=LocalDate.now();
+		disputas.save(new Dispute(ahora,ahora,queja,apartment));
 	}
 	
 
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		
+
 		if(event.getParameters() != null){
 	           // split at "/", add each part as a label
 	           String[] msgs = event.getParameters().split("/");
@@ -114,6 +118,7 @@ public class DisputeView extends VerticalLayout implements View
 	           
 	           apartment=service.loadApartmentById(id);
 	           mostrarQueja();
+	        
 	    
 	           
 	    }
