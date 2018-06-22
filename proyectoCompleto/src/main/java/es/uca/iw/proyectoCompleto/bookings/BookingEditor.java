@@ -149,7 +149,7 @@ public class BookingEditor extends VerticalLayout  {
 				correo.enviarCorreo("Reserva pendiente de confirmación",mensaje, userAnfitrion.getEmail());
 				
 				Notification.show("Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
-				getUI().getNavigator().navigateTo(ApartmentListView.VIEW_NAME);
+				getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 				
 			} catch(ValidationException ex) {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
