@@ -83,7 +83,9 @@ public class BookingEditor extends VerticalLayout  {
 
 		editDate();
 		addComponents(entryDate,departureDate,actions,actions2);
- 
+		
+		confirm.setVisible(false);
+		delete.setVisible(false);
 		/// bind using naming convention 
 		
 		Binder.BindingBuilder<Booking, LocalDate> returnBB = binder.forField(entryDate).withValidator(departureDate_ -> !departureDate_.isBefore(LocalDate.now()), "Departure date should be after local date");	
@@ -99,31 +101,7 @@ public class BookingEditor extends VerticalLayout  {
 		actions.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 		save.setStyleName(ValoTheme.BUTTON_PRIMARY);
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
-		
-		actions2.setVisible(true);
-		
-		confirm.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
-		
-		
-		////// VISIBILIDAD DE BOTONES/////
-		System.out.println("ANTES DEL IF");
-		if(booking_ != null)
-		{
-			System.out.println("ENTRAAAAAAAAAAAAAAAAA");
-			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId() && !booking_.isConfirmation()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos
-				confirm.setVisible(true);
-			
-			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos
-			{
-				delete.setVisible(true);
-				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-			}
-				
-						
-		}
-		
-		System.out.println("DESPUES DEL IF");
-
+	
 		// wire action buttons to save, delete and reset
 	
 		save.addClickListener(e -> {
@@ -268,6 +246,18 @@ public class BookingEditor extends VerticalLayout  {
 			apId = booking_.getApartment().getId();
 			apartment = service2.loadApartmentById(apId);
 			userAnfitrion = apartment.getUser();
+	
+			System.out.print("HOLAA");
+			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId() && !booking_.isConfirmation()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos	
+				confirm.setVisible(true);	
+			 else
+				confirm.setVisible(false);
+				
+			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos
+				delete.setVisible(true);	
+			else
+				delete.setVisible(false);
+			
 		}
 		
 		setVisible(true);

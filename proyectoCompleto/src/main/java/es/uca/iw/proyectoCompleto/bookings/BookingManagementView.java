@@ -36,16 +36,21 @@ public class BookingManagementView extends VerticalLayout implements View {
 
 	private BookingEditor editor;
 	
+	@Autowired
 	private final ApartmentService serviceApartment;
+	
+	@Autowired
+	private final BookingService bookingService;
 
 	@Autowired
-	public BookingManagementView(BookingEditor editor, ApartmentService serviceApartment ) {
+	public BookingManagementView(BookingEditor editor, ApartmentService serviceApartment, BookingService bookingService) {
 		this.editor = editor;
 		this.grid = new Grid<>();
 		this.grid2 = new Grid<>();
 		this.apartmentNameGrid = new Grid<>();
 		this.apartmentNameGrid2 = new Grid<>();
 		this.serviceApartment = serviceApartment;
+		this.bookingService = bookingService;
 		    
 	}
 
@@ -63,9 +68,7 @@ public class BookingManagementView extends VerticalLayout implements View {
 		addComponent(h);
 		
 		apartmentNameGrid.setHeight(300, Unit.PIXELS);
-		apartmentNameGrid.setWidth(300, Unit.PIXELS);
-		
-
+		apartmentNameGrid.setWidth(250, Unit.PIXELS);
 		
 		grid.setHeight(300, Unit.PIXELS);
 		grid.setWidth(100, Unit.PERCENTAGE);
@@ -86,7 +89,6 @@ public class BookingManagementView extends VerticalLayout implements View {
 		editor.setChangeHandler(() -> {
 			editor.setVisible(false);
 		}); 
-
 		
 		// Initialize listing
 		listBookings(null);
@@ -94,11 +96,14 @@ public class BookingManagementView extends VerticalLayout implements View {
 		//PARA LAS RESERVAS DE TU APARTAMENTO
 		HorizontalLayout h2 = new HorizontalLayout();
 		Label titulo2 = new Label("RESERVAS EN MIS APARTAMENTOS");
-		h2.addComponents(apartmentNameGrid2, grid2, editor);
-		addComponents(titulo2,h2);
+		addComponent(titulo2);
+		
+		h2.addComponents(apartmentNameGrid2, grid2);
+		
+		addComponents(h2);
 		
 		apartmentNameGrid2.setHeight(300, Unit.PIXELS);
-		apartmentNameGrid2.setWidth(300, Unit.PIXELS);
+		apartmentNameGrid2.setWidth(250, Unit.PIXELS);
 		
 
 		
@@ -114,13 +119,12 @@ public class BookingManagementView extends VerticalLayout implements View {
 		
 		// Hook logic to components
 		// Connect selected Booking to editor or hide if none is selected
-		grid2.asSingleSelect().addValueChangeListener( e -> {
-			editor.editBooking(e.getValue());
+		grid2.asSingleSelect().addValueChangeListener( ex -> {
+			editor.editBooking(ex.getValue());
 		});
+	
 		
-		editor.setChangeHandler(() -> {
-			editor.setVisible(false);
-		}); 
+		listBookingsAp(null);
 		
 
 	}
@@ -154,7 +158,23 @@ public class BookingManagementView extends VerticalLayout implements View {
 	
 	private void listBookingsAp(String filterText)
 	{
+		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
+		List<Apartment> a = new ArrayList<Apartment>();
+		List<Booking> b = new ArrayList<Booking>();
+		
+		for(Booking book: bookingService.findAll())
+		{
+			if(book.getApartment().getUser().getId() == user_.getId())
+			{
+				a.add(book.getApartment());
+				b.add(book);
+			}
+			
+		}
+		
+		grid2.setItems(b);
+		apartmentNameGrid2.setItems(a);
 	}
 	
 	@Override
