@@ -27,8 +27,8 @@ public class Correo {
 	{
 		
 		props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
-		props.put("mail.smtp.user", "pruebassdperi@gmail.com");
-		props.put("mail.smtp.clave", "quevivaSD");    //La clave de la cuenta
+		props.put("mail.smtp.user", "novetravel@gmail.com");
+		props.put("mail.smtp.clave", "fannyperipatriisa");    //La clave de la cuenta
 		props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
 		props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
 		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
@@ -39,12 +39,12 @@ public class Correo {
 		MimeMessage message = new MimeMessage(session);
 		try {
 			Address to = new InternetAddress(email);
-	        message.setFrom(new InternetAddress("pruebasdperi@gmail.com"));
+	        message.setFrom(new InternetAddress("novetravel@gmail.com"));
 	        message.addRecipient(Message.RecipientType.TO, to);   //Se podrían añadir varios de la misma manera
 	        message.setSubject(asunto);
 	        message.setText(cuerpo);
 	        Transport transport = session.getTransport("smtp");
-	        transport.connect("smtp.gmail.com", "pruebassdperi@gmail.com", "quevivaSD");
+	        transport.connect("smtp.gmail.com", "novetravel@gmail.com", "fannyperipatriisa");
 	        transport.sendMessage(message, message.getAllRecipients());
 	        transport.close();
 		}catch(MessagingException me) {

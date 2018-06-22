@@ -15,7 +15,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
@@ -63,9 +62,10 @@ public class BookingManagementView extends VerticalLayout implements View {
 		Label titulo = new Label("MIS RESERVAS");
 		addComponents(goBack, titulo);
 		
-		h.addComponents(apartmentNameGrid, grid, editor);
+		editor.setVisible(false);
+		h.addComponents(apartmentNameGrid, grid,editor);
 		
-		addComponent(h);
+		addComponents(h);
 		
 		apartmentNameGrid.setHeight(300, Unit.PIXELS);
 		apartmentNameGrid.setWidth(250, Unit.PIXELS);
