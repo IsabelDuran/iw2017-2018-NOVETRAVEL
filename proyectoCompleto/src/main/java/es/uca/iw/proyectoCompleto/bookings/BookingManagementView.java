@@ -75,6 +75,7 @@ public class BookingManagementView extends VerticalLayout implements View {
 		grid.setWidth(100, Unit.PERCENTAGE);
 			
 		apartmentNameGrid.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		grid.addColumn(Booking::isConfirmation).setCaption("Confirmación").setResizable(false);
 		grid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada" ).setResizable(false);
 		grid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
 		grid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
