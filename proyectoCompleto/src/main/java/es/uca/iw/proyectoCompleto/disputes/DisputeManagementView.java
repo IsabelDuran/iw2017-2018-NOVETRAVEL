@@ -15,8 +15,10 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentView;
 
@@ -78,9 +80,11 @@ public class DisputeManagementView extends VerticalLayout implements View
 		Button anuncioCasa=new Button("Ir al anuncio de la casa",e -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME + "/" + d.getApartmentID()));
 		Label descripcion=new Label(d.getDescription());
 		
-		Button cerrarAnuncio=new Button("Eliminar",e->
+		Button cerrarAnuncio=new Button("Eliminar el apartamento denunciado",e->
 		{
 			apartamentos.delete(d.getApartment());
+			Notification.show("Se ha borrardo el anuncio correctamente");
+			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);	
 		});
 		
 		Button denunciaInvalida=new Button("Denuncia erronea",e->
@@ -114,8 +118,7 @@ public class DisputeManagementView extends VerticalLayout implements View
 			} else {
 				grid.setItems(service.findByDateStartsWithIgnoreCase(filterText));
 			}
-			*/
-			
+			*/	
 			grid.setItems(service.findAll());
 			
 		}
