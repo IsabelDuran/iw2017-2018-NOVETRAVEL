@@ -24,7 +24,9 @@ public class Dispute{
 
 	private String description;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	private boolean open;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Apartment apartment;
 	
 	@ManyToOne
@@ -40,8 +42,17 @@ public class Dispute{
 		this.description = description;
 		this.apartment=apartamento;
 		this.user=user;
+		open=true;
 	}
 	
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -86,6 +97,16 @@ public class Dispute{
 
 	public void setApartment(Apartment apartment) {
 		this.apartment = apartment;
+	}
+	
+	public String getUsername(){
+		
+		return user.getUsername();
+	}
+	
+	public Long getApartmentID(){
+		
+		return apartment.getId();
 	}
 
 	@Override

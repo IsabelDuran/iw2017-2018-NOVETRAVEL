@@ -237,6 +237,7 @@ public class ApartmentView extends VerticalLayout implements View
 	           long id=Long.valueOf(msgs[0]);
 	           
 	           apartment=service.loadApartmentById(id);
+	           
 	           mostrarApartamento();
 	           
 	    }

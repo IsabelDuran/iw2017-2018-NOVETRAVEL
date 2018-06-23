@@ -116,6 +116,7 @@ public class DisputeView extends VerticalLayout implements View
 	           long id=Long.valueOf(msgs[0]);
 	           
 	           apartment=service.loadApartmentById(id);
+
 	           mostrarQueja();
 	        
 	    
