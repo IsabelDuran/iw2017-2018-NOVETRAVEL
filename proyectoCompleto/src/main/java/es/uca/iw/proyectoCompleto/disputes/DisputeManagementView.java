@@ -77,7 +77,7 @@ public class DisputeManagementView extends VerticalLayout implements View
 		grid.addColumn(Dispute::getApartmentID).setCaption("Apartamento");
 		
 		grid.addColumn(Dispute::getDescription).setCaption("Descripción");
-
+		
 		//filter.setPlaceholder("Filter by date");
 		
 		// Hook logic to components
@@ -118,6 +118,9 @@ public class DisputeManagementView extends VerticalLayout implements View
 			
 			d.setOpen(false);
 			service.save(d);
+			
+			listDispute(null);
+			grid.clearSortOrder();
 			 
 		});
 		denunciaInvalida.setVisible(d.isOpen()==true);
@@ -128,12 +131,12 @@ public class DisputeManagementView extends VerticalLayout implements View
 		h.addComponents(descripcion,anuncioCasa);
 		botones.addComponents(cerrarAnuncio,denunciaInvalida);
 		editor.addComponents(h,botones);
-		setComponentAlignment(editor, Alignment.TOP_CENTER);
-		
-
 		
 	}
 	
+	
+
+
 	private void listDispute(String filterText) {
 			/*
 			if (StringUtils.isEmpty(filterText)) {
@@ -144,6 +147,7 @@ public class DisputeManagementView extends VerticalLayout implements View
 			*/
 			
 			grid.setItems(service.findAll());
+			
 		}
 
 }
