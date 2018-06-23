@@ -56,7 +56,7 @@ public class Apartment{
 	@OneToOne(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private Location location;
 	
-	@OneToMany(mappedBy="apartment")
+	@OneToMany(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private List<Dispute> disputas;
 
 	@ManyToOne

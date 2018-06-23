@@ -12,6 +12,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
@@ -35,11 +36,14 @@ public class DeleteConfirmationView extends VerticalLayout implements View
 		Button confirmationAfirmative = new Button("Sí", e -> {
 			user = userService.findOne(SecurityUtils.getCurrentUserId());
 			 userService.delete(user);
+			 getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
+			 
 		});
 		Button confirmationNegative = new Button("Cancelar y volver", e -> 
 		{
 			VaadinSession.getCurrent().setAttribute("usuarioEditado", SecurityUtils.getCurrentUserId());
 			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
+			getSession().close();
 		});
 		
 		addComponents(notificationLabel, confirmationAfirmative, confirmationNegative);

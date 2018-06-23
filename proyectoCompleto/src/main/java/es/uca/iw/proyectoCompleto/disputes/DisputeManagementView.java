@@ -4,38 +4,21 @@
 package es.uca.iw.proyectoCompleto.disputes;
 
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.Page;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 
-import es.uca.iw.proyectoCompleto.DefaultView;
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentView;
-import es.uca.iw.proyectoCompleto.reports.Report;
-import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = DisputeManagementView.VIEW_NAME)
 public class DisputeManagementView extends VerticalLayout implements View
@@ -78,25 +61,10 @@ public class DisputeManagementView extends VerticalLayout implements View
 		
 		grid.addColumn(Dispute::getDescription).setCaption("Descripción");
 		
-		//filter.setPlaceholder("Filter by date");
-		
-		// Hook logic to components
-
-		// Replace listing with filtered content when user changes filter
-		/*
-		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listReports(e.getValue()));
-		*/
-		// Connect selected Report to editor or hide if none is selected
-		
 		grid.asSingleSelect().addValueChangeListener(e -> {
 			evaluar(e.getValue());
 		});
-		 	
-
-		
-		//
-		
+		 			
 		listDispute(null);
 		
 	}
@@ -109,10 +77,12 @@ public class DisputeManagementView extends VerticalLayout implements View
 		HorizontalLayout botones=new HorizontalLayout();
 		Button anuncioCasa=new Button("Ir al anuncio de la casa",e -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME + "/" + d.getApartmentID()));
 		Label descripcion=new Label(d.getDescription());
+		
 		Button cerrarAnuncio=new Button("Eliminar",e->
 		{
-		 apartamentos.delete(d.getApartment());
-		 });
+			apartamentos.delete(d.getApartment());
+		});
+		
 		Button denunciaInvalida=new Button("Denuncia erronea",e->
 		{
 			
@@ -123,7 +93,7 @@ public class DisputeManagementView extends VerticalLayout implements View
 			grid.clearSortOrder();
 			 
 		});
-		denunciaInvalida.setVisible(d.isOpen()==true);
+		denunciaInvalida.setVisible(d.isOpen() == true);
 		//cerrarAnuncio.addClickListener(clickEvent ->
 	    //Notification.show("Se ha borrardo el anuncio correctamente"));
 		cerrarAnuncio.addStyleName("danger");
