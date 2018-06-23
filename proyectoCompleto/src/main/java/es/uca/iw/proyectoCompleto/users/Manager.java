@@ -40,7 +40,7 @@ public class Manager extends User{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
-		list.add(new SimpleGrantedAuthority("ROLE_MANAGEMENT"));
+		list.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
 		return list;
 		
 	}

@@ -15,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentManagementView;
 import es.uca.iw.proyectoCompleto.bookings.BookingManagementView;
+import es.uca.iw.proyectoCompleto.disputes.DisputeManagementView;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserManagementView;
@@ -44,6 +45,11 @@ public class MainScreen extends VerticalLayout implements View {
 		userManagementButton.setStyleName("title-text");
 		userManagementButton.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
 		addComponents(userManagementLabel, userManagementLabel);
+		
+		if(SecurityUtils.hasRole("ROLE_MANAGER")){
+			createManagerMainMenu();
+		}
+		
 	
 	}
 
@@ -76,6 +82,19 @@ public class MainScreen extends VerticalLayout implements View {
 		profileNavigationButton.setVisible(SecurityUtils.hasRole("ROLE_USER"));
 		
 		addComponents(apartmentLabel, apartmentNavigationButton, myBookingsLabel, myBookingsNavigationButton, profileLabel, profileNavigationButton);
+	}
+	
+	
+	private void createManagerMainMenu() {
+		Label apartmentLabel = new Label("Gestión de quejas: ");
+		apartmentLabel.setStyleName("title-text");
+		apartmentLabel.setVisible(SecurityUtils.hasRole("ROLE_MANAGER"));
+		
+		Button apartmentNavigationButton = new Button("¡Gestionar quejas!",  e -> getUI().getNavigator().navigateTo(DisputeManagementView.VIEW_NAME));
+		apartmentNavigationButton.setStyleName("box-padding");
+		apartmentNavigationButton.setVisible(SecurityUtils.hasRole("ROLE_MANAGER"));
+		
+		addComponents(apartmentLabel,apartmentNavigationButton);
 	}
 
 }

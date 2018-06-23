@@ -17,8 +17,6 @@ public class Dispute{
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	
 	
 	private LocalDate opening_date;
 	
