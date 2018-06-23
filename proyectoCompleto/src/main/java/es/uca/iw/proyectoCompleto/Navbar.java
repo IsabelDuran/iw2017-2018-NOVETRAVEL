@@ -1,10 +1,12 @@
 package es.uca.iw.proyectoCompleto;
 
+import com.vaadin.server.Page;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.security.RegisterScreen;
@@ -29,12 +31,19 @@ public class Navbar extends HorizontalLayout {
 		Label title = new Label("NOVETRAVEL");
 		title.setStyleName("white-title");
 		labelWrapper.addComponent(title);
-
+		
 		addComponent(labelWrapper);
 		this.setComponentAlignment(labelWrapper, Alignment.MIDDLE_LEFT);
-
+		labelWrapper.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
+		
 		if (SecurityUtils.isLoggedIn()) {
-			Button logoutButton = new Button("Logout", e -> getSession().close());
+			Button logoutButton = new Button("Logout", e -> {
+				getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
+				
+				getSession().close();
+				Page.getCurrent().reload();
+			
+				});
 			logoutButton.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
 			addComponent(logoutButton);
 			this.setComponentAlignment(logoutButton, Alignment.MIDDLE_RIGHT);
