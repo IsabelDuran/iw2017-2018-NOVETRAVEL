@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.users.User;
+import facturas.Factura;
 
 @Entity
 public class Booking{
@@ -32,6 +33,16 @@ public class Booking{
 	@ManyToOne(fetch=FetchType.EAGER)
 	private User user;
 	
+	private Factura factura;
+	
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+
 	public Booking() {
 		super();
 	}
