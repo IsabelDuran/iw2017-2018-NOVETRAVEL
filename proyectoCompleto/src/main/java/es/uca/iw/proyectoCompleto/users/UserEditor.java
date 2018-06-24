@@ -4,6 +4,7 @@ package es.uca.iw.proyectoCompleto.users;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.converter.StringToIntegerConverter;
@@ -15,6 +16,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -56,6 +58,7 @@ public class UserEditor extends VerticalLayout implements View {
 		Button save = new Button("Guardar cambios");
 		Button cancel = new Button("Cancelar");
 		Button delete = new Button("Eliminar mi cuenta");
+		delete.setVisible(false);
 
 		/* Layout for buttons */
 		CssLayout actions = new CssLayout(save, cancel, delete);
@@ -63,7 +66,7 @@ public class UserEditor extends VerticalLayout implements View {
 		addComponents(firstName, lastName, username, password, direccion, zipcode, email, actions);
 
 		
-		binder.forField(firstName).asRequired("Introduce tu nombre porfi :(").bind(User::getFirstName, User::setFirstName);
+		binder.forField(firstName).asRequired("Introduce tu nombre").bind(User::getFirstName, User::setFirstName);
 		binder.forField(lastName).asRequired("Introduce tu apellido").bind(User::getLastName, User::setLastName);
 		binder.forField(username).asRequired("Introduce tu usuario").bind(User::getUsername, User::setUsername);
 		binder.forField(direccion).asRequired("Introduce tu dirección").bind(User::getAddress, User::setAddress);
@@ -80,10 +83,14 @@ public class UserEditor extends VerticalLayout implements View {
 		// wire action buttons to save, delete and reset
 		save.addClickListener(e -> {
 			if(!password.isEmpty())
-					user.setPassword(password.getValue());
-			else
-				
+			{
+				user.setPassword(password.getValue());
 				userService.save(user);
+			}
+			else
+				userService.saveWithoutEncoding(user);
+			Notification.show("Se ha guardado c o");
+			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 		});
 		delete.addClickListener(e -> getUI().getNavigator().navigateTo(DeleteConfirmationView.VIEW_NAME));
 		cancel.addClickListener(e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
@@ -98,7 +105,7 @@ public class UserEditor extends VerticalLayout implements View {
 		}
 		else
 		{
-			this.user = userService.findOne(editedUser);
+			this.user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			binder.setBean(user);
 		}
 	}

@@ -33,10 +33,17 @@ public class UserService implements UserDetailsService {
 		return user;
 	}
 
-	public User save(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword() != null ? user.getPassword() : "default"));
+	public User save(User user)
+	{
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return repo.save(user);
 	}
+	
+	public User saveWithoutEncoding(User user)
+	{
+		return repo.save(user);
+	}
+	
 
 	public List<User> findByLastNameStartsWithIgnoreCase(String lastName) {
 		return repo.findByLastNameStartsWithIgnoreCase(lastName);
