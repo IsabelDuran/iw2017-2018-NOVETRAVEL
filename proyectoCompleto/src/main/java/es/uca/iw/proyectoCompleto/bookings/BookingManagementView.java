@@ -156,15 +156,8 @@ public class BookingManagementView extends VerticalLayout implements View {
 		{
 			for(Booking book: b)
 			{
-				for(Apartment apart: serviceApartment.findAll())
-				{
-					if(book.getApartment().getId() == apart.getId())
-					{
-						a.add(apart);
-						u.add(book.getApartment().getUser());
-					}	
-					
-				}
+				a.add(book.getApartment());
+				u.add(book.getApartment().getUser());
 			
 			}
 		

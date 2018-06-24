@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.bookings.BookingService;
+import es.uca.iw.proyectoCompleto.facturas.FacturaService;
 import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.reports.Report;
 import es.uca.iw.proyectoCompleto.reports.ReportService;
@@ -41,12 +42,17 @@ public class ProyectoCompletoApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
+	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs, FacturaService fs) {
 		return (args) -> {
 			try {
 			 
 			 Apartment a1=null, a2 = null;
 			 User u1=null, u2 = null;
+			 
+		/*	if(fs.findAll().size() == 0)
+			{
+				System.out.println("NO HAY FACTURAS");
+			}*/
 			 
 			if(re.findAll().size()==0)
 			{
@@ -54,8 +60,7 @@ public class ProyectoCompletoApplication {
 			}
 			
 			if (service.findAll().size() == 0) 
-			{
-				
+			{	
 				u1=new User("Juan", "Bauer");
 				u2 = new User("Michelle", "Dessler");
 				// save a couple of users with default password: default
@@ -64,6 +69,8 @@ public class ProyectoCompletoApplication {
 				service.save(new User("David", "Palmer"));
 				service.save(u1);
 				service.save(u2);
+				
+				System.out.println("aqui llega");
 				
 				Host registrado = new Host("registrado", "registrado");
 				registrado.setPassword("registrado");
@@ -85,7 +92,7 @@ public class ProyectoCompletoApplication {
 			
 			if(ap.findAll().size()==0)
 			{
-			
+				System.out.println("APARTAMENTOSSS");
 				a1=new Apartment("apartamento", "es un apartamento",3.0,"unifamiliar");
 				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , "c");
 				a1.setLocation(l1);
@@ -97,7 +104,7 @@ public class ProyectoCompletoApplication {
 			
          } catch(Exception e)
 			{
-				System.out.println("Excepcion no controlada" + e.getMessage());
+				System.out.println("Excepcion no controlada " + e.getMessage());
 			}
 
 		};
