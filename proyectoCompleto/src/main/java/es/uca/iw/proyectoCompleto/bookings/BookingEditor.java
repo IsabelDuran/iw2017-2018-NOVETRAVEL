@@ -135,8 +135,6 @@ public class BookingEditor extends VerticalLayout  {
 				if(!fechaValida)
 					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
 				
-				System.out.println("111111111111111111111111111111111111111111111111111111");
-				
 				user_.addBooking(booking_);
 		
 				double price =  ((int)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * apartment.getPricePerDay();
@@ -150,20 +148,14 @@ public class BookingEditor extends VerticalLayout  {
 						+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
 						+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
 				
-				System.out.println("22222222222222222222222222222222222222222222222");
-				
-				if(factura == null)
-				{
-					System.out.println("Factura es null");
-				}
 				factura.setDetalles(detalles);
-				System.out.println("333333333333333333333333333333333333333333333");
 				factura.setFechaFactura(LocalDate.now());
-				System.out.println("4444444444444444444444444444444444");
-				
+		
+				this.factura.setBooking(booking_);
+				booking_.setFactura(this.factura);
 				serviceFact.save(factura);
 				
-				System.out.println("555555555555555555555555555555555555");
+
 				service.save(booking_);
 				
 				Correo correo = new Correo();
@@ -209,14 +201,14 @@ public class BookingEditor extends VerticalLayout  {
 					+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
 					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
 			
-		//	booking_.getFactura().generarPdf();
+			this.factura.generarPdf();
 			/// GENERAR FACTURA///
 			Correo correo = new Correo();
 			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
 					+ detalles + "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 							
-			correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
-		//	correo.enviarCorreoAttachment("Reserva pendiente de confirmación",mensaje, user_.getEmail());
+		//	correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
+			correo.enviarCorreoAttachment("Reserva pendiente de confirmación",mensaje, user_.getEmail());
 			booking_.setConfirmation(true);
 			service.delete(booking_);
 			service.save(booking_);

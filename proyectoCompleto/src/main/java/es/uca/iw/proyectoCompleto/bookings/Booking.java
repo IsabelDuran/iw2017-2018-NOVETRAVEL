@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -35,7 +36,8 @@ public class Booking{
 	@ManyToOne(fetch=FetchType.EAGER)
 	private User user;
 	
-	@OneToOne(mappedBy="booking", cascade = {CascadeType.ALL})
+	@OneToOne(fetch=FetchType.EAGER)
+	// @JoinColumn(name="FACTURA_ID")
 	private Factura factura;
 
 	public Factura getFactura() {

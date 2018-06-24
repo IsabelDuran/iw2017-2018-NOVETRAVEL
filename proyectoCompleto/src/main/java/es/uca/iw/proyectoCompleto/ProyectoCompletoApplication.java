@@ -48,21 +48,17 @@ public class ProyectoCompletoApplication {
 			 
 			 Apartment a1=null, a2 = null;
 			 User u1=null, u2 = null;
-
-			 
-		/*	if(fs.findAll().size() == 0)
-			{
-				System.out.println("NO HAY FACTURAS");
-			}*/
 			 
 			if(re.findAll().size()==0)
 			{
+				System.out.println("AQUI ENTRA");
 				re.save(new Report("23/03/91", "hola", "vater sucio", "el vater esta muy sucio loco"));
 			}
 			
 
-			if (service.findAll().size() == 0) 
+		/*	if (service.findAll().size() == 0) 
 			{	
+				System.out.println("AQUI ENTRA 2");
 				u1=new User("Juan", "Bauer");
 				u2 = new User("Michelle", "Dessler");
 				// save a couple of users with default password: default
@@ -90,19 +86,22 @@ public class ProyectoCompletoApplication {
 				root.setPassword("root");
 				service.save(root);
 				
-			}
+			} */
 			
-			if(ap.findAll().size()==0)
+		/*	if(ap.findAll().size()==0)
 			{
-				System.out.println("APARTAMENTOSSS");
+				System.out.println("AQUI ENTRA 3");
 				a1=new Apartment("apartamento", "es un apartamento",3.0,"unifamiliar");
+				System.out.println("a1 creado");
 				Location l1 = new Location("hola","11500", "Antonio", 1, 1 , "c");
+				System.out.println("l1 creado");
 				a1.setLocation(l1);
 				a2 = new Apartment("apartamento2", "aaa", 20.0, "piso");
+				System.out.println("a2 creado");
 				ap.save(a1);
 				ap.save(a2);
 				
-			}
+			}*/
 			
          } catch(Exception e)
 			{

@@ -8,9 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.itextpdf.awt.geom.Rectangle;
@@ -39,7 +42,8 @@ public class Factura {
 	
 	private String detalles;
 	
-	@OneToOne
+	//@OneToOne(fetch = FetchType.EAGER, mappedBy ="factura", cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, mappedBy ="factura", cascade=CascadeType.ALL)
 	private Booking booking;
 	
 	public Factura() {
