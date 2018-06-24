@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.facturas.Factura;
 import es.uca.iw.proyectoCompleto.users.User;
-import facturas.Factura;
 
 @Entity
 public class Booking{
