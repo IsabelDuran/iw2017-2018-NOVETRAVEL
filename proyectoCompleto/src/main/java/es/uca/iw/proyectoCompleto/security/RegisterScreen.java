@@ -1,5 +1,7 @@
 package es.uca.iw.proyectoCompleto.security;
 
+import java.util.HashSet;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.LoginView;
+import es.uca.iw.proyectoCompleto.users.Role;
 import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
@@ -38,7 +41,7 @@ public class RegisterScreen extends VerticalLayout implements View {
 	public static final String VIEW_NAME = "registerScreen";
 	@Autowired
 	private UserService userService;
-
+	
 	@PostConstruct
 	public void init() {
 		Button save = new Button("Guardar");
@@ -83,9 +86,11 @@ public class RegisterScreen extends VerticalLayout implements View {
 
 		save.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 		save.addClickListener(ev -> {
-
 			User user = new User();
 			try {
+				HashSet<Role> roles = new HashSet<>();
+				roles.add(userService.findRole("ROLE_USER"));
+				user.setRoles(roles);
 				binder.writeBean(user);
 				userService.save(user);
 				Notification.show("¡Registro exitoso!");

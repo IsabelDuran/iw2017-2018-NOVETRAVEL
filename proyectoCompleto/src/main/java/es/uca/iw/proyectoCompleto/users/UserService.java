@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import es.uca.iw.proyectoCompleto.security.RoleRepository;
+
 /**
  * @author ruizrube
  *
@@ -21,6 +23,9 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository repo;
 
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -63,6 +68,11 @@ public class UserService implements UserDetailsService {
 
 	public List<User> findAll() {
 		return repo.findAll();
+	}
+	
+	public Role findRole(String name)
+	{
+		return roleRepository.findByName(name);
 	}
 	
 

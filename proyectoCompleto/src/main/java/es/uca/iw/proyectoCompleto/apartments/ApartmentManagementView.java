@@ -1,7 +1,5 @@
 package es.uca.iw.proyectoCompleto.apartments;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;

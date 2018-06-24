@@ -50,9 +50,7 @@ public class User implements UserDetails{
 	
 	private int zipcode;
 	
-//	@OneToMany(fetch=FetchType.EAGER)
-//	private List<CreditCard> creditCard; 
-	
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
 	private List<Booking> booking;
@@ -63,6 +61,9 @@ public class User implements UserDetails{
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
 	private List<Dispute> disputes;
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	private Set<Role> roles;
 
 	public User() {
 	}
@@ -184,16 +185,19 @@ public class User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
-		list.add(new SimpleGrantedAuthority("ROLE_USER"));
+		for(Role r : roles)
+			list.add(new SimpleGrantedAuthority(r.getName()));
 		return list;
 		
 	}
-
+	
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return password;
 	}
+
+
 
 	@Override
 	public String getUsername() {
@@ -231,6 +235,14 @@ public class User implements UserDetails{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 }
