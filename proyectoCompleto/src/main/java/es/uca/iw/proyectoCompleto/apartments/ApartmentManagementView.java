@@ -48,7 +48,6 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 		HorizontalLayout actions = new HorizontalLayout(addNewBtn, goBack);
 		
 	
-		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		addComponents(actions, grid);
 		
@@ -58,7 +57,7 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 
 		// Connect selected Apartment to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
-			VaadinSession.getCurrent().setAttribute("apartamentoEditado", e.getValue().getId());
+			VaadinSession.getCurrent().setAttribute("apartamentoEditado", e.getValue());
 			getUI().getNavigator().navigateTo(ApartmentEditor.VIEW_NAME);
 		});
 
@@ -69,19 +68,16 @@ public class ApartmentManagementView extends VerticalLayout implements View{
 			getUI().getNavigator().navigateTo(ApartmentEditor.VIEW_NAME);
 		});
 		
-		listApartments(null, user_.getApartments());
 		
 	}
 
-	private void listApartments(String filterText, List<Apartment> aps) {
-		grid.setItems(aps);
-	}
+
 	
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-		
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		grid.setItems(user.getApartments());
 	}
 
 }

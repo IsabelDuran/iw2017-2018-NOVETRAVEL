@@ -48,8 +48,8 @@ public class DefaultView extends VerticalLayout implements View {
 	@PostConstruct
 	void init() {
 		
-		Factura f = new Factura();
-		f.generarPdf();
+		//Factura f = new Factura();
+		//f.generarPdf();
 		this.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 		Label searchtitle_ = new Label("Buscar: ");
 		searchtitle_.setStyleName("title-text");
@@ -75,11 +75,16 @@ public class DefaultView extends VerticalLayout implements View {
 		searchWithFilter.setStyleName("box-padding");
 		
 		panelButtons.addComponents(searchWithFilter, closeButton);
+		Label sliderLabel = new Label("Precio máximo: ");
 		Slider priceSlider = new Slider(0, 1000);
+		priceSlider.setWidth(100, Unit.PERCENTAGE);
+		
+		Label dateLabel = new Label("Fecha entrada y salida: ");
+		
 		DateField entryDateField = new DateField();
 		DateField departureDateField = new DateField();
 		
-		filters.addComponents(priceSlider, entryDateField, departureDateField, panelButtons);
+		filters.addComponents(sliderLabel, priceSlider,dateLabel, entryDateField, departureDateField, panelButtons);
 		
 		Panel filterPanel = new Panel("Filtrar por precio y disponibilidad");
 		filterPanel.setContent(filters);

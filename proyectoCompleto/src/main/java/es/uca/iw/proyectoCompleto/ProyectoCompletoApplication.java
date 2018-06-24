@@ -48,6 +48,7 @@ public class ProyectoCompletoApplication {
 			 
 			 Apartment a1=null, a2 = null;
 			 User u1=null, u2 = null;
+
 			 
 		/*	if(fs.findAll().size() == 0)
 			{
@@ -59,6 +60,7 @@ public class ProyectoCompletoApplication {
 				re.save(new Report("23/03/91", "hola", "vater sucio", "el vater esta muy sucio loco"));
 			}
 			
+
 			if (service.findAll().size() == 0) 
 			{	
 				u1=new User("Juan", "Bauer");

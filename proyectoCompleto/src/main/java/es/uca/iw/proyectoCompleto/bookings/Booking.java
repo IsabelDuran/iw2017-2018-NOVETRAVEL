@@ -2,13 +2,16 @@ package es.uca.iw.proyectoCompleto.bookings;
 
 import  java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.facturas.Factura;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @Entity
@@ -31,6 +34,17 @@ public class Booking{
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private User user;
+	
+	@OneToOne(mappedBy="booking", cascade = {CascadeType.ALL})
+	private Factura factura;
+
+	public Factura getFactura() {
+		return factura;
+	}
+
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
 
 	public Booking() {
 		super();

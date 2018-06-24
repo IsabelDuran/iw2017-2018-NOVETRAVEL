@@ -15,6 +15,8 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.ValidationResult;
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
@@ -27,6 +29,9 @@ import com.vaadin.ui.themes.ValoTheme;
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.facturas.Factura;
+import es.uca.iw.proyectoCompleto.facturas.FacturaService;
+import es.uca.iw.proyectoCompleto.location.Location;
 import es.uca.iw.proyectoCompleto.security.Correo;
 import es.uca.iw.proyectoCompleto.users.User;
 
@@ -47,9 +52,13 @@ public class BookingEditor extends VerticalLayout  {
 	@Autowired
 	private ApartmentService service2;
 	
+	@Autowired
+	private FacturaService serviceFact;
+	
 	private User user_,userAnfitrion;
 	private Long apId;
 	private Apartment apartment;
+	private Factura factura;
 	
 	/**
 	 * The currently edited booking
@@ -120,17 +129,41 @@ public class BookingEditor extends VerticalLayout  {
 					}
 				} else
 					fechaValida = comprobarFecha();
+					
+					
 				
 				if(!fechaValida)
 					throw new Exception ("Lo sentimos, ya existe una reserva en esa fecha");
 				
+				System.out.println("111111111111111111111111111111111111111111111111111111");
+				
 				user_.addBooking(booking_);
 		
-				double price =  ((double)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * apartment.getPricePerDay();
+				double price =  ((int)DAYS.between(entryDate.getValue(), departureDate.getValue())+1) * apartment.getPricePerDay();
 				booking_.setTotalPrice(price);
 				
 				binder.writeBean(booking_);
+			
+				String detalles = " Nombre del apartamento: " +apartment.getName() + "\n "
+						+ "Descripción del apartamento: " +apartment.getDescription() + "\n "
+						+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
+						+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
+						+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
 				
+				System.out.println("22222222222222222222222222222222222222222222222");
+				
+				if(factura == null)
+				{
+					System.out.println("Factura es null");
+				}
+				factura.setDetalles(detalles);
+				System.out.println("333333333333333333333333333333333333333333333");
+				factura.setFechaFactura(LocalDate.now());
+				System.out.println("4444444444444444444444444444444444");
+				
+				serviceFact.save(factura);
+				
+				System.out.println("555555555555555555555555555555555555");
 				service.save(booking_);
 				
 				Correo correo = new Correo();
@@ -146,14 +179,17 @@ public class BookingEditor extends VerticalLayout  {
 						+ "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
 				
 				correo.enviarCorreo("Reserva pendiente de confirmación",mensaje, userAnfitrion.getEmail());
+				//correo.enviarCorreoAttachment("Reserva pendiente de confirmaciónnnnn",mensaje, userAnfitrion.getEmail());
 				
 				Notification.show("Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
 				getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
 				
 			} catch(ValidationException ex) {
+				System.out.println("Excepcion VALIDATIONEXCEPTION");
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
 		    } catch (Exception exc) {
+		    	System.out.println("Excepcion EXCEPTION");
 		    	Notification.show(exc.getMessage());
 		    }
 			 
@@ -167,17 +203,20 @@ public class BookingEditor extends VerticalLayout  {
 		
 		confirm.addClickListener(e -> {
 			
-			Correo correo = new Correo();
-			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
-					+ "La reserva que se detalla a continuación se ha realizado con éxito:\n\n"
-					+ " Nombre del apartamento: " +apartment.getName() + "\n "
+			String detalles = " Nombre del apartamento: " +apartment.getName() + "\n "
 					+ "Descripción del apartamento: " +apartment.getDescription() + "\n "
 					+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
 					+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
-					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n"
-					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
+					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
+			
+		//	booking_.getFactura().generarPdf();
+			/// GENERAR FACTURA///
+			Correo correo = new Correo();
+			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
+					+ detalles + "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 							
 			correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
+		//	correo.enviarCorreoAttachment("Reserva pendiente de confirmación",mensaje, user_.getEmail());
 			booking_.setConfirmation(true);
 			service.delete(booking_);
 			service.save(booking_);
@@ -247,11 +286,19 @@ public class BookingEditor extends VerticalLayout  {
 		
 		if (booking == null) {
 			this.booking_ = new Booking();
+			this.factura = new Factura();
 			binder.setBean(booking_);
 		}
 		else
 		{
+			System.out.println("o NO SE SI TIENE QUE ENTRAR AQUI");
 			this.booking_ = booking;
+			
+			if(booking.getFactura() == null)
+				this.factura = new Factura();
+			else
+				this.factura = booking.getFactura();
+			
 			binder.setBean(booking_);
 			
 			user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -259,7 +306,6 @@ public class BookingEditor extends VerticalLayout  {
 			apartment = service2.loadApartmentById(apId);
 			userAnfitrion = apartment.getUser();
 	
-			System.out.print("HOLAA");
 			if(user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId() && !booking_.isConfirmation()) // Solo  el anfitrion puede confirmar una reserva o eliminarla y solo de sus pisos	
 				confirm.setVisible(true);	
 			 else
@@ -269,6 +315,8 @@ public class BookingEditor extends VerticalLayout  {
 				delete.setVisible(true);	
 			else
 				delete.setVisible(false);
+			
+			System.out.println("TODO ESTO LO HACE");
 			
 		}
 		
@@ -283,7 +331,7 @@ public class BookingEditor extends VerticalLayout  {
 		delete.addClickListener(e -> h.onChange());
 		confirm.addClickListener(e -> h.onChange());
 		cancel.addClickListener(e -> h.onChange());
+	} 
+	
 	}
 	
-
-}

@@ -3,6 +3,7 @@ package es.uca.iw.proyectoCompleto.users;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +58,7 @@ public class User implements UserDetails{
 	private List<Booking> booking;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
-	private List<Apartment> apartments;
+	private Set<Apartment> apartments;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
@@ -105,16 +106,11 @@ public class User implements UserDetails{
 		this.firstName = firstName;
 	}
 
-	public List<Apartment> getApartments() {
+	public Set<Apartment> getApartments() {
 		return apartments;
 	} 
-
-	public void addApartments(Apartment apartment) {
-		if(apartment != null)
-			this.apartments.add(apartment);
-	} 
 	
-	public void setApartments(List<Apartment> apartments)
+	public void setApartments(Set<Apartment> apartments)
 	{
 		this.apartments = apartments;
 	}
