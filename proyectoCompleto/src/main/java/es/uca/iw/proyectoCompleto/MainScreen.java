@@ -34,23 +34,25 @@ public class MainScreen extends VerticalLayout implements View {
 		root.setSizeFull();
 		
 		createUserMainMenu();
-	
 		
-		Label userManagementLabel = new Label("Gestión de usuarios: ");
-		userManagementLabel.setStyleName("title-text");
-		userManagementLabel.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
-		
-
-		Button userManagementButton = new Button("Gestion de usuarios", e -> getUI().getNavigator().navigateTo(UserManagementView.VIEW_NAME));
-		userManagementButton.setStyleName("title-text");
-		userManagementButton.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
-		addComponents(userManagementLabel, userManagementLabel);
+		createAdminMainMenu();
 		
 		if(SecurityUtils.hasRole("ROLE_MANAGER")){
 			createManagerMainMenu();
 		}
 		
 	
+	}
+
+	private void createAdminMainMenu() {
+		Label userManagementLabel = new Label("Gestión de usuarios: ");
+		userManagementLabel.setStyleName("title-text");
+		userManagementLabel.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		
+		Button userManagementButton = new Button("Gestion de usuarios", e -> getUI().getNavigator().navigateTo(UserManagementView.VIEW_NAME));
+		userManagementButton.setStyleName("title-text");
+		userManagementButton.setVisible(SecurityUtils.hasRole("ROLE_ADMIN"));
+		addComponents(userManagementLabel, userManagementButton);
 	}
 
 	private void createUserMainMenu() {
