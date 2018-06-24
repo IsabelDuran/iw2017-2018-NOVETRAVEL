@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -26,6 +27,7 @@ public class Apartment{
 
 	private String name;
 
+	@Lob
 	private String description;
 	
 	@Min(value = 1L, message = "The value must be positive")

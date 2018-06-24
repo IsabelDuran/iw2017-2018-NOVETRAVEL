@@ -1,7 +1,6 @@
 package es.uca.iw.proyectoCompleto;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
@@ -18,18 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.bookings.BookingService;
-import es.uca.iw.proyectoCompleto.location.Location;
-import es.uca.iw.proyectoCompleto.reports.Report;
-import es.uca.iw.proyectoCompleto.reports.ReportService;
 import es.uca.iw.proyectoCompleto.security.VaadinSessionSecurityContextHolderStrategy;
-import es.uca.iw.proyectoCompleto.users.Administrator;
-import es.uca.iw.proyectoCompleto.users.Host;
-import es.uca.iw.proyectoCompleto.users.Manager;
-import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @ComponentScan(basePackages="es.uca.*")
@@ -40,53 +28,6 @@ public class ProyectoCompletoApplication {
 		SpringApplication.run(ProyectoCompletoApplication.class, args);
 	}
 	
-	@Bean
-	public CommandLineRunner loadData(UserService service,ApartmentService ap, ReportService re, BookingService bs) {
-		return (args) -> {
-			try {
-			 
-			 Apartment a1=null, a2 = null;
-			 User u1=null, u2 = null;
-					
-			if (service.findAll().size() == 0) 
-			{
-				
-				u1=new User("Juan", "Bauer");
-				u2 = new User("Michelle", "Dessler");
-				// save a couple of users with default password: default
-				service.save(new Administrator("Chloe", "O'Brian"));
-				service.save(new User("Kim", "Bauer"));
-				service.save(new User("David", "Palmer"));
-				service.save(u1);
-				service.save(u2);
-				
-				Host registrado = new Host("registrado", "registrado");
-				registrado.setPassword("registrado");
-				service.save(registrado);
-				
-				Manager manager = new Manager("manager", "manager");
-				manager.setPassword("manager");
-				service.save(manager);
-				
-				Administrator admin = new Administrator("admin", "admin");
-				admin.setPassword("admin");
-				service.save(admin);
-				
-				User root = new User("root", "root");
-				root.setPassword("root");
-				service.save(root);
-				
-			}
-			
-         } catch(Exception e)
-			{
-				System.out.println("Excepcion no controlada" + e.getMessage());
-			}
-
-		};
-	}	
-
-
 	@Configuration
 	@EnableGlobalMethodSecurity(securedEnabled = true)
 	public static class SecurityConfiguration extends GlobalMethodSecurityConfiguration {
