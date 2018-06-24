@@ -49,7 +49,6 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	private Binder<Apartment> binder;
 	private Binder<Location> loc_binder;
-
 	
 	@PostConstruct
 	public void init() {
@@ -176,7 +175,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				
 				this.location.setApartment(apartment);
 				User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				user_.addApartments(apartment);
+				user_.getApartments().add(apartment);
 				apartment.setUser(user_);
 				apartment.setLocation(this.location);
 				service.save(this.apartment);
@@ -202,14 +201,13 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		Long editedApartement = (Long) VaadinSession.getCurrent().getAttribute("apartamentoEditado");
-		if (editedApartement == null) {
+		Apartment editedApartment = (Apartment) VaadinSession.getCurrent().getAttribute("apartamentoEditado");
+		if (editedApartment == null) {
 			this.apartment = new Apartment();
 			this.location = new Location();
 
 		} else {
-			
-			this.apartment = service.loadApartmentById(editedApartement);
+			this.apartment = editedApartment;
 			this.location = this.apartment.getLocation();
 			binder.setBean(this.apartment);
 			loc_binder.setBean(this.location);

@@ -1,6 +1,7 @@
 package es.uca.iw.proyectoCompleto.security;
 
 import com.vaadin.event.ShortcutAction;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
@@ -37,9 +38,11 @@ public class LoginScreen extends VerticalLayout {
         
         this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         TextField username = new TextField("Username");
+        username.setIcon(VaadinIcons.USER);
         addComponent(username);
  
         PasswordField password = new PasswordField("Password");
+        password.setIcon(VaadinIcons.PASSWORD);
         addComponent(password);
         this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         

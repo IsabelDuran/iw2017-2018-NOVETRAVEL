@@ -274,6 +274,26 @@ public class Apartment{
 	public void setDisputas(List<Dispute> disputas) {
 		this.disputas = disputas;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		System.out.println(this);
+		System.out.println(obj);
+		boolean isEqual = false;
+		if(obj == null)
+			return false;
+		else if(obj instanceof Apartment)
+		{
+			System.out.println(this.id);
+			System.out.println(((Apartment) obj).id);
+
+			isEqual = (this.id == ((Apartment) obj).id);
+		}
+		else 
+			isEqual = super.equals(obj);
+		return isEqual;
+	}
+	
 	
 
 }
