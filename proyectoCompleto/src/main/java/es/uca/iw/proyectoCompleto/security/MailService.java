@@ -57,7 +57,7 @@ public class MailService {
 	    }
 	}
 	
-	public void enviarCorreoAttachment(String asunto, String cuerpo, String email, ByteArrayOutputStream adjunto) 
+	public void enviarCorreoAttachment(String asunto, String cuerpo, String email, ByteArrayOutputStream adjunto, String filename) 
 	{
 		Properties props;
 		Session session;
@@ -87,9 +87,6 @@ public class MailService {
 	        
 	        messageBodyPart = new MimeBodyPart();
 	        try {
-	        	
-	        String path = new File(".").getCanonicalPath();
-	        String filename = path + "/factura.pdf";
 	 
 	        DataSource source = new ByteArrayDataSource(adjunto.toByteArray(), "application/pdf");
 	        messageBodyPart.setDataHandler(new DataHandler(source));
