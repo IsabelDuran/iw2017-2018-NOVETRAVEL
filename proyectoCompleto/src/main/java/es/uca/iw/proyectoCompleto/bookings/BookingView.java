@@ -25,104 +25,99 @@ import es.uca.iw.proyectoCompleto.users.User;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringView(name = BookingView.VIEW_NAME)
-public class BookingView extends VerticalLayout implements View{
-	
+public class BookingView extends VerticalLayout implements View {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String VIEW_NAME = "bookingView";
-	
+
 	@Autowired
 	private ApartmentService aps;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	private Apartment apartment;
-	
+
 	@Autowired
 	private BookingEditor editor;
-	
+
 	@PostConstruct
-	void init()
-	{
-		
+	void init() {
+
 	}
-	
+
 	public void mostrarApartamento() {
-		
+
 		User currentUser = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		LocalDate f1 = LocalDate.now();
 		LocalDate f2 = LocalDate.now();
-		
+
 		HorizontalLayout h = new HorizontalLayout();
 		HorizontalLayout imagenes = new HorizontalLayout();
 		VerticalLayout v = new VerticalLayout();
-		
+
 		addComponents(h);
-		
+
 		h.addComponent(v);
 		h.addComponent(editor);
 		editor.editBooking(new Booking(f1, f2, apartment.getPricePerDay(), false, apartment, currentUser));
-		
+
 		v.addComponent(new Label(apartment.getName()));
 		Label description = new Label(apartment.getDescription());
 		description.setWidth("300px");
 		v.addComponent(description);
-		desplegarImagenes(imagenes); 
+		desplegarImagenes(imagenes);
 		v.addComponent(imagenes);
-		
+
 		v.addComponent(new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€")));
-		
-    }
-	
+
+	}
+
 	public void desplegarImagenes(Layout contenedor) {
-		
+
 		contenedor.removeAllComponents();
-		
-		for(int i=0;i<apartment.getImages().size();i++)
-		{
+
+		for (int i = 0; i < apartment.getImages().size(); i++) {
 			desplegarImagen(contenedor, apartment.getImages().get(i));
 		}
 
-	
 	}
-	
-	public void desplegarImagen(Layout l,ImageApartment A) {
+
+	public void desplegarImagen(Layout l, ImageApartment A) {
 
 		final StreamResource.StreamSource streamSource = () -> {
-			
-            if (A.getFile() != null) {
-                final byte[] byteArray = A.getFile();
 
-                return new ByteArrayInputStream(byteArray);
-            }
-            return null;
-        };
-        final StreamResource resource = new StreamResource(streamSource, "");
-        Image im=new Image("name",resource);
-        im.setWidth(100,Unit.PIXELS);
-        im.setHeight(100,Unit.PIXELS);
-        l.addComponent(im);
-        
-        
+			if (A.getFile() != null) {
+				final byte[] byteArray = A.getFile();
+
+				return new ByteArrayInputStream(byteArray);
+			}
+			return null;
+		};
+		final StreamResource resource = new StreamResource(streamSource, "");
+		Image im = new Image("name", resource);
+		im.setWidth(100, Unit.PIXELS);
+		im.setHeight(100, Unit.PIXELS);
+		l.addComponent(im);
+
 	}
-	
+
 	@Override
 	public void enter(ViewChangeEvent event) {
-		if(event.getParameters() != null){
-	           // split at "/", add each part as a label
-	           String[] msgs = event.getParameters().split("/");
-	           long id=Long.valueOf(msgs[0]);
-	           
-	           apartment= aps.loadApartmentById(id);
-	           mostrarApartamento();
-	           
-	    }
-		
+		if (event.getParameters() != null) {
+			// split at "/", add each part as a label
+			String[] msgs = event.getParameters().split("/");
+			long id = Long.valueOf(msgs[0]);
+
+			apartment = aps.loadApartmentById(id);
+			mostrarApartamento();
+
+		}
+
 	}
-	
-	
+
 }
