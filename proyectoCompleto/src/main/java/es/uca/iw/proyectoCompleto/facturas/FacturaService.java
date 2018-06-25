@@ -101,10 +101,10 @@ public class FacturaService {
 			dinero.setFont(fuente3);
 			dinero.setAlignment(Element.ALIGN_RIGHT);
 			dinero.add(
-					"Subtotal sin IVA: " + factura.getPrecioSinIva() + "\nIVA " + factura.getIva() + "% de " + factura.getPrecioSinIva()
-							+ ": " + (factura.getIva()/100) * factura.getPrecioSinIva()
-							+ "\nTotal EUR: " + factura.getPrecioSinIva()*1.21);
-
+					"Subtotal sin IVA: " + String.format("%.2f", factura.getPrecioSinIva()) + "\nIVA " + String.format("%.2f", factura.getIva()) + "% de " + String.format("%.2f", factura.getPrecioSinIva())
+							+ ": " + String.format("%.2f", (factura.getIva()/100) * factura.getPrecioSinIva())
+							+ "\nTotal EUR: " + String.format("%.2f",  factura.getPrecioSinIva()*1.21));
+			
 			LineSeparator l = new LineSeparator(0.5f, 100, null, 0, -5);
 			l.setLineWidth(2);
 
