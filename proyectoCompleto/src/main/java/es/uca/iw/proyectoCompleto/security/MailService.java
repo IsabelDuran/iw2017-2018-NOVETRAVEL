@@ -18,15 +18,16 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-public class Correo {
-	
-	String origen;
-	String destino;
-	Properties props;
-	Session session;
+import org.springframework.stereotype.Service;
 
-	public Correo()
+@Service
+public class MailService {
+
+	public void enviarCorreo(String asunto, String cuerpo, String email) 
 	{
+		Properties props;
+		Session session;
+		
 		props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
 		props.put("mail.smtp.user", "novetravel@gmail.com");
@@ -37,22 +38,7 @@ public class Correo {
 		props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
 		
 		session = Session.getDefaultInstance(props);
-
-	}
-	
-	public void enviarCorreo(String asunto, String cuerpo, String email) 
-	{
 		
-		/*props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
-		props.put("mail.smtp.user", "novetravel@gmail.com");
-		props.put("mail.smtp.clave", "fannyperipatriisa");    //La clave de la cuenta
-		props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
-		props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
-		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google*/
-		
-	//	session = Session.getDefaultInstance(props);
-
 		MimeMessage message = new MimeMessage(session);
 		try {
 			Address to = new InternetAddress(email);
@@ -71,6 +57,19 @@ public class Correo {
 	
 	public void enviarCorreoAttachment(String asunto, String cuerpo, String email) 
 	{
+		Properties props;
+		Session session;
+		
+		props = System.getProperties();
+		props.put("mail.smtp.host", "smtp.gmail.com");  //El servidor SMTP de Google
+		props.put("mail.smtp.user", "novetravel@gmail.com");
+		props.put("mail.smtp.clave", "fannyperipatriisa");    //La clave de la cuenta
+		props.put("mail.smtp.auth", "true");    //Usar autenticación mediante usuario y clave
+		props.put("mail.smtp.starttls.enable", "true"); //Para conectar de manera segura al servidor SMTP
+		props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587"); //El puerto SMTP seguro de Google
+		
+		session = Session.getDefaultInstance(props);
 		try {
 			Message message = new MimeMessage(session);
 			Address to = new InternetAddress(email);
@@ -84,7 +83,6 @@ public class Correo {
 	        Multipart multipart = new MimeMultipart();
 	        multipart.addBodyPart(messageBodyPart); 
 	        
-	     // Part two is attachment
 	        messageBodyPart = new MimeBodyPart();
 	        try {
 	        	

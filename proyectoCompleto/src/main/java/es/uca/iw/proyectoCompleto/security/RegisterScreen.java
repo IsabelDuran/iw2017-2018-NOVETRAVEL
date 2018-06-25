@@ -42,6 +42,9 @@ public class RegisterScreen extends VerticalLayout implements View {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private MailService mailService;
+	
 	@PostConstruct
 	public void init() {
 		Button save = new Button("Guardar");
@@ -94,13 +97,26 @@ public class RegisterScreen extends VerticalLayout implements View {
 				binder.writeBean(user);
 				userService.save(user);
 				Notification.show("¡Registro exitoso!");
+				
+				String mensaje = "Estimado/a " + user.getFirstName() + " " + user.getLastName()
+				+ ",\n\n " + "se ha registrado correctamente como " + user.getUsername()
+				+ " le deseamos que disfrute del sistema.\n\n"
+				+ "\n\n" + "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
+
+				mailService.enviarCorreo("¡Gracias por registrate en Novetravel!", mensaje, user.getEmail());
+
+				
 				getUI().getNavigator().navigateTo(LoginView.VIEW_NAME);
 			} catch (ValidationException e) {
 				ValidationResult validationResult = e.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
+<<<<<<< HEAD
 			}catch (DataIntegrityViolationException e) {
 				Notification.show("El usuario ya está registrado");
 			}
+=======
+			} 
+>>>>>>> 6bf9b3a9549301389f48635737ca4ffc19bb47b0
 
 		});
 	}
