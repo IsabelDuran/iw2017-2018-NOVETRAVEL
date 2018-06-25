@@ -147,18 +147,9 @@ public class BookingManagementView extends VerticalLayout implements View {
 
 		b = user_.getBooking();
 
-		if (b.size() != 0) {
-			for (Booking book : b) {
-				for (Apartment apart : serviceApartment.findAll()) {
-					if (book.getApartment().getId() == apart.getId()) {
-						a.add(apart);
-						u.add(book.getApartment().getUser());
-					}
-
-				}
-
-			}
-
+		for (Booking book : b) {
+			a.add(book.getApartment());
+			u.add(book.getApartment().getUser());
 		}
 
 		grid.setItems(b);
@@ -180,7 +171,6 @@ public class BookingManagementView extends VerticalLayout implements View {
 				b.add(book);
 				u.add(book.getUser());
 			}
-
 		}
 
 		grid2.setItems(b);
