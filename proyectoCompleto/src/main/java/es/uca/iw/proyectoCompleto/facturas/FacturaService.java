@@ -41,7 +41,7 @@ public class FacturaService {
 			
 		 try {
 			 	String path = new File(".").getCanonicalPath();
-	        	String FILE_NAME = path + "/facturaaa.pdf";
+	        	String FILE_NAME = path + "/factura.pdf";
 	        	String imagenLogo = path + "/logonovetravel.jpg";
 	        	
 	            PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));

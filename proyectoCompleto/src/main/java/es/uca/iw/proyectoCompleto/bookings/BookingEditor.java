@@ -137,11 +137,13 @@ public class BookingEditor extends VerticalLayout {
 
 				factura.setDetalles(detalles);
 				factura.setFechaFactura(LocalDate.now());
+				factura.setIva(21);
+				factura.setPrecioSinIva(booking_.getTotalPrice()*100/121);
 
 				this.factura.setBooking(booking_);
 				booking_.setFactura(this.factura);
+				
 				serviceFact.save(factura);
-
 				bookingService.save(booking_);
 
 
@@ -189,7 +191,6 @@ public class BookingEditor extends VerticalLayout {
 			String mensaje = "Estimado/a " + user_.getFirstName() + " " + user_.getLastName() + ",\n\n " + detalles
 					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 
-			// correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
 			mailService.enviarCorreoAttachment("Reserva pendiente de confirmación", mensaje, user_.getEmail());
 			booking_.setConfirmation(true);
 			bookingService.delete(booking_);
@@ -226,7 +227,6 @@ public class BookingEditor extends VerticalLayout {
 			this.factura = new Factura();
 			binder.setBean(booking_);
 		} else {
-			System.out.println("o NO SE SI TIENE QUE ENTRAR AQUI");
 			this.booking_ = booking;
 
 			if (booking.getFactura() == null)

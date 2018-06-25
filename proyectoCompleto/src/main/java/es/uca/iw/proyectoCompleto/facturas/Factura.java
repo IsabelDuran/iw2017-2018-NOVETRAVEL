@@ -27,24 +27,7 @@ public class Factura {
 	private double precioSinIva;
 	
 	private double iva;
-	
-	public double getPrecioSinIva() {
-		return precioSinIva;
-	}
 
-	public void setPrecioSinIva(double precioSinIva) {
-		this.precioSinIva = precioSinIva;
-	}
-
-	public double getIva() {
-		return iva;
-	}
-
-	public void setIva(double iva) {
-		this.iva = iva;
-	}
-
-	//@OneToOne(fetch = FetchType.EAGER, mappedBy ="factura", cascade=CascadeType.ALL)
 	@OneToOne(fetch = FetchType.EAGER, mappedBy ="factura", cascade=CascadeType.ALL)
 	private Booking booking;
 	
@@ -84,6 +67,20 @@ public class Factura {
 		this.booking = booking;
 	} 
 	
+	public double getPrecioSinIva() {
+		return precioSinIva;
+	}
 
+	public void setPrecioSinIva(double precioSinIva) {
+		this.precioSinIva = precioSinIva;
+	}
+
+	public double getIva() {
+		return iva;
+	}
+
+	public void setIva(double iva) {
+		this.iva = iva;
+	}
 	
 }
