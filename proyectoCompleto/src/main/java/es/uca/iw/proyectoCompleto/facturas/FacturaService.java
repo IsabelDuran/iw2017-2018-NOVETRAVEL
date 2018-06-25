@@ -2,8 +2,7 @@ package es.uca.iw.proyectoCompleto.facturas;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 
-import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.bookings.Booking;
 
 @Service
 public class FacturaService {
@@ -35,7 +32,6 @@ public class FacturaService {
 	}
 
 	public ByteArrayOutputStream generarPdf(Factura factura) {
-		
 		
 		Document document = new Document();
 		ByteArrayOutputStream outputDocument = new ByteArrayOutputStream();

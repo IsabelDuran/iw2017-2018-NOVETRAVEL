@@ -54,7 +54,6 @@ public class LoginScreen extends VerticalLayout {
                 username.focus();
             }
         });
-        
         login.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         //register.setClickShortcut(ShortcutAction.KeyCode.ENTER);
         addComponent(login);
