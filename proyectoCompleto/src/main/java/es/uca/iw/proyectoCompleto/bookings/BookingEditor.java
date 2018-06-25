@@ -186,12 +186,11 @@ public class BookingEditor extends VerticalLayout {
 					+ booking_.getDepartureDate().toString() + "\n " + "Precio total: " + booking_.getTotalPrice()
 					+ " euros.\n\n\n";
 
-			serviceFact.generarPdf(factura.getId());
 			/// GENERAR FACTURA///
 			String mensaje = "Estimado/a " + user_.getFirstName() + " " + user_.getLastName() + ",\n\n " + detalles
 					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 
-			mailService.enviarCorreoAttachment("Reserva pendiente de confirmación", mensaje, user_.getEmail());
+			mailService.enviarCorreoAttachment("Reserva pendiente de confirmación", mensaje, user_.getEmail(), serviceFact.generarPdf(factura));
 			booking_.setConfirmation(true);
 			bookingService.delete(booking_);
 			bookingService.save(booking_);

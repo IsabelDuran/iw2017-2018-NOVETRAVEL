@@ -1,5 +1,6 @@
 package es.uca.iw.proyectoCompleto.security;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Properties;
 
@@ -17,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import org.springframework.stereotype.Service;
 
@@ -55,7 +57,7 @@ public class MailService {
 	    }
 	}
 	
-	public void enviarCorreoAttachment(String asunto, String cuerpo, String email) 
+	public void enviarCorreoAttachment(String asunto, String cuerpo, String email, ByteArrayOutputStream adjunto) 
 	{
 		Properties props;
 		Session session;
@@ -89,7 +91,7 @@ public class MailService {
 	        String path = new File(".").getCanonicalPath();
 	        String filename = path + "/factura.pdf";
 	 
-	        DataSource source = new FileDataSource(filename);
+	        DataSource source = new ByteArrayDataSource(adjunto.toByteArray(), "application/pdf");
 	        messageBodyPart.setDataHandler(new DataHandler(source));
 	        messageBodyPart.setFileName(filename);
 	        multipart.addBodyPart(messageBodyPart);
