@@ -30,6 +30,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.location.Location;
+import es.uca.iw.proyectoCompleto.security.MailService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = ApartmentEditor.VIEW_NAME)
@@ -49,6 +50,8 @@ public class ApartmentEditor extends VerticalLayout implements View {
 
 	private Binder<Apartment> binder;
 	private Binder<Location> loc_binder;
+	@Autowired
+	private MailService mailService;
 	
 	@PostConstruct
 	public void init() {
@@ -174,13 +177,38 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				binder.writeBean(this.apartment);
 				
 				this.location.setApartment(apartment);
-				User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-				user_.getApartments().add(apartment);
-				apartment.setUser(user_);
+				User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				user.getApartments().add(apartment);
+				apartment.setUser(user);
 				apartment.setLocation(this.location);
 				service.save(this.apartment);
 				
 				Notification.show("Apartamento guardado con éxito");
+				
+				String mensaje = "Estimado/a " + user.getFirstName() + " " + user.getLastName()
+				+ "Ha registrado el siguiente apartamento:" + "\n\n"
+				+ "\tNombre del apartamento: " + apartment.getName() + "\n"
+				+ "\tDescripción:" + apartment.getDescription() + "\n\n"
+				+ "Con las siguientes características \n"
+				+ "\t" + "Número máximo de huéspedes:\t" + apartment.getMaxHosts() + "\n"
+				+ "\t" + "Número de metros cuadrados:\t" + apartment.getSquaredMeters() + "\n"
+				+ "\t" + "Tipo:\t" + apartment.getApartmentType() + "\n"
+				+ "\t" + "Número de camas:\t" + apartment.getNumberBeds() + "\n"
+				+ "\t" + "Precio por día:\t" + apartment.getPricePerDay() + "\n\n"
+
+				+ "¡Y mucho más! \n\n"
+
+				+ "Además ha registrado su apartamento en la siguiente ubicación:\n"
+				+ "\tCiudad:\t" + location.getCity_() + "\n"
+				+ "\tCalle:\t" + location.getStreet_() + "\n"
+				+ "\tNumero:\t" + location.getNumber_() + "\n"
+				+ "\tNumero:\t" + location.getPostalCode_()
+				+ "\n\n" + "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
+
+				mailService.enviarCorreo("Reserva pendiente de confirmación", mensaje, user.getEmail());
+
+				
+				
 				getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME);
 
 			} catch (ValidationException e1) {

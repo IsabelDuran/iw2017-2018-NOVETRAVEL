@@ -1,10 +1,13 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 
 @Service
 public class BookingService {
@@ -49,6 +52,17 @@ public class BookingService {
 
 	public List<Booking> findAll() {
 		return repository_.findAll();
+	}
+	
+	public boolean isApartmentFreeBetweenDates(Apartment apartment, LocalDate start, LocalDate end)
+	{
+		List<Booking> bookings = repository_.findBookingsOfApartmentBetweenDates(apartment.getId(), start, end);
+		for(Booking b : bookings)
+		{
+			System.out.println(b.getEntryDate());
+			System.out.println(b.getDepartureDate());
+		}
+		return bookings.isEmpty();
 	}
 
 }
