@@ -57,11 +57,6 @@ public class BookingService {
 	public boolean isApartmentFreeBetweenDates(Apartment apartment, LocalDate start, LocalDate end)
 	{
 		List<Booking> bookings = repository_.findBookingsOfApartmentBetweenDates(apartment.getId(), start, end);
-		for(Booking b : bookings)
-		{
-			System.out.println(b.getEntryDate());
-			System.out.println(b.getDepartureDate());
-		}
 		return bookings.isEmpty();
 	}
 

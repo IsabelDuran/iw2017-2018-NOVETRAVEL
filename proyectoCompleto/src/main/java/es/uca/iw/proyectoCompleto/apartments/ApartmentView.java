@@ -29,6 +29,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.dnd.FileDropTarget;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.disputes.DisputeView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
@@ -54,7 +55,7 @@ public class ApartmentView extends VerticalLayout implements View
 	private ImageApartmentService imageService;
 	
 	@Autowired
-	private ApartmentService service;
+	private ApartmentService apartmentService;
 	
 	
 	private Apartment apartment;
@@ -79,6 +80,10 @@ public class ApartmentView extends VerticalLayout implements View
 		
 		VerticalLayout v = new VerticalLayout();
 		HorizontalLayout imagenes = new HorizontalLayout();
+		
+		Button volver = new Button("Volver");
+		volver.addClickListener(e -> getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME));
+		addComponent(volver);
 
 		Label nombreAp = new Label(apartment.getName());
 		Label description = new Label(apartment.getDescription());
@@ -103,9 +108,9 @@ public class ApartmentView extends VerticalLayout implements View
 			ponerContenedorImagenes(v,imagenes);
 		} 
 		
-		v.addComponents(precio, reservar,denunciar);
-
-		
+		reservar.setVisible(apartmentService.apartamentoEsPropiedad(apartment, usuarioLogeado));
+		v.addComponents(precio, reservar, denunciar);
+	
 		
 	}
 	
@@ -236,7 +241,7 @@ public class ApartmentView extends VerticalLayout implements View
 	           String[] msgs = event.getParameters().split("/");
 	           long id=Long.valueOf(msgs[0]);
 	           
-	           apartment=service.loadApartmentById(id);
+	           apartment=apartmentService.loadApartmentById(id);
 	           
 	           mostrarApartamento();
 	           

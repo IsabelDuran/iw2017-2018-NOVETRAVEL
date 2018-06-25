@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.vaadin.addon.pagination.Pagination;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
@@ -25,8 +26,6 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
-import es.uca.iw.proyectoCompleto.facturas.Factura;
-import es.uca.iw.proyectoCompleto.facturas.FacturaService;
 
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View {
@@ -45,8 +44,6 @@ public class DefaultView extends VerticalLayout implements View {
 
 	private Panel springViewDisplay;
 	
-	@Autowired 
-	private FacturaService fs;
 
 	@PostConstruct
 	void init() {
@@ -124,7 +121,8 @@ public class DefaultView extends VerticalLayout implements View {
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
 		addComponent(springViewDisplay);
-
+		Pagination pagination = new Pagination();
+		addComponent(pagination);
 		addComponent(springViewDisplay);
 		apartmentListView.setPanel(springViewDisplay);
 		springViewDisplay.setContent(apartmentListView);

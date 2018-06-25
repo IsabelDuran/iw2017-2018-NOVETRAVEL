@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -27,6 +28,7 @@ import com.vaadin.ui.VerticalLayout;
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @UIScope
 @SpringView(name = ApartmentListView.VIEW_NAME)
@@ -40,7 +42,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	Panel p;
 	
 	@Autowired
-	private  ApartmentService service;
+	private  ApartmentService apartmentService;
 	
 	@PostConstruct
 	void init() {
@@ -48,7 +50,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 
 		// Initialize listing
 		if(SecurityUtils.hasRole("ROLE_MANAGEMENT") || SecurityUtils.hasRole("ROLE_ADMIN") || SecurityUtils.hasRole("ROLE_USER"))
-			listApartments(service.findAll());
+			listApartments(apartmentService.findAll());
 
 	}
 	
@@ -96,8 +98,16 @@ public class ApartmentListView extends VerticalLayout implements View {
 	
 	private Button crearBotonReservar(Apartment ap) {
 		Button reservarBtn = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + ap.getId())) ;
-		reservarBtn.setVisible(SecurityUtils.hasRole("ROLE_USER"));
-
+		
+		if(SecurityUtils.isLoggedIn())
+			{
+				User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				reservarBtn.setVisible(SecurityUtils.hasRole("ROLE_USER") && apartmentService.apartamentoEsPropiedad(ap, user));
+			}
+		
+		else
+			reservarBtn.setVisible(false);
+		
 		return reservarBtn;
 	}
 	
@@ -131,7 +141,7 @@ public class ApartmentListView extends VerticalLayout implements View {
 	@Override
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
-
+	
 	}
 
 }

@@ -3,11 +3,17 @@
  */
 package es.uca.iw.proyectoCompleto.users;
 
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
+import com.vaadin.addon.pagination.Pagination;
+import com.vaadin.addon.pagination.PaginationChangeListener;
+import com.vaadin.addon.pagination.PaginationResource;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinSession;
@@ -31,11 +37,11 @@ public class UserManagementView extends VerticalLayout implements View {
 	private Grid<User> grid;
 	private TextField filter;
 	private Button addNewBtn;
-
-
 	@Autowired
-	private UserService service;
+	private UserRepository userRepository;
 
+	private PaginationResource paginationResource;
+	private Pagination pagination;
 	public UserManagementView()
 	{
 		this.grid = new Grid<>(User.class);
@@ -49,16 +55,38 @@ public class UserManagementView extends VerticalLayout implements View {
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 
-		addComponents(actions, grid);
+		final int page = 1;
+		final int limit = 10;
+		
+	    this.paginationResource = PaginationResource.newBuilder().setTotal(1).setPage(page).setLimit(limit).build();
+	    pagination = new Pagination(paginationResource);
+	    pagination.setItemsPerPage(10, 20, 50, 100);		
+	    
+	    pagination.addPageChangeListener(new PaginationChangeListener() {
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
+			@Override
+		    public void changed(PaginationResource event) {
+			    updateUsersGrid();
+		    }
+		});	
+		
+		
+		addComponents(actions, grid, pagination);
 		grid.setHeight(100, Unit.PERCENTAGE);
+		grid.setWidth(100, Unit.PERCENTAGE);
 		grid.setColumns("firstName", "lastName", "username", "email");
 
 		filter.setPlaceholder("Filtrar por apellido");
 
 		// Replace listing with filtered content when user changes filter
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
-		filter.addValueChangeListener(e -> listUsers(e.getValue()));
+		filter.addValueChangeListener(e -> {
+		    updateUsersGrid();
+		});
 
 		// Connect selected User to editor or hide if none is selected
 		grid.asSingleSelect().addValueChangeListener(e -> {
@@ -75,18 +103,23 @@ public class UserManagementView extends VerticalLayout implements View {
 
 	}
 
-	private void listUsers(String filterText) {
-		if (StringUtils.isEmpty(filterText)) {
-			grid.setItems(service.findAll());
-		} else {
-			grid.setItems(service.findByLastNameStartsWithIgnoreCase(filterText));
-		}
-	}
+	
 
 	@Override
 	public void enter(ViewChangeEvent event)
-	{
-		grid.setItems(service.findAll());
+	{	
+	    updateUsersGrid();
 	}
+
+	private void updateUsersGrid() {
+		Pageable pageable = new PageRequest(this.paginationResource.pageIndex(), this.paginationResource.limit());
+    	Page<User> users = userRepository.findByLastNameContaining(filter.getValue(), pageable);
+		pagination.setTotalCount(users.getTotalElements());
+		grid.setItems(users.getContent());
+	}
+	
+	
+	
+
 
 }

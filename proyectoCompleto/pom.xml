@@ -24,7 +24,14 @@
 		<java.version>1.8</java.version>
 		<vaadin.version>8.1</vaadin.version>
 	</properties>
-
+	<repositories>
+	
+<repository>
+   <id>vaadin-addons</id>
+   <url>http://maven.vaadin.com/vaadin-addons</url>
+</repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -72,13 +79,12 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-spring-boot-starter</artifactId>
 		</dependency>
-		
 		<dependency>
-  			<groupId>joda-time</groupId>
- 			<artifactId>joda-time</artifactId>
- 			<version>2.4</version>
-		</dependency>
-		
+   <groupId>com.vaadin.addon</groupId>
+   <artifactId>pagination</artifactId>
+   <version>8.0.6</version>
+</dependency>
+
 		<dependency>
     		<groupId>javax.mail</groupId>
     		<artifactId>mail</artifactId>

@@ -19,7 +19,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.MainScreen;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = BookingManagementView.VIEW_NAME)
@@ -37,32 +36,23 @@ public class BookingManagementView extends VerticalLayout implements View {
 
 	private Grid<User> userNameGrid, userNameGrid2;
 
+	@Autowired
 	private BookingEditor editor;
 
 	@Autowired
-	private final ApartmentService serviceApartment;
+	private BookingService bookingService;
 
-	@Autowired
-	private final BookingService bookingService;
 
-	@Autowired
-	public BookingManagementView(BookingEditor editor, ApartmentService serviceApartment,
-			BookingService bookingService) {
-		this.editor = editor;
+	@PostConstruct
+	void init() {
+		/// build layout
 		this.grid = new Grid<>();
 		this.grid2 = new Grid<>();
 		this.apartmentNameGrid = new Grid<>();
 		this.apartmentNameGrid2 = new Grid<>();
 		this.userNameGrid = new Grid<>();
 		this.userNameGrid2 = new Grid<>();
-		this.serviceApartment = serviceApartment;
-		this.bookingService = bookingService;
-
-	}
-
-	@PostConstruct
-	void init() {
-		/// build layout
+		
 		HorizontalLayout h = new HorizontalLayout();
 		Button goBack = new Button("Volver", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
 		Label titulo = new Label("MIS RESERVAS");

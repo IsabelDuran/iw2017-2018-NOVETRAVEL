@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-
-
 import es.uca.iw.proyectoCompleto.bookings.Booking;
 
 @Entity

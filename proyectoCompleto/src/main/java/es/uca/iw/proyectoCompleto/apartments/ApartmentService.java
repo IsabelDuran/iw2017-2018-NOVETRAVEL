@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import es.uca.iw.proyectoCompleto.users.User;
+
 
 @Service
 public class ApartmentService {
@@ -80,5 +82,10 @@ public class ApartmentService {
 		if (apartamentos == null)
 				apartamentos = new ArrayList<>();
 		return apartamentos;
+	}
+	
+	public boolean apartamentoEsPropiedad(Apartment apartment , User user)
+	{
+		return user.getId() != apartment.getUser().getId();
 	}
 }
