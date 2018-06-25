@@ -71,12 +71,12 @@ public class FacturaService {
 			Paragraph dinero = new Paragraph();
 
 			datos1.setFont(fuente);
-			datos1.add("   Calle Alcalá 10");
+			datos1.add("   Calle Aprobado");
 			datos1.add(glue);
 			datos1.add("Número de Factura: " + factura.getId());
 
 			datos2.setFont(fuente);
-			datos2.add("28001 Madrid, España");
+			datos2.add("11510, Puerto Real, Escuela Superior de Ingeniería");
 			datos2.add(glue);
 			datos2.add("Fecha " + factura.getFechaFactura());
 
@@ -102,8 +102,8 @@ public class FacturaService {
 			dinero.setAlignment(Element.ALIGN_RIGHT);
 			dinero.add(
 					"Subtotal sin IVA: " + factura.getPrecioSinIva() + "\nIVA " + factura.getIva() + "% de " + factura.getPrecioSinIva()
-							+ ": " + (double) Math.round((factura.getIva() * factura.getPrecioSinIva() / 121) * 100d / 100d)
-							+ "\nTotal EUR: " + factura.getBooking().getTotalPrice());
+							+ ": " + (factura.getIva()/100) * factura.getPrecioSinIva()
+							+ "\nTotal EUR: " + factura.getPrecioSinIva()*1.21);
 
 			LineSeparator l = new LineSeparator(0.5f, 100, null, 0, -5);
 			l.setLineWidth(2);

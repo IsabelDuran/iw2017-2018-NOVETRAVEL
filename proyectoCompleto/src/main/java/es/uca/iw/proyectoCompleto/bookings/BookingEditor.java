@@ -138,7 +138,7 @@ public class BookingEditor extends VerticalLayout {
 				factura.setDetalles(detalles);
 				factura.setFechaFactura(LocalDate.now());
 				factura.setIva(21);
-				factura.setPrecioSinIva(booking_.getTotalPrice()*100/121);
+				factura.setPrecioSinIva(booking_.getTotalPrice());
 
 				this.factura.setBooking(booking_);
 				booking_.setFactura(this.factura);
@@ -159,6 +159,12 @@ public class BookingEditor extends VerticalLayout {
 
 				mailService.enviarCorreo("Reserva pendiente de confirmación", mensaje, userAnfitrion.getEmail());
 
+				mensaje = "Reserva realizada con éxito.\n En breve recibirá un correo con los datos de la reserva y cuando el anfitrión"
+						+ " la confirme, recibirá un correo indicándolo." 
+						+ "\n\nGracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
+
+				
+				mailService.enviarCorreo("Reserva realizada con éxito" , mensaje, user_.getEmail());
 
 				Notification.show(
 						"Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
