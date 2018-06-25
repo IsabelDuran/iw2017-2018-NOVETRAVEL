@@ -105,9 +105,13 @@ public class FacturaService {
 	            
 	            dinero.setFont(fuente3);
 	            dinero.setAlignment(Element.ALIGN_RIGHT); 
-	            dinero.add("Subtotal sin IVA: "+ f.getPrecioSinIva() 
-	            			+ "\nIVA " + f.getIva() + "% de " + f.getPrecioSinIva() + ": " + (double)Math.round((f.getIva()*f.getPrecioSinIva()/121) *100d/ 100d)
-	            			+ "\nTotal EUR: "+ f.getBooking().getTotalPrice());
+	            double cantidadIva = f.getPrecioSinIva() * 0.21;
+	            double redondeoCantidad = Math.rint(cantidadIva*100)/100;
+	            double pTotal = f.getPrecioSinIva()+ redondeoCantidad;
+	            
+	            dinero.add("Subtotal sin IVA: "+ f.getPrecioSinIva() + "€"
+	            			+ "\nIVA " + f.getIva() + "% de " + f.getPrecioSinIva() + ": " + redondeoCantidad + "€"
+	            			+ "\nTotal EUR: "+ pTotal + "€");
 	            
 	            LineSeparator l =new LineSeparator(0.5f, 100, null, 0, -5);
 	            l.setLineWidth(2);
