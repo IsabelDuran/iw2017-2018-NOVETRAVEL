@@ -25,6 +25,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
+import es.uca.iw.proyectoCompleto.facturas.Factura;
+import es.uca.iw.proyectoCompleto.facturas.FacturaService;
 
 @SpringView(name = DefaultView.VIEW_NAME)
 public class DefaultView extends VerticalLayout implements View {
@@ -42,12 +44,13 @@ public class DefaultView extends VerticalLayout implements View {
 	private ApartmentListView apartmentListView;
 
 	private Panel springViewDisplay;
+	
+	@Autowired 
+	private FacturaService fs;
 
 	@PostConstruct
 	void init() {
 		
-		//Factura f = new Factura();
-		//f.generarPdf();
 		this.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 		Label searchtitle_ = new Label("Buscar: ");
 		searchtitle_.setStyleName("title-text");

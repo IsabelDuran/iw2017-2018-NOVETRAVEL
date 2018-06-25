@@ -57,6 +57,8 @@ public class BookingEditor extends VerticalLayout  {
 	private Apartment apartment;
 	private Factura factura;
 	
+	
+	
 	/**
 	 * The currently edited booking
 	 */
@@ -141,9 +143,9 @@ public class BookingEditor extends VerticalLayout  {
 			
 				String detalles = " Nombre del apartamento: " +apartment.getName() + "\n "
 						+ "Descripción del apartamento: " +apartment.getDescription() + "\n "
-						+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
-						+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
-						+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
+			//			+ "Fecha de entrada: " + booking_.getEntryDate().toString() + "\n "
+			//			+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
+						+ "Precio/noche: " + booking_.getApartment().getPricePerDay()+ " euros.\n\n\n";
 				
 				factura.setDetalles(detalles);
 				factura.setFechaFactura(LocalDate.now());
@@ -198,7 +200,8 @@ public class BookingEditor extends VerticalLayout  {
 					+ "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
 					+ "Precio total: " + booking_.getTotalPrice() + " euros.\n\n\n";
 			
-			this.factura.generarPdf();
+			serviceFact.generarPdf(factura.getId());
+			
 			/// GENERAR FACTURA///
 			Correo correo = new Correo();
 			String mensaje = "Estimado/a "+ user_.getFirstName() + " " + user_.getLastName() + ",\n\n "
