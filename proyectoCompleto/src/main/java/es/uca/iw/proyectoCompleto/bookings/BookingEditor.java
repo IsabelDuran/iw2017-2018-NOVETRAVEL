@@ -156,7 +156,13 @@ public class BookingEditor extends VerticalLayout {
 						+ "\n\n" + "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
 
 				mailService.enviarCorreo("Reserva pendiente de confirmación", mensaje, userAnfitrion.getEmail());
+				
+				mensaje = "Reserva realizada con éxito.\n En breve recibirá un correo con los datos de la reserva y cuando el anfitrión"
+						+ " la confirme, recibirá un correo indicándolo." 
+						+ "\n\nGracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
 
+				
+				mailService.enviarCorreo("Reserva realizada con éxito" , mensaje, user_.getEmail());
 
 				Notification.show(
 						"Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
