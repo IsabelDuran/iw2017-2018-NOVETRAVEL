@@ -3,11 +3,8 @@ package es.uca.iw.proyectoCompleto.bookings;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -29,7 +26,7 @@ import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.facturas.Factura;
 import es.uca.iw.proyectoCompleto.facturas.FacturaService;
-import es.uca.iw.proyectoCompleto.security.Correo;
+import es.uca.iw.proyectoCompleto.security.MailService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringComponent
@@ -57,6 +54,9 @@ public class BookingEditor extends VerticalLayout {
 	private Apartment apartment;
 	private Factura factura;
 
+	@Autowired
+	private MailService mailService;
+	
 	/**
 	 * The currently edited booking
 	 */
@@ -144,7 +144,6 @@ public class BookingEditor extends VerticalLayout {
 
 				bookingService.save(booking_);
 
-				Correo correo = new Correo();
 
 				String mensaje = "Estimado/a " + userAnfitrion.getFirstName() + " " + userAnfitrion.getLastName()
 						+ ",\n\n " + "El usuario " + user_.getUsername()
@@ -156,9 +155,8 @@ public class BookingEditor extends VerticalLayout {
 						+ "Si está de acuerdo con la reserva, acceda a la gestión de sus reservas para confirmarla."
 						+ "\n\n" + "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
 
-				correo.enviarCorreo("Reserva pendiente de confirmación", mensaje, userAnfitrion.getEmail());
-				// correo.enviarCorreoAttachment("Reserva pendiente de
-				// confirmaciónnnnn",mensaje, userAnfitrion.getEmail());
+				mailService.enviarCorreo("Reserva pendiente de confirmación", mensaje, userAnfitrion.getEmail());
+
 
 				Notification.show(
 						"Reserva realizada con éxito.\n En breve recibirá un correo \ncon los datos de la reserva \ny la confirmación de la misma");
@@ -188,12 +186,11 @@ public class BookingEditor extends VerticalLayout {
 
 			this.factura.generarPdf();
 			/// GENERAR FACTURA///
-			Correo correo = new Correo();
 			String mensaje = "Estimado/a " + user_.getFirstName() + " " + user_.getLastName() + ",\n\n " + detalles
 					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 
 			// correo.enviarCorreo("Confirmación de la reserva", mensaje, user_.getEmail());
-			correo.enviarCorreoAttachment("Reserva pendiente de confirmación", mensaje, user_.getEmail());
+			mailService.enviarCorreoAttachment("Reserva pendiente de confirmación", mensaje, user_.getEmail());
 			booking_.setConfirmation(true);
 			bookingService.delete(booking_);
 			bookingService.save(booking_);
