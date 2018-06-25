@@ -186,7 +186,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				Notification.show("Apartamento guardado con éxito");
 				
 				String mensaje = "Estimado/a " + user.getFirstName() + " " + user.getLastName()
-				+ "Ha registrado el siguiente apartamento:" + "\n\n"
+				+ " Ha registrado el siguiente apartamento:" + "\n\n"
 				+ "\tNombre del apartamento: " + apartment.getName() + "\n"
 				+ "\tDescripción:" + apartment.getDescription() + "\n\n"
 				+ "Con las siguientes características \n"
@@ -205,7 +205,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				+ "\tNumero:\t" + location.getPostalCode_()
 				+ "\n\n" + "Gracias por confiar en nuestros servicios, \n\n Atte: El equipo de Novetravel. ";
 
-				mailService.enviarCorreo("Reserva pendiente de confirmación", mensaje, user.getEmail());
+				mailService.enviarCorreo("Apartamento guardado correctamente", mensaje, user.getEmail());
 
 				
 				
