@@ -147,7 +147,7 @@ public class BookingEditor extends VerticalLayout {
 
 				String mensaje = "Estimado/a " + userAnfitrion.getFirstName() + " " + userAnfitrion.getLastName()
 						+ ",\n\n " + "El usuario " + user_.getUsername()
-						+ "ha realizado la siguiente reserva del apartamento que se detalla a continuación:" + "\n\n"
+						+ " ha realizado la siguiente reserva del apartamento que se detalla a continuación:" + "\n\n"
 						+ " Nombre del apartamento: " + apartment.getName() + "\n " + "Descripción del apartamento: "
 						+ apartment.getDescription() + "\n " + "Fecha de entrada: " + booking_.getEntryDate().toString()
 						+ "\n " + "Fecha de salida: " + booking_.getDepartureDate().toString() + "\n "
