@@ -32,14 +32,12 @@ public class UserManagementView extends VerticalLayout implements View {
 	private TextField filter;
 	private Button addNewBtn;
 
-	private UserEditor editor;
-
-	private final UserService service;
 
 	@Autowired
-	public UserManagementView(UserService service, UserEditor editor) {
-		this.service = service;
-		this.editor = editor;
+	private UserService service;
+
+	public UserManagementView()
+	{
 		this.grid = new Grid<>(User.class);
 		this.filter = new TextField();
 		this.addNewBtn = new Button("Nuevo usuario");
@@ -51,14 +49,12 @@ public class UserManagementView extends VerticalLayout implements View {
 		// build layout
 		HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
 
-		addComponents(actions, grid, editor);
+		addComponents(actions, grid);
 
-		grid.setHeight(300, Unit.PIXELS);
-		grid.setColumns("id", "firstName", "lastName");
+		grid.setHeight(100, Unit.PERCENTAGE);
+		grid.setColumns("firstName", "lastName", "username", "email");
 
 		filter.setPlaceholder("Filtrar por apellido");
-
-		// Hook logic to components
 
 		// Replace listing with filtered content when user changes filter
 		filter.setValueChangeMode(ValueChangeMode.LAZY);
@@ -77,15 +73,6 @@ public class UserManagementView extends VerticalLayout implements View {
 			getUI().getNavigator().navigateTo(UserEditor.VIEW_NAME);
 		});
 
-//		// Listen changes made by the editor, refresh data from backend
-//		editor.setChangeHandler(() -> {
-//			editor.setVisible(false);
-//			listUsers(filter.getValue());
-//		});
-//
-//		// Initialize listing
-//		listUsers(null);
-
 	}
 
 	private void listUsers(String filterText) {
@@ -97,9 +84,9 @@ public class UserManagementView extends VerticalLayout implements View {
 	}
 
 	@Override
-	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
-
+	public void enter(ViewChangeEvent event)
+	{
+		grid.setItems(service.findAll());
 	}
 
 }
