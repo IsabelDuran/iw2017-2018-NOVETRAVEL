@@ -98,9 +98,9 @@ public class RegisterScreen extends VerticalLayout implements View {
 			} catch (ValidationException e) {
 				ValidationResult validationResult = e.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
-			} /*catch (DataIntegrityViolationException e) {
+			}catch (DataIntegrityViolationException e) {
 				Notification.show("El usuario ya está registrado");
-			}*/
+			}
 
 		});
 	}
