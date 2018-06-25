@@ -93,15 +93,15 @@ public class BookingEditor extends VerticalLayout {
 
 		Binder.BindingBuilder<Booking, LocalDate> returnBB = binder.forField(entryDate).withValidator(
 				departureDate_ -> !departureDate_.isBefore(LocalDate.now()),
-				"Departure date should be after local date");
+				"La fecha de entrada debe ser posterior a la fecha de hoy");
 		Binder.Binding<Booking, LocalDate> returnB = returnBB.bind(Booking::getEntryDate, Booking::setEntryDate);
 		departureDate.addValueChangeListener(event -> returnB.validate());
 
 		Binder.BindingBuilder<Booking, LocalDate> returnBindingBuilder = binder.forField(departureDate)
 				.withValidator(departureDate_ -> !departureDate_.isBefore(entryDate.getValue()),
-						"Cannot return before departing")
+						"La fecha de salida no puede ser anterior a la fecha de entrada")
 				.withValidator(departureDate_ -> !departureDate_.isBefore(LocalDate.now()),
-						"Departure date should be after local date");
+						"La fecha de entrada debe ser posterior a la fecha de hoy");
 		Binder.Binding<Booking, LocalDate> returnBinder = returnBindingBuilder.bind(Booking::getDepartureDate,
 				Booking::setDepartureDate);
 		departureDate.addValueChangeListener(event -> returnBinder.validate());
@@ -232,7 +232,6 @@ public class BookingEditor extends VerticalLayout {
 			this.factura = new Factura();
 			binder.setBean(booking_);
 		} else {
-			System.out.println("o NO SE SI TIENE QUE ENTRAR AQUI");
 			this.booking_ = booking;
 
 			if (booking.getFactura() == null)
