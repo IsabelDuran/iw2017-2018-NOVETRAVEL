@@ -16,7 +16,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
 	@Query("SELECT book FROM Booking book WHERE book.apartment.id = :apartmentId")
 	public List<Booking> findByApartmentId(@Param("apartmentId") Long apartmentId);
 	
-	@Query("SELECT book FROM Booking book WHERE book.apartment.id = :apartmentId AND ((book.entryDate_ BETWEEN :fechaInicio AND :fechaFin) OR (book.departureDate_ BETWEEN :fechaInicio AND :fechaFin)) AND book.confirmation = TRUE")
+	@Query("SELECT book FROM Booking book WHERE book.apartment.id = :apartmentId AND (( :fechaInicio BETWEEN book.entryDate_ AND book.departureDate_) OR (:fechaFin BETWEEN book.entryDate_ AND book.departureDate_)) AND book.confirmation = TRUE")
 	public List<Booking> findBookingsOfApartmentBetweenDates(@Param("apartmentId") Long apartmentId, @Param("fechaInicio") LocalDate fechaInicio, @Param("fechaFin") LocalDate fechaFin);
 	
 }
