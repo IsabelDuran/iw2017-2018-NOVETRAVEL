@@ -188,7 +188,7 @@ public class ApartmentEditor extends VerticalLayout implements View {
 				String mensaje = "Estimado/a " + user.getFirstName() + " " + user.getLastName()
 				+ "Ha registrado el siguiente apartamento:" + "\n\n"
 				+ "\tNombre del apartamento: " + apartment.getName() + "\n"
-				+ "\t" + apartment.getDescription() + "\n"
+				+ "\tDescripción:" + apartment.getDescription() + "\n\n"
 				+ "Con las siguientes características \n"
 				+ "\t" + "Número máximo de huéspedes:\t" + apartment.getMaxHosts() + "\n"
 				+ "\t" + "Número de metros cuadrados:\t" + apartment.getSquaredMeters() + "\n"
