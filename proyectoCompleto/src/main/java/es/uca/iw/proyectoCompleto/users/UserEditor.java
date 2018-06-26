@@ -130,7 +130,7 @@ public class UserEditor extends VerticalLayout implements View {
 		if (editedUser == null) {
 			this.user = new User();
 		} else {
-			this.user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			this.user = (User) userService.findOne(editedUser);
 			binder.setBean(user);
 		}
 	}

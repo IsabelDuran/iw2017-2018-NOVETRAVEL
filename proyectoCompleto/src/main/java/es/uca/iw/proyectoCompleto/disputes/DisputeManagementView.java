@@ -98,8 +98,6 @@ public class DisputeManagementView extends VerticalLayout implements View
 			 
 		});
 		denunciaInvalida.setVisible(d.isOpen() == true);
-		//cerrarAnuncio.addClickListener(clickEvent ->
-	    //Notification.show("Se ha borrardo el anuncio correctamente"));
 		cerrarAnuncio.addStyleName("danger");
 		denunciaInvalida.addStyleName("primary");
 		h.addComponents(descripcion,anuncioCasa);
@@ -111,14 +109,7 @@ public class DisputeManagementView extends VerticalLayout implements View
 	
 
 
-	private void listDispute(String filterText) {
-			/*
-			if (StringUtils.isEmpty(filterText)) {
-				grid.setItems(service.findAll());
-			} else {
-				grid.setItems(service.findByDateStartsWithIgnoreCase(filterText));
-			}
-			*/	
+	private void listDispute(String filterText) {	
 			grid.setItems(service.findAll());
 			
 		}
