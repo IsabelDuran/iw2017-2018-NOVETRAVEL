@@ -1,7 +1,6 @@
 package es.uca.iw.proyectoCompleto.security;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
