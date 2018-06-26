@@ -65,18 +65,6 @@ public class ApartmentView extends VerticalLayout implements View
 	private UserService userService;
 
 
-	@PostConstruct
-	void init() {
-		
-		// Hook logic to components
-	
-		// Listen changes made by the editor, refresh data from backend
-		// Initialize listing
-
-		
-	}
-	
-
 	public void mostrarApartamento() {
 		
 		VerticalLayout v = new VerticalLayout();
@@ -89,9 +77,18 @@ public class ApartmentView extends VerticalLayout implements View
 		Label nombreAp = new Label(apartment.getName());
 		nombreAp.setStyleName("name-title");
 		Label description = new Label(apartment.getDescription());
-		Label calleAp = new Label(apartment.getLocation().getStreet_());
+		Label calleAp = new Label(apartment.getLocation().getCity_() + ", " + apartment.getLocation().getStreet_() + " " 
+		 + apartment.getLocation().getNumber_());
 		Label tipo = new Label(apartment.getApartmentType());
 		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
+		
+		Label detalles = new Label("Detalles del apartamento");
+		detalles.setStyleName("h3");
+		
+		Label max_hosts = new Label("Máximo número de huespedes: " + apartment.getMaxHosts());
+		Label number_beds = new Label("Número de camas: " + apartment.getNumberBeds());
+		Label squared_meters = new Label("Metros cuadrados: " + apartment.getSquaredMeters());
+		
 		Button denunciar=new Button("Denuncia este anuncio", e -> {
 			VaadinSession.getCurrent().setAttribute("apartamentoActual", apartment);
 			getUI().getNavigator().navigateTo(DisputeView.VIEW_NAME);
@@ -106,7 +103,7 @@ public class ApartmentView extends VerticalLayout implements View
 		
 		addComponent(v);
 		
-		v.addComponents(nombreAp, calleAp, tipo, description, imagenes,reservar);
+		v.addComponents(nombreAp, calleAp, tipo, description, imagenes, detalles, max_hosts, number_beds, squared_meters,reservar);
 
 		User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		
