@@ -3,7 +3,6 @@
  */
 package es.uca.iw.proyectoCompleto;
 
-import java.util.List;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;

@@ -25,5 +25,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long>{
 	
 	@Query("SELECT book FROM Booking book WHERE book.user = :user")
 	public Set<Booking> findUserBookings(@Param("user") User user);
+	
+	@Query("SELECT book FROM Booking book LEFT JOIN FETCH book.apartment apt LEFT JOIN FETCH book.user WHERE apt.user = :user ")
+	public Set<Booking> findUserApartmentsBookings(@Param("user") User user);
 }
 

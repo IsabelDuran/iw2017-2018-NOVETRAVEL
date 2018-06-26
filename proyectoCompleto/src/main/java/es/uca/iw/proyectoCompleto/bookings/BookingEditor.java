@@ -5,6 +5,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -85,14 +87,27 @@ public class BookingEditor extends VerticalLayout {
 	CssLayout actions = new CssLayout(save, cancel);
 	CssLayout actions2 = new CssLayout(delete, confirm);
 
-	public BookingEditor() {
+	
+	class ReservaExistente extends Throwable{
+
+		private static final long serialVersionUID = 1L;
+		private String msg;
+		
+		public ReservaExistente(String msg) {
+			this.msg = msg;
+		}
+
+		public String getMsg() {
+			return msg;
+		}
+		
+	}
+	
+	@PostConstruct
+	public void init() {
 
 		editDate();
 		addComponents(entryDate, departureDate, actions, actions2);
-
-		confirm.setVisible(false);
-		delete.setVisible(false);
-		/// bind using naming convention
 
 		Binder.BindingBuilder<Booking, LocalDate> returnBB = binder.forField(entryDate).withValidator(
 				departureDate_ -> !departureDate_.isBefore(LocalDate.now()),
@@ -122,7 +137,7 @@ public class BookingEditor extends VerticalLayout {
 
 				if (!bookingService.isApartmentFreeBetweenDates(apartment, entryDate.getValue(),
 						departureDate.getValue()))
-					throw new Exception("Lo sentimos, ya existe una reserva en esa fecha");
+					throw new ReservaExistente("Lo sentimos, ya existe una reserva en esa fecha");
 
 				user_.addBooking(booking_);
 
@@ -176,7 +191,10 @@ public class BookingEditor extends VerticalLayout {
 			} catch (ValidationException ex) {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
-			} catch (Exception exc) {
+			} catch (ReservaExistente e1) {
+				Notification.show(e1.getMsg());
+			}
+			catch (Exception exc) {
 				exc.printStackTrace();
 			}
 
@@ -250,19 +268,18 @@ public class BookingEditor extends VerticalLayout {
 			apartment = apartmentService.findByIdWithUser(apId);
 			userAnfitrion = apartment.getUser();
 
-			if (user_.getId() == userAnfitrion.getId() && !booking_.isConfirmation())
+			if(user_.getId().equals(userAnfitrion.getId()) && !booking_.isConfirmation())
 				confirm.setVisible(true);
-			else
+			else 
 				confirm.setVisible(false);
-
-			if (user_.getId() == userAnfitrion.getId())
+		
+			if(user_.getId().equals(userAnfitrion.getId()) )
 				delete.setVisible(true);
 			else
 				delete.setVisible(false);
 		}
 
 		setVisible(true);
-		save.focus();
 	}
 
 	public void setChangeHandler(ChangeHandler h) {

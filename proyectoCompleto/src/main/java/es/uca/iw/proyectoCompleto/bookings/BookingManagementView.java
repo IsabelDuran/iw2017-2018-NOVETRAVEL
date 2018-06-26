@@ -32,11 +32,11 @@ public class BookingManagementView extends VerticalLayout implements View {
 
 	public static final String VIEW_NAME = "bookingManagementView";
 
-	private Grid<Booking> grid, grid2;
+	private Grid<Booking> grid, receivedBookingsGrid;
 
-	private Grid<Apartment> apartmentNameGrid, apartmentNameGrid2;
+	private Grid<Apartment> apartmentNameGrid, apartmentNamesGrid;
 
-	private Grid<User> userNameGrid, userNameGrid2;
+	private Grid<User> userNameGrid, usernamesGrid;
 
 	@Autowired
 	private BookingEditor editor;
@@ -49,11 +49,11 @@ public class BookingManagementView extends VerticalLayout implements View {
 	void init() {
 		/// build layout
 		this.grid = new Grid<>();
-		this.grid2 = new Grid<>();
+		this.receivedBookingsGrid = new Grid<>();
 		this.apartmentNameGrid = new Grid<>();
-		this.apartmentNameGrid2 = new Grid<>();
+		this.apartmentNamesGrid = new Grid<>();
 		this.userNameGrid = new Grid<>();
-		this.userNameGrid2 = new Grid<>();
+		this.usernamesGrid = new Grid<>();
 		
 		HorizontalLayout h = new HorizontalLayout();
 		Button goBack = new Button("Volver", e -> getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME));
@@ -93,44 +93,44 @@ public class BookingManagementView extends VerticalLayout implements View {
 		});
 
 		// Initialize listing
-		listBookings(null);
+		listMyBookings(null);
 
 		// PARA LAS RESERVAS DE TU APARTAMENTO
 		HorizontalLayout h2 = new HorizontalLayout();
 		Label titulo2 = new Label("RESERVAS EN MIS APARTAMENTOS");
 		addComponent(titulo2);
 
-		h2.addComponents(apartmentNameGrid2, grid2, userNameGrid2);
+		h2.addComponents(apartmentNamesGrid, receivedBookingsGrid, usernamesGrid);
 
 		addComponents(h2);
 
-		apartmentNameGrid2.setHeight(300, Unit.PIXELS);
-		apartmentNameGrid2.setWidth(250, Unit.PIXELS);
+		apartmentNamesGrid.setHeight(300, Unit.PIXELS);
+		apartmentNamesGrid.setWidth(250, Unit.PIXELS);
 
-		grid2.setHeight(300, Unit.PIXELS);
-		grid2.setWidth(100, Unit.PERCENTAGE);
+		receivedBookingsGrid.setHeight(300, Unit.PIXELS);
+		receivedBookingsGrid.setWidth(100, Unit.PERCENTAGE);
 
-		userNameGrid2.setHeight(300, Unit.PIXELS);
-		userNameGrid2.setWidth(250, Unit.PIXELS);
+		usernamesGrid.setHeight(300, Unit.PIXELS);
+		usernamesGrid.setWidth(250, Unit.PIXELS);
 
-		apartmentNameGrid2.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
-		grid2.addColumn(Booking::isConfirmation).setCaption("Confirmación").setResizable(false);
-		grid2.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada").setResizable(false);
-		grid2.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
-		grid2.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
-		userNameGrid2.addColumn(User::getEmail).setCaption("E-mail de contacto").setResizable(false);
+		apartmentNamesGrid.addColumn(Apartment::getName).setCaption("Nombre del apartamento").setResizable(false);
+		receivedBookingsGrid.addColumn(Booking::isConfirmation).setCaption("Confirmación").setResizable(false);
+		receivedBookingsGrid.addColumn(Booking::getEntryDate).setCaption("Fecha de entrada").setResizable(false);
+		receivedBookingsGrid.addColumn(Booking::getDepartureDate).setCaption("Fecha de salida").setResizable(false);
+		receivedBookingsGrid.addColumn(Booking::getTotalPrice).setCaption("Precio total").setResizable(false);
+		usernamesGrid.addColumn(User::getEmail).setCaption("E-mail de contacto").setResizable(false);
 
 		// Hook logic to components
 		// Connect selected Booking to editor or hide if none is selected
-		grid2.asSingleSelect().addValueChangeListener(ex -> {
+		receivedBookingsGrid.asSingleSelect().addValueChangeListener(ex -> {
 			editor.editBooking(ex.getValue());
 		});
 
-		listBookingsAp(null);
+		listBookingsOfMyApartments(null);
 
 	}
 
-	private void listBookings(String filterText) {
+	private void listMyBookings(String filterText) {
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		List<Apartment> a = new ArrayList<Apartment>();
@@ -150,24 +150,22 @@ public class BookingManagementView extends VerticalLayout implements View {
 
 	}
 
-	private void listBookingsAp(String filterText) {
-		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	private void listBookingsOfMyApartments(String filterText) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		List<Apartment> a = new ArrayList<Apartment>();
-		List<Booking> b = new ArrayList<Booking>();
-		List<User> u = new ArrayList<User>();
+		List<Apartment> apartments = new ArrayList<Apartment>();
+		List<Booking> receivedBookings = new ArrayList<Booking>();
+		List<User> bookerUsers = new ArrayList<User>();
 
-		for (Booking book : bookingService.findAll()) {
-			if (book.getApartment().getUser().getId() == user_.getId()) {
-				a.add(book.getApartment());
-				b.add(book);
-				u.add(book.getUser());
-			}
+		for (Booking book : bookingService.findUserApartmentsBookings(user)) {
+				apartments.add(book.getApartment());
+				receivedBookings.add(book);
+				bookerUsers.add(book.getUser());
 		}
 
-		grid2.setItems(b);
-		apartmentNameGrid2.setItems(a);
-		userNameGrid2.setItems(u);
+		receivedBookingsGrid.setItems(receivedBookings);
+		apartmentNamesGrid.setItems(apartments);
+		usernamesGrid.setItems(bookerUsers);
 	}
 
 	@Override

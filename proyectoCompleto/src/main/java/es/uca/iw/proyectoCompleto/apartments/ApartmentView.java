@@ -37,7 +37,6 @@ import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
-import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 

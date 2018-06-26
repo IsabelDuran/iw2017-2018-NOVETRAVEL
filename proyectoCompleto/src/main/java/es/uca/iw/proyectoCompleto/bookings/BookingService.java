@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
@@ -62,6 +61,10 @@ public class BookingService {
 		return repository_.findUserBookings(user);
 	}
 
+	public Set<Booking> findUserApartmentsBookings(User user)
+	{
+		return repository_.findUserApartmentsBookings(user);
+	}
 	
 	public boolean isApartmentFreeBetweenDates(Apartment apartment, LocalDate start, LocalDate end)
 	{

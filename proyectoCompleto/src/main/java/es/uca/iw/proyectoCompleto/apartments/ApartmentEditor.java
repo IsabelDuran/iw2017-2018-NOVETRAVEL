@@ -220,6 +220,8 @@ public class ApartmentEditor extends VerticalLayout implements View {
 		});
 
 		delete.addClickListener(e -> {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user.getApartments().remove(apartment);
 			service.delete(apartment);
 			getUI().getNavigator().navigateTo(ApartmentManagementView.VIEW_NAME);
 		});

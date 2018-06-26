@@ -28,7 +28,6 @@ import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
-import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = DisputeView.VIEW_NAME)
@@ -39,9 +38,6 @@ public class DisputeView extends VerticalLayout implements View {
 	public static final String VIEW_NAME = "disputeView";
 
 	private Apartment apartment;
-
-	@Autowired
-	private ApartmentService service;
 
 	@Autowired
 	private DisputeService disputeService;

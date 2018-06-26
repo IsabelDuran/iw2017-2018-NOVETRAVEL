@@ -27,7 +27,6 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
-import es.uca.iw.proyectoCompleto.disputes.DisputeView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
