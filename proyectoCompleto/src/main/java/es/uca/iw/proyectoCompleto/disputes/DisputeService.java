@@ -3,6 +3,8 @@ package es.uca.iw.proyectoCompleto.disputes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,5 +41,15 @@ public class DisputeService
 	public List<Dispute> findAll()
 	{
 		return repository_.findAll();
+	}
+	
+	public Page<Dispute> findAllPageable(Pageable page)
+	{
+		return repository_.findAll(page);
+	}
+	
+	Page<Dispute> findByReason(String reason, Pageable page)
+	{
+		return repository_.findByReason(reason, page);
 	}
 }

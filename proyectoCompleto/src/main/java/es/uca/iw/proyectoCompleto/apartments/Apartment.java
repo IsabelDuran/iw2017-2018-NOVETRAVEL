@@ -52,7 +52,7 @@ public class Apartment{
 	@OneToMany(mappedBy="apartment",fetch=FetchType.EAGER)
 	private List<ImageApartment> images;
 	
-	@OneToMany(mappedBy="apartment")
+	@OneToMany(mappedBy="apartment", cascade = {CascadeType.ALL})
 	private List<Booking> bookings;
 	
 	@OneToOne(mappedBy="apartment", cascade = {CascadeType.ALL})
