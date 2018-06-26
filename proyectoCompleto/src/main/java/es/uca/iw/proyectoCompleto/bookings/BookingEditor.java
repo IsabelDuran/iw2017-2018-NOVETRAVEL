@@ -218,6 +218,8 @@ public class BookingEditor extends VerticalLayout {
 					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 
 			mailService.enviarCorreoAttachment("Reserva confirmada", mensaje, user_.getEmail(), serviceFact.generarPdf(factura), "factura" + factura.getId() + ".pdf");
+			mailService.enviarCorreoAttachment("Reserva confirmada", mensaje, booking_.getUser().getEmail(), serviceFact.generarPdf(factura), "factura" + factura.getId() + ".pdf");
+
 			booking_.setConfirmation(true);
 			bookingService.delete(booking_);
 			bookingService.save(booking_);

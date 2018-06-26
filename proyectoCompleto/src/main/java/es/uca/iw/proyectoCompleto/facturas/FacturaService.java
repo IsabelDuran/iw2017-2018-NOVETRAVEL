@@ -122,6 +122,7 @@ public class FacturaService {
 			document.close();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return outputDocument;
 

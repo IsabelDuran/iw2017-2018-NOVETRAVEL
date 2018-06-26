@@ -97,7 +97,7 @@ public class MailService {
 	        transport.sendMessage(message, message.getAllRecipients());
 	        transport.close();
 	        } catch (Exception e) {
-	        	
+	        	e.printStackTrace();
 	        }
 	        
 		} catch(MessagingException e) {
