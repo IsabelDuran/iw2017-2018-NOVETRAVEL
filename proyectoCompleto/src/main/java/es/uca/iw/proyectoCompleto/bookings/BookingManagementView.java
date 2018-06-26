@@ -1,7 +1,9 @@
 package es.uca.iw.proyectoCompleto.bookings;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -132,7 +134,7 @@ public class BookingManagementView extends VerticalLayout implements View {
 		User user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		List<Apartment> a = new ArrayList<Apartment>();
-		List<Booking> b = new ArrayList<Booking>();
+		Set<Booking> b = new HashSet<Booking>();
 		List<User> u = new ArrayList<User>();
 
 		b = user_.getBooking();

@@ -57,7 +57,7 @@ public class User implements UserDetails{
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
-	private List<Booking> booking;
+	private Set<Booking> booking;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private Set<Apartment> apartments;
@@ -154,11 +154,11 @@ public class User implements UserDetails{
 		this.zipcode = zipcode;
 	}
 	
-	public List<Booking> getBooking() {
+	public Set<Booking> getBooking() {
 		return booking;
 	}
 
-	public void setBooking(List<Booking> booking) {
+	public void setBooking(Set<Booking> booking) {
 		this.booking = booking;
 	}
 	
