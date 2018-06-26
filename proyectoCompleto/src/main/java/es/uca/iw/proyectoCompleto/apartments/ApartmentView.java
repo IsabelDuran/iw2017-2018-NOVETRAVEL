@@ -86,7 +86,10 @@ public class ApartmentView extends VerticalLayout implements View
 		addComponent(volver);
 
 		Label nombreAp = new Label(apartment.getName());
+		nombreAp.setStyleName("name-title");
 		Label description = new Label(apartment.getDescription());
+		Label calleAp = new Label(apartment.getLocation().getStreet_());
+		Label tipo = new Label(apartment.getApartmentType());
 		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
 		Button denunciar=new Button("Denuncia este anuncio", e -> getUI().getNavigator().navigateTo(DisputeView.VIEW_NAME + "/" + apartment.getId()));
 		
@@ -99,7 +102,7 @@ public class ApartmentView extends VerticalLayout implements View
 		
 		addComponent(v);
 		
-		v.addComponents(nombreAp, description, imagenes,reservar);
+		v.addComponents(nombreAp, calleAp, tipo, description, imagenes,reservar);
 
 		User usuarioLogeado = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		
