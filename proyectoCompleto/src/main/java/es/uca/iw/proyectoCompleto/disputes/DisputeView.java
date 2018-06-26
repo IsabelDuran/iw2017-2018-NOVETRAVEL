@@ -28,6 +28,7 @@ import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.DefaultView;
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.security.MailService;
 import es.uca.iw.proyectoCompleto.users.User;
 
 @SpringView(name = DisputeView.VIEW_NAME)
@@ -41,6 +42,9 @@ public class DisputeView extends VerticalLayout implements View {
 
 	@Autowired
 	private DisputeService disputeService;
+	
+	@Autowired
+	private MailService mailService;
 	
 	private Dispute dispute;
 
@@ -76,7 +80,7 @@ public class DisputeView extends VerticalLayout implements View {
 		binder.forField(selectDisputeType).asRequired("¡Debe introducir un motivo!").bind(Dispute::getReason, Dispute::setReason);
 		binder.forField(description).asRequired("¡Debe introducir una descripción!").bind(Dispute::getDescription, Dispute::setDescription);
 		
-		Button confirmar = new Button("Confirmar",
+		Button enviar = new Button("Envíar",
 				e -> {
 					try
 					{
@@ -86,7 +90,16 @@ public class DisputeView extends VerticalLayout implements View {
 						dispute.setApartment(apartment);
 						dispute.setUser(user);
 						dispute.setOpening_date(systemDate);
+						dispute.setOpen(true);
 						disputeService.save(dispute);
+						
+						String mensaje = "Estimado/a " + user.getFirstName() + " " + user.getLastName() +
+								", hemos recibido su denuncia y procederemos a cerrarla lo antes posible. \n"
+								+ "Recibirá un mensaje cuando uno de nuestros gestores resuelva su queja." +
+								"\n\n" + "Gracias por ayudarnos a mejorar nuestros servicios.";
+						
+						mailService.enviarCorreo("Hemos recibido su denuncia", mensaje, user.getEmail());
+						
 						Notification.show("Se ha guardado correctamente");
 						getUI().getNavigator().navigateTo(DefaultView.VIEW_NAME);
 						
@@ -98,7 +111,7 @@ public class DisputeView extends VerticalLayout implements View {
 					
 				});
 
-		v.addComponents(selectDisputeType, description, confirmar);
+		v.addComponents(selectDisputeType, description, enviar);
 	}
 
 	@Override

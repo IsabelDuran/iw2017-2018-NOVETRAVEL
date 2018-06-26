@@ -214,10 +214,13 @@ public class BookingEditor extends VerticalLayout {
 					+ " euros.\n\n\n";
 
 			/// GENERAR FACTURA///
-			String mensaje = "Estimado/a " + user_.getFirstName() + " " + user_.getLastName() + ",\n\n " + detalles
+			String mensaje = "Estimado/a " + user_.getFirstName() + "Se ha realizado una reserva en su apartamento" + " " + user_.getLastName() + ",\n\n " + detalles
 					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 
 			mailService.enviarCorreoAttachment("Reserva confirmada", mensaje, user_.getEmail(), serviceFact.generarPdf(factura), "factura" + factura.getId() + ".pdf");
+			
+			mensaje = "Estimado/a " +  booking_.getUser().getFirstName() + " " +  booking_.getUser().getLastName() + ",\n\n " + detalles
+					+ "Gracias por confiar en nuestros servicios, \n\n El equipo de Novetravel. ";
 			mailService.enviarCorreoAttachment("Reserva confirmada", mensaje, booking_.getUser().getEmail(), serviceFact.generarPdf(factura), "factura" + factura.getId() + ".pdf");
 
 			booking_.setConfirmation(true);
