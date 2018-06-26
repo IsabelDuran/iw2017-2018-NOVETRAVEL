@@ -53,8 +53,8 @@ public class DisputeManagementView extends VerticalLayout implements View
 
 		addComponent(editor);
 
-		grid.setHeight(300, Unit.PIXELS);
-		grid.setWidth(Page.getCurrent().getBrowserWindowWidth(),Unit.PIXELS);
+		grid.setHeight(100, Unit.PERCENTAGE);
+		grid.setWidth(100, Unit.PERCENTAGE);
 		
 		grid.addColumn(Dispute::isOpen).setCaption("Abierta");
 		grid.addColumn(Dispute::getOpening_date).setCaption("Fecha de apertura");
