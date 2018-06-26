@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
@@ -26,6 +27,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 import es.uca.iw.proyectoCompleto.bookings.BookingView;
+import es.uca.iw.proyectoCompleto.disputes.DisputeView;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
@@ -113,7 +115,10 @@ public class ApartmentListView extends VerticalLayout implements View {
 	
 	private Button crearBotonVermas(Apartment ap) {
 		
-		Button btnVermas = new Button("Ver mas...",event -> getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME+"/"+ap.getId()));
+		Button btnVermas = new Button("Ver mas...",event -> {
+			VaadinSession.getCurrent().setAttribute("apartamentoActual", ap);
+			getUI().getNavigator().navigateTo(ApartmentView.VIEW_NAME);
+		});
 		
 		return btnVermas;
 	}

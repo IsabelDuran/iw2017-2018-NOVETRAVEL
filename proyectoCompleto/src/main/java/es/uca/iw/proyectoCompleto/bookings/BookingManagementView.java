@@ -137,7 +137,7 @@ public class BookingManagementView extends VerticalLayout implements View {
 		Set<Booking> b = new HashSet<Booking>();
 		List<User> u = new ArrayList<User>();
 
-		b = user_.getBooking();
+		b = bookingService.findUserBookings(user_);
 
 		for (Booking book : b) {
 			a.add(book.getApartment());

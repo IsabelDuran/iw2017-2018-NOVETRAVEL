@@ -26,6 +26,8 @@ public class Dispute{
 	@Lob
 	private String description;
 	
+	private String reason;
+	
 	private boolean open;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -33,8 +35,8 @@ public class Dispute{
 	
 	@ManyToOne
 	private User user;
-	
-	protected Dispute() {
+
+	public Dispute() {
 	}
 
 	public Dispute(LocalDate date_opening, LocalDate date_closing, String description,Apartment apartamento,User user) {
@@ -114,6 +116,22 @@ public class Dispute{
 	@Override
 	public String toString() {
 		return description;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 

@@ -28,6 +28,7 @@ import es.uca.iw.proyectoCompleto.facturas.Factura;
 import es.uca.iw.proyectoCompleto.facturas.FacturaService;
 import es.uca.iw.proyectoCompleto.security.MailService;
 import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserService;
 
 @SpringComponent
 @UIScope
@@ -44,7 +45,7 @@ public class BookingEditor extends VerticalLayout {
 	private Booking booking_;
 
 	@Autowired
-	private ApartmentService service2;
+	private ApartmentService apartmentService;
 
 	@Autowired
 	private FacturaService serviceFact;
@@ -54,6 +55,8 @@ public class BookingEditor extends VerticalLayout {
 	private Apartment apartment;
 	private Factura factura;
 
+	@Autowired
+	private UserService userService;
 	@Autowired
 	private MailService mailService;
 	
@@ -241,32 +244,18 @@ public class BookingEditor extends VerticalLayout {
 
 			binder.setBean(booking_);
 
-			user_ = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+			user_ = userService.findByUsernameWithBookins(username);
 			apId = booking_.getApartment().getId();
-			apartment = service2.loadApartmentById(apId);
+			apartment = apartmentService.findByIdWithUser(apId);
 			userAnfitrion = apartment.getUser();
 
-			if (user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId()
-					&& !booking_.isConfirmation()) // Solo el anfitrion puede confirmar una reserva o eliminarla y solo
-													// de sus pisos
+			if (user_.getId() == userAnfitrion.getId() && !booking_.isConfirmation())
 				confirm.setVisible(true);
 			else
 				confirm.setVisible(false);
 
-			if (user_.getId() == userAnfitrion.getId() && apartment.getUser().getId() == userAnfitrion.getId()) // Solo
-																												// el
-																												// anfitrion
-																												// puede
-																												// confirmar
-																												// una
-																												// reserva
-																												// o
-																												// eliminarla
-																												// y
-																												// solo
-																												// de
-																												// sus
-																												// pisos
+			if (user_.getId() == userAnfitrion.getId())
 				delete.setVisible(true);
 			else
 				delete.setVisible(false);

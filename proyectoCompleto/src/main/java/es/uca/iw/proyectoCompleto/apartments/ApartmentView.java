@@ -16,6 +16,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.StreamVariable;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -36,6 +37,7 @@ import es.uca.iw.proyectoCompleto.imageApartment.ImageApartment;
 import es.uca.iw.proyectoCompleto.imageApartment.ImageApartmentService;
 import es.uca.iw.proyectoCompleto.security.SecurityUtils;
 import es.uca.iw.proyectoCompleto.users.User;
+import es.uca.iw.proyectoCompleto.users.UserEditor;
 import es.uca.iw.proyectoCompleto.users.UserService;
 
 
@@ -88,7 +90,10 @@ public class ApartmentView extends VerticalLayout implements View
 		Label nombreAp = new Label(apartment.getName());
 		Label description = new Label(apartment.getDescription());
 		Label precio = new Label("Precio por día: " + String.valueOf(apartment.getPricePerDay() + "€"));
-		Button denunciar=new Button("Denuncia este anuncio", e -> getUI().getNavigator().navigateTo(DisputeView.VIEW_NAME + "/" + apartment.getId()));
+		Button denunciar=new Button("Denuncia este anuncio", e -> {
+			VaadinSession.getCurrent().setAttribute("apartamentoActual", apartment);
+			getUI().getNavigator().navigateTo(DisputeView.VIEW_NAME);
+		});
 		
 		Button reservar = new Button("Reservar", e -> getUI().getNavigator().navigateTo(BookingView.VIEW_NAME + "/" + apartment.getId())) ;
 		reservar.setVisible(SecurityUtils.hasRole("ROLE_USER"));
@@ -236,16 +241,10 @@ public class ApartmentView extends VerticalLayout implements View
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-		if(event.getParameters() != null){
-	           // split at "/", add each part as a label
-	           String[] msgs = event.getParameters().split("/");
-	           long id=Long.valueOf(msgs[0]);
-	           
-	           apartment=apartmentService.loadApartmentById(id);
-	           
-	           mostrarApartamento();
-	           
-	    }
+ 
+		Apartment apartamentoActual = (Apartment) VaadinSession.getCurrent().getAttribute("apartamentoActual");
+		this.apartment = apartamentoActual;
+		mostrarApartamento();
 		
 	}
 

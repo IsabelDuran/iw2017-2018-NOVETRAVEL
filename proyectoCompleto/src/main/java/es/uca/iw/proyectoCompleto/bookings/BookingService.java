@@ -3,11 +3,14 @@ package es.uca.iw.proyectoCompleto.bookings;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
+import es.uca.iw.proyectoCompleto.users.User;
 
 @Service
 public class BookingService {
@@ -53,6 +56,12 @@ public class BookingService {
 	public List<Booking> findAll() {
 		return repository_.findAll();
 	}
+	
+	public Set<Booking> findUserBookings(User user)
+	{
+		return repository_.findUserBookings(user);
+	}
+
 	
 	public boolean isApartmentFreeBetweenDates(Apartment apartment, LocalDate start, LocalDate end)
 	{

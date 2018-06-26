@@ -51,6 +51,9 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long>{
 												@Param(value = "fechaInicio") LocalDate fechaInicio,
 												@Param(value = "fechaFin") LocalDate fechaFin, Pageable page);
 	
+	@Query("SELECT ap FROM Apartment ap LEFT JOIN FETCH ap.user WHERE ap.id = :idApartment")
+	public Apartment findByIdWithUser(@Param(value = "idApartment") Long idApartment);
+	
 	public Apartment findById(Long id);
 	
 }

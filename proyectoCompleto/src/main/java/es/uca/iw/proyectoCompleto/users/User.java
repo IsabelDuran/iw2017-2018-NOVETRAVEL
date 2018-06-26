@@ -55,14 +55,12 @@ public class User implements UserDetails{
 	private int zipcode;
 	
 
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
 	private Set<Booking> booking;
 	
 	@OneToMany(mappedBy="user",fetch=FetchType.EAGER)
 	private Set<Apartment> apartments;
 	
-	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "user")
 	private List<Dispute> disputes;
 	
@@ -180,12 +178,6 @@ public class User implements UserDetails{
 		this.disputes = disputes;
 	}
 		
-	@Override
-	public String toString() {
-		return String.format("User[id=%d, firstName='%s', lastName='%s', username='%s', password='%s', direccion='%s', email='%s']", id,
-				firstName, lastName,username,password);
-	}
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> list=new ArrayList<GrantedAuthority>();
