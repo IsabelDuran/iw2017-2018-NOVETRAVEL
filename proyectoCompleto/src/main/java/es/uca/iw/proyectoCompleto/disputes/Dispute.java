@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import es.uca.iw.proyectoCompleto.apartments.Apartment;
@@ -22,6 +23,7 @@ public class Dispute{
 	
 	private LocalDate closing_date;
 
+	@Lob
 	private String description;
 	
 	private boolean open;

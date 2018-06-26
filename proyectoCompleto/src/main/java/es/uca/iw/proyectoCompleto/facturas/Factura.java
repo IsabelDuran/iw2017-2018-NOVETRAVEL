@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 import es.uca.iw.proyectoCompleto.bookings.Booking;
@@ -20,6 +21,7 @@ public class Factura {
 	
 	private LocalDate fechaFactura;
 	
+	@Lob
 	private String detalles;
 	
 	private double precioSinIva;
