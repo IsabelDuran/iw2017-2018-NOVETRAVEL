@@ -3,13 +3,19 @@
  */
 package es.uca.iw.proyectoCompleto;
 
+import java.util.List;
 import java.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.vaadin.addon.pagination.Pagination;
+import com.vaadin.addon.pagination.PaginationChangeListener;
+import com.vaadin.addon.pagination.PaginationResource;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.spring.annotation.SpringView;
@@ -24,6 +30,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
+import es.uca.iw.proyectoCompleto.apartments.Apartment;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentListView;
 import es.uca.iw.proyectoCompleto.apartments.ApartmentService;
 
@@ -43,11 +50,13 @@ public class DefaultView extends VerticalLayout implements View {
 	private ApartmentListView apartmentListView;
 
 	private Panel springViewDisplay;
-	
+
+	private Pagination pagination;
+	private PaginationResource paginationResource;
 
 	@PostConstruct
 	void init() {
-		
+
 		this.setDefaultComponentAlignment(Alignment.TOP_LEFT);
 		Label searchtitle_ = new Label("Buscar: ");
 		searchtitle_.setStyleName("title-text");
@@ -92,21 +101,57 @@ public class DefaultView extends VerticalLayout implements View {
 		filterPanel.setWidth(300, Unit.PIXELS);
 		filterPanel.setVisible(false);
 
-		addComponents(searchbar, searchbutton, filterButton, filterPanel);
+		this.paginationResource = PaginationResource.newBuilder().setTotal(1).setPage(1).setLimit(9).build();
+
+		pagination = new Pagination(paginationResource);
+		pagination.setItemsPerPage(3, 6, 9, 30, 60, 90);
+		addComponent(pagination);
+
+		pagination.addPageChangeListener(new PaginationChangeListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void changed(PaginationResource event) {
+				Pageable pageable = new PageRequest(event.pageIndex(), event.limit());
+				String location = searchbar.getValue();
+				LocalDate entryDate = entryDateField.getValue();
+				LocalDate departureDate = departureDateField.getValue();
+				Double price = priceSlider.getValue();
+
+				Page<Apartment> apartments = null;
+				if (filterPanel.isVisible())
+					apartments = apartmentService.loadApartmentByLocationDateAndPrice(location, entryDate, departureDate, price,
+							pageable);
+				else
+					apartments = apartmentService.loadApartmentByLocation(location, pageable);
+
+				pagination.setTotalCount(apartments.getTotalElements());
+				apartmentListView.listApartments(apartments.getContent());
+			}
+		});
+
+		addComponents(searchbar, searchbutton, filterButton, filterPanel, pagination);
 
 		Label title_ = new Label("Pisos destacados: ");
 		title_.setStyleName("title-text");
 		addComponent(title_);
 
-		searchbutton.addClickListener(
-				e -> apartmentListView.listApartments(apartmentService.loadApartmentByLocation(searchbar.getValue())));
+		searchbutton.addClickListener(e -> {
+			String location = searchbar.getValue();
+			Pageable pageable = new PageRequest(this.paginationResource.pageIndex(), this.paginationResource.limit());
+	    	Page<Apartment> apartments = apartmentService.loadApartmentByLocation(location, pageable);
+			pagination.setTotalCount(apartments.getTotalElements());
+			apartmentListView.listApartments(apartments.getContent());
+		});
 
 		filterButton.addClickListener(e -> {
 			filterPanel.setVisible(true);
+			searchbutton.setVisible(false);
 		});
 
 		closeButton.addClickListener(e -> {
 			filterPanel.setVisible(false);
+			searchbutton.setVisible(true);
 		});
 
 		searchWithFilter.addClickListener(e -> {
@@ -114,15 +159,16 @@ public class DefaultView extends VerticalLayout implements View {
 			LocalDate entryDate = entryDateField.getValue();
 			LocalDate departureDate = departureDateField.getValue();
 			Double price = priceSlider.getValue();
-			apartmentListView.listApartments(
-					apartmentService.loadApartmentByLocationDateAndPrice(location, entryDate, departureDate, price));
+
+			Pageable pageable = new PageRequest(this.paginationResource.pageIndex(), this.paginationResource.limit());
+			Page<Apartment> apartments = apartmentService.loadApartmentByLocationDateAndPrice(location, entryDate,
+					departureDate, price, pageable);
+			pagination.setTotalCount(apartments.getTotalElements());
+			apartmentListView.listApartments(apartments.getContent());
 		});
 
 		springViewDisplay = new Panel();
 		springViewDisplay.setSizeFull();
-		addComponent(springViewDisplay);
-		Pagination pagination = new Pagination();
-		addComponent(pagination);
 		addComponent(springViewDisplay);
 		apartmentListView.setPanel(springViewDisplay);
 		springViewDisplay.setContent(apartmentListView);
@@ -132,8 +178,14 @@ public class DefaultView extends VerticalLayout implements View {
 
 	@Override
 	public void enter(ViewChangeEvent event) {
-		apartmentListView.listApartments(apartmentService.findAll());
+		updateApartments();
+	}
 
+	private void updateApartments() {
+		Pageable pageable = new PageRequest(this.paginationResource.pageIndex(), this.paginationResource.limit());
+		Page<Apartment> apartments = apartmentService.findAllWithPagination(pageable);
+		pagination.setTotalCount(apartments.getTotalElements());
+		apartmentListView.listApartments(apartments.getContent());
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.uca.iw.proyectoCompleto.users.User;
@@ -56,13 +58,16 @@ public class ApartmentService {
 		return repo.findAll();
 	}
 	
+	public Page<Apartment> findAllWithPagination(Pageable page) {
+		return repo.findAll(page);
+	}
+	
 	public List<Apartment> loadApartmentByLocation(String city)
 	{
 		List<Apartment> apartamentos = repo.findByLocation(city);
 		if (apartamentos == null)
 			apartamentos = new ArrayList<>();
-		return apartamentos;
-		
+		return apartamentos;	
 	}
 	
 	public List<Apartment> loadByPrice(String city, Double price)
@@ -81,6 +86,27 @@ public class ApartmentService {
 		List<Apartment> apartamentos = repo.filterByPriceAndDate(city, entryDate, departureDate, maxPrice);
 		if (apartamentos == null)
 				apartamentos = new ArrayList<>();
+		return apartamentos;
+	}
+	
+	public Page<Apartment> loadApartmentByLocation(String city, Pageable page)
+	{
+		Page<Apartment> apartamentos = repo.findByLocation(city, page);
+		return apartamentos;
+	}
+	
+	public Page<Apartment> loadByPrice(String city, Double price, Pageable page)
+	{
+		Page<Apartment> apartamentos = repo.findByPrice(city, price, page);
+		return apartamentos;
+	}
+	
+	public Page<Apartment> loadApartmentByLocationDateAndPrice(String city, 
+							LocalDate entryDate, 
+							LocalDate departureDate, 
+							Double maxPrice, Pageable page)
+	{
+		Page<Apartment> apartamentos = repo.filterByPriceAndDate(city, entryDate, departureDate, maxPrice, page);
 		return apartamentos;
 	}
 	
