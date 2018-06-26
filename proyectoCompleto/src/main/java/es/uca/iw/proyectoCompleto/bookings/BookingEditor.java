@@ -174,7 +174,7 @@ public class BookingEditor extends VerticalLayout {
 				ValidationResult validationResult = ex.getValidationErrors().iterator().next();
 				Notification.show(validationResult.getErrorMessage());
 			} catch (Exception exc) {
-				Notification.show(exc.getMessage());
+				exc.printStackTrace();
 			}
 
 		});
