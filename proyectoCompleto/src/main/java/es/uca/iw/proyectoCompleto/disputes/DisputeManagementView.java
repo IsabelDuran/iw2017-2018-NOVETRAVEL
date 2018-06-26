@@ -138,7 +138,7 @@ public class DisputeManagementView extends VerticalLayout implements View {
 					+ " nuestros gestores han considerado que su reserva realizada el " + dispute.getOpening_date()
 					+ " incumple nuestras políticas y ha procedido a ser borrado.\n\n Gracias por ayudarnos a mejorar nuestros servicios";
 
-			mailService.enviarCorreo("Información sobre su reserva", mensaje, dispute.getUser().getEmail());
+			mailService.enviarCorreo("Información sobre su denuncia", mensaje, dispute.getUser().getEmail());
 			apartmentService.delete(dispute.getApartment());
 			Notification.show("Se ha borrardo el anuncio correctamente");
 			getUI().getNavigator().navigateTo(MainScreen.VIEW_NAME);
